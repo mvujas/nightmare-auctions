@@ -1,2 +1,2 @@
 # nightmare-auctions
-The best auction platform on Balkan
+Soon to be the best auction platform on Balkan
