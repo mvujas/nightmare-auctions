@@ -1,5 +1,5 @@
 # nightmare-auctions
-Soon to be the best auction platform in Balkan
+Soon to be the best auction platform at Balkan
 
 
 ### Technologies
