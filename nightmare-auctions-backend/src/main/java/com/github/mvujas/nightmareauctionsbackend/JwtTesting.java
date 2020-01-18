@@ -3,17 +3,16 @@ package com.github.mvujas.nightmareauctionsbackend;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import com.github.mvujas.nightmareauctionsbackend.managers.jwt.JwtConstantUserIdentifierManager;
 import com.github.mvujas.nightmareauctionsbackend.managers.jwt.JwtConverter;
+import com.github.mvujas.nightmareauctionsbackend.managers.jwt.JwtUsernameManager;
 
 @Component
 public class JwtTesting {
 
 	@Autowired
-	JwtConstantUserIdentifierManager jwtManager;
+	JwtUsernameManager jwtManager;
 	
 	@Autowired
 	JwtConverter jwtConverter;

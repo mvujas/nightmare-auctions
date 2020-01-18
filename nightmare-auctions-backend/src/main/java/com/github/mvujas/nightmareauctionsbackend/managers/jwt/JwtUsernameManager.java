@@ -8,33 +8,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class JwtConstantUserIdentifierManager {
+public class JwtUsernameManager {
 
 	@Autowired
 	private JwtConverter jwtConverter;
 	
 	@Autowired
 	private JwtPacker jwtPacker;
-
-	private final String primaryClaimIdentifier = "userId";
 	
 	private final long duration = 5;
 	private final TimeUnit durationUnit = TimeUnit.HOURS;
 	
 	private final String issuer = "Nightmare Auctions";
 	
-	public String getTokenUsingUserId(int userId) {
+	public String getTokenUsingUsername(String username) {
 		return jwtConverter
 			.create()
-			.claim(primaryClaimIdentifier, userId)
+			.subject(username)
 			.periodFromNow(duration, durationUnit)
 			.issuer(issuer)
 			.build();
 	}
 	
 	public void setAuthorizationHeaderUsingUserId(
-			HttpServletResponse response, int userId) {
-		jwtPacker.setAuthorizationHeader(response, getTokenUsingUserId(userId));
+			HttpServletResponse response, String username) {
+		jwtPacker.setAuthorizationHeader(response, getTokenUsingUsername(username));
 	}
 
 }

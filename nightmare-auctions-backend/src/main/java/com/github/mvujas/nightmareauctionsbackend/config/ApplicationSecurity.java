@@ -1,5 +1,6 @@
 package com.github.mvujas.nightmareauctionsbackend.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -8,14 +9,19 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import com.github.mvujas.nightmareauctionsbackend.filters.JwtAuthenticationFilter;
+import com.github.mvujas.nightmareauctionsbackend.managers.jwt.JwtUsernameManager;
 
 @Configuration
 @EnableWebSecurity
 public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
 
+	@Autowired 
+	private JwtUsernameManager jwtManager;
+	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
@@ -23,10 +29,11 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
 			.authorizeRequests()
 				.anyRequest().authenticated()
 			.and()
-			.formLogin()
-			.permitAll()
-			.and()
-			.httpBasic();
+			.addFilter(new JwtAuthenticationFilter(authenticationManager(), jwtManager));
+//			.formLogin()
+//			.permitAll()
+//			.and()
+//			.httpBasic();
 	}
 	
 	@Override
