@@ -8,6 +8,9 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
@@ -17,7 +20,13 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 			.csrf().disable()
-			.formLogin();
+			.authorizeRequests()
+				.anyRequest().authenticated()
+			.and()
+			.formLogin()
+			.permitAll()
+			.and()
+			.httpBasic();
 	}
 	
 	@Override
@@ -25,8 +34,13 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
 		auth
 			.inMemoryAuthentication()
 			.withUser("admin")
-			.password("admin123")
+			.password(passwordEncoder().encode("admin123"))
 			.roles("ADMIN");
+	}
+	
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
 	}
 	
 	@Bean(name = BeanIds.AUTHENTICATION_MANAGER)
