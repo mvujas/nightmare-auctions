@@ -19,22 +19,22 @@ public class JwtPacker {
 	}
 	
 	public String getTokenFromHeaderValue(String headerValue)
-			throws IllegalArgumentException {
+			throws IllegalJsonWebTokenException {
 		String[] headerParts = headerValue.trim().split(" ");
 	
 		if(headerParts.length != 2 && headerParts[0].equalsIgnoreCase(authorizationPrefix)) {
-			throw new IllegalArgumentException("Given header format is not supported");
+			throw new IllegalJsonWebTokenException("Given header format is not supported");
 		}
 		
 		return headerParts[1];
 	}
 	
 	public String getToken(HttpServletRequest request)
-			throws IllegalArgumentException {
+			throws IllegalJsonWebTokenException {
 		String headerValue = request.getHeader(authorizationHeaderName);
 		
 		if(headerValue == null) {
-			throw new IllegalArgumentException("Authorization header is not present");
+			throw new IllegalJsonWebTokenException("Authorization header is not present");
 		}
 		
 		return getTokenFromHeaderValue(headerValue);

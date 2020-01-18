@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.github.mvujas.nightmareauctionsbackend.filters.JwtAuthenticationFilter;
+import com.github.mvujas.nightmareauctionsbackend.filters.JwtAuthorizationFilter;
 import com.github.mvujas.nightmareauctionsbackend.managers.jwt.JwtUsernameManager;
 
 @Configuration
@@ -29,7 +30,8 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
 			.authorizeRequests()
 				.anyRequest().authenticated()
 			.and()
-			.addFilter(new JwtAuthenticationFilter(authenticationManager(), jwtManager));
+			.addFilter(new JwtAuthenticationFilter(authenticationManager(), jwtManager))
+			.addFilter(new JwtAuthorizationFilter(authenticationManager(), jwtManager));
 //			.formLogin()
 //			.permitAll()
 //			.and()
