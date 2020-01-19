@@ -1,0 +1,15 @@
+.same-height-row {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display:         flex;
+    & > [class*='col-'], 
+    & > .col {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+img {
+    max-width: 100%;
+}
