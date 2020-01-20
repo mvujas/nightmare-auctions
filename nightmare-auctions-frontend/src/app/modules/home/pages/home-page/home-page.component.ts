@@ -12,7 +12,11 @@ export class HomePageComponent implements OnInit {
   constructor(private greetingService: GreetingService, private authenticationService: AuthenticationService) { }
 
   ngOnInit() {
-    this.authenticationService.login("admin", "admin123").subscribe();
+    /*this.authenticationService.login("admin", "admin123").subscribe(
+      x => {
+        this.greetingService.message().subscribe(console.log)
+      }
+    );*/
   }
 
 }

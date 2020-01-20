@@ -1,15 +1,28 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from '@app/core/authentication/authentication.service';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
   styleUrls: ['../../shared-scss/authentication-pages-styles.scss']
 })
-export class LoginPageComponent implements OnInit {
+export class LoginPageComponent {
 
-  constructor() { }
+  loginForm = new FormGroup({
+    username: new FormControl(''),
+    password: new FormControl(''),
+  });
 
-  ngOnInit() {
+  constructor(private authService: AuthenticationService) { }
+
+
+  attemptLogin(formValue): void {
+    console.log('Pera!')
+    this.authService.login(formValue).subscribe(
+      console.log,
+      console.log
+    );
   }
 
 }

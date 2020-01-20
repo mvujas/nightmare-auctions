@@ -14,29 +14,30 @@
         Incorrect password
       </div>
 
-      <form>
+      <form [formGroup]="loginForm" (submit)="attemptLogin(loginForm.value)">
 
         <app-fancy-input-with-underline 
           type="text" 
           placeholder="Username"
-          activeColor="#98ce00">
+          activeColor="#98ce00"
+          formControlName="username">
         </app-fancy-input-with-underline>
         <br>
         <br>
         <app-fancy-input-with-underline 
           type="password" 
           placeholder="Password"
-          activeColor="#98ce00">
+          activeColor="#98ce00"
+          formControlName="password">
         </app-fancy-input-with-underline>
         <br>
         <br>
         <button type="submit" class="btn btn-primary">Sign in</button>
-
-        <ul class="under-form-links">
-          <li><a routerLink=".">Forgot password?</a></li>
-          <li><a routerLink="/auth/register">Create new account</a></li>
-        </ul>
       </form>
+      <ul class="under-form-links">
+        <li><a routerLink=".">Forgot password?</a></li>
+        <li><a routerLink="/auth/register">Create new account</a></li>
+      </ul>
     </div>
   </div>
 </div>

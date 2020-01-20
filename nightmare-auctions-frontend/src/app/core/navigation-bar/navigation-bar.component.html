@@ -12,36 +12,43 @@
         </li>
       </ul>
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <div id="navbar-account-group">
-            <p class="navbar-btn">
-              <a routerLink="/auth/login" class="btn btn-primary">Login</a>
-            </p>
-            <p class="navbar-btn">
-              <a routerLink="/auth/register" class="btn btn-primary">Register</a>
-            </p>
-          </div>
-        </li>
-        <!--<li class="nav-item dropdown" id="user-account-actions-dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            pera12345
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="#">
-              <i class="material-icons">person</i>
-              Profile
+        
+        <ng-template [ngIf]="!authService.isAuthenticated" [ngIfElse]="loggedIn">
+          <li class="nav-item">
+            <div id="navbar-account-group">
+              <p class="navbar-btn">
+                <a routerLink="/auth/login" class="btn btn-primary">Login</a>
+              </p>
+              <p class="navbar-btn">
+                <a routerLink="/auth/register" class="btn btn-primary">Register</a>
+              </p>
+            </div>
+          </li>
+        </ng-template>
+
+        <ng-template #loggedIn>
+          <li class="nav-item dropdown" id="user-account-actions-dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              pera12345
             </a>
-            <a class="dropdown-item" href="#">
-              <i class="material-icons">settings_applications</i>
-              Settings
-            </a>
-            <hr>
-            <a class="dropdown-item" href="#">
-              <i class="material-icons">exit_to_app</i>
-              Log out
-            </a>
-          </div>
-        </li>-->
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="#">
+                <i class="material-icons">person</i>
+                Profile
+              </a>
+              <a class="dropdown-item" href="#">
+                <i class="material-icons">settings_applications</i>
+                Settings
+              </a>
+              <hr>
+              <a class="dropdown-item" href="#">
+                <i class="material-icons">exit_to_app</i>
+                Log out
+              </a>
+            </div>
+          </li>
+        </ng-template>
+
       </ul>
     </div>
   </div>

@@ -6,9 +6,9 @@ import { FancyInputComponent } from '@app/shared/components/fancy-input/fancy-in
 import { RouterModule } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ApiPrefixInterceptor } from './interceptors/api-prefix.interceptor';
-import { GreetingService } from './http/greeting/greeting.service';
 import { ErrorHandlerInterceptor } from './interceptors/error-handler.interceptor';
 import { TokenInterceptor } from './interceptors/token.interceptor';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 const componentsToExport: any[] = [
   NavigationBarComponent,
@@ -29,7 +29,9 @@ const interceptors: any[] = [
   imports: [
     CommonModule,
     RouterModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   declarations: [ 
     ...componentsToExport,
