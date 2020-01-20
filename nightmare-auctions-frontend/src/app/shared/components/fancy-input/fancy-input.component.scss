@@ -1,0 +1,54 @@
+@import "src/assets/scss/bootstrap-utils";
+
+.fancy-input {
+    //--default-color: #495057; 
+    //--active-color: red;
+
+    position: relative;
+    $input-text-size: 1em;
+    $placeholder-size: 0.7em;
+    $bottom-padding: .2em;
+
+    $horizontal-padding: .2em;
+    $input-text-padding: $placeholder-size $horizontal-padding $bottom-padding $horizontal-padding;
+    //$placeholder-innactive-padding: ($placeholder-size - $input-text-size) $horizontal-padding 0 $horizontal-padding;
+    //$placeholder-active-padding: 0 $horizontal-padding;
+    $placeholder-padding: 0 $horizontal-padding $bottom-padding $horizontal-padding;
+    display: inline-block;
+    width: 100%;
+
+    input {
+        width: 100%;
+        font-size: $input-text-size;
+        padding: $input-text-padding;
+        border: none;
+        box-sizing: border-box;
+        color: var(--default-color) !important;
+    }
+    .placeholder {
+        font-size: $input-text-size + $placeholder-size;
+        position: absolute;
+        left: 0;
+        top: 0;
+        font-weight: bold;
+        padding: $placeholder-padding;
+        color: var(--default-color) !important;
+        @include transition(all 300ms ease-out);
+    }
+
+    &.active-input {
+        * {
+            cursor: text;
+        }
+        .placeholder {
+            font-size: $placeholder-size;
+            color: var(--active-color) !important;
+        }
+    }
+
+    &:not(.active-input) {
+        * {
+            cursor: pointer;
+        }
+    }
+}
