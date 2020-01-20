@@ -40,6 +40,8 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 	public Authentication getAuthenticationObject(HttpServletRequest request) {
 		String username = jwtManager.getUsernameFromRequestHeader(request);
 		
+		// TODO: get user from database when you implement entities and repositories
+		
 		UsernamePasswordAuthenticationToken authenticationToken = 
 				new UsernamePasswordAuthenticationToken(
 						username, null, null);
