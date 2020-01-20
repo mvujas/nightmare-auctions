@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
 import { FooterComponent } from './footer/footer.component';
 import { FancyInputComponent } from '@app/shared/components/fancy-input/fancy-input.component';
+import { RouterModule } from '@angular/router';
 
 const componentsToExport: any[] = [
   NavigationBarComponent,
@@ -15,7 +16,8 @@ const sharedComponentsUsed: any[] = [
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    RouterModule
   ],
   declarations: [ 
     ...componentsToExport,
