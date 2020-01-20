@@ -9,7 +9,14 @@ export class GreetingService {
   constructor(private http: HttpClient) { }
 
   greeting() {
-    return this.http.get("greeting");
+    return this.http.get("api/greeting");
+  }
+
+  login(username: string, password: string) {
+    return this.http.post("login", {
+      username: username,
+      password: password
+    });
   }
 
 }
