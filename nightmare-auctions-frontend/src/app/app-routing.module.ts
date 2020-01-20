@@ -15,6 +15,14 @@ const routes: Routes = [
   {
     path: 'auth',
     loadChildren: () => import('@modules/authentication/authentication.module').then(mod => mod.AuthenticationModule)
+  },
+  {
+    path: '404',
+    loadChildren: () => import('@modules/page404/page404.module').then(mod => mod.Page404Module)
+  },
+  {
+    path: '**',
+    redirectTo: '404'
   }
 ];
 
