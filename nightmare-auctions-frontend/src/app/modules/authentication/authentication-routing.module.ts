@@ -11,6 +11,10 @@ const routes: Routes = [
   {
     path: 'register',
     component: RegistrationPageComponent
+  },
+  {
+    path: '**',
+    redirectTo: '/404'
   }
 ];
 
