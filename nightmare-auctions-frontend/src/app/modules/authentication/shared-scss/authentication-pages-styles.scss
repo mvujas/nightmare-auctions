@@ -1,0 +1,56 @@
+#login-page-view-container {
+    padding: 50px 0;
+
+    *[type="submit"] {
+        min-width: 100%;
+    }
+
+}
+
+@mixin heading-fancy-border(
+        $border-width, 
+        $border-color,
+        $line-weight,
+        $bottom) {
+
+    position: relative;
+
+    &::after {
+        content: ' ';
+        position: absolute;
+        display: block;
+        width: $border-width;
+        left: 50%;
+        margin-left: -$border-width / 2;
+
+        $border-style: $line-weight solid $border-color; 
+    
+        @if $bottom == true {
+            bottom: 0;
+            border-bottom: $border-style;
+        } @else {
+            top: 0;
+            border-top: $border-style;
+        }
+    }
+}
+
+h2 {
+    @include heading-fancy-border(150px, #98ce00, 4px, true);
+}
+
+ul.under-form-links {
+    list-style: none;
+    text-align: center;
+    padding: 0;
+
+    @include heading-fancy-border(80%, #aaa, 1px, false);
+
+    padding-top: 5px;
+    margin-top: 15px;
+
+    a {
+        font-weight: bold;
+    }
+    
+}

@@ -1,0 +1,42 @@
+<div class="container">
+  <div id="login-page-view-container" class="row">
+    <div class="col col-xl-4 col-md-7 col-sm-12 col-xs-12 col-centered text-center">
+      <!-- TODO: Fix color scheme -->
+      
+      <h2>Welcome</h2>
+      <p class="center-justified">
+        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sint hic itaque, officia nihil ad facere iste possimus aliquam perspiciatis quisquam, quibusdam in corporis libero, deleniti voluptatum quia dicta nam mollitia.
+
+        <!--You're just one step away from getting access to thousands of auctions-->
+      </p> 
+
+      <div class="alert alert-danger" role="alert">
+        Incorrect password
+      </div>
+
+      <form>
+
+        <app-fancy-input-with-underline 
+          type="text" 
+          placeholder="Username"
+          activeColor="#98ce00">
+        </app-fancy-input-with-underline>
+        <br>
+        <br>
+        <app-fancy-input-with-underline 
+          type="password" 
+          placeholder="Password"
+          activeColor="#98ce00">
+        </app-fancy-input-with-underline>
+        <br>
+        <br>
+        <button type="submit" class="btn btn-primary">Sign in</button>
+
+        <ul class="under-form-links">
+          <li><a routerLink=".">Forgot password?</a></li>
+          <li><a routerLink="/auth/register">Create new account</a></li>
+        </ul>
+      </form>
+    </div>
+  </div>
+</div>
