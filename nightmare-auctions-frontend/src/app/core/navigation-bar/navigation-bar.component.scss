@@ -1,0 +1,83 @@
+@import "src/assets/scss/bootstrap-utils";
+
+#main-navigation-bar {
+    @mixin outline-main-navbar {
+        --box-shadow-color-1: rgba(0, 0, 0, 0.14);
+        --box-shadow-color-2: rgba(0, 0, 0, 0.12);
+        --box-shadow-color-3: rgba(0, 0, 0, 0.2);
+        --background-color: #001011;
+    }
+
+    &.main-page-nav {
+        position: fixed;
+
+        &.scrolled {
+            @include outline-main-navbar;
+        }   
+
+        @include media-breakpoint-down(md) {
+            @include outline-main-navbar;
+        }
+    }
+
+    &:not(.main-page-nav) {
+        position: sticky;
+        @include outline-main-navbar;
+    }
+     
+    width: 100%;
+    z-index: 100;
+    top: 0;
+    @include transition(all 1s ease);
+
+    box-shadow: 0 2px 2px 0 var(--box-shadow-color-1), 0 3px 1px -2px var(--box-shadow-color-2), 0 1px 5px 0 var(--box-shadow-color-3);
+    background-color: var(--background-color);
+
+    #navbar-account-group {
+        @include media-breakpoint-up(lg) {
+            padding-left: 10px;
+        }
+        display: inline-flex;
+        & > p:not(:first-child) {
+            margin-left: 5px;
+        }
+    }
+
+    // FIX FOR BOOTSTRAP
+    p {
+        margin: 0;
+    }
+}
+
+#user-account-actions-dropdown {
+    $background-color: #001011;
+    $text-color: white;
+
+    $color-changes: true;
+    
+    .dropdown-menu {
+        right: 0;
+        left: auto;
+
+        @if $color-changes {
+            background-color: $background-color;
+            border: 1px solid $text-color;
+
+            a {
+                color: $text-color;
+                &:hover {
+                    background-color: rgba(255, 255, 255, 0.14);
+                }
+            }
+    
+            hr {
+                border-color: $text-color;
+            }
+        }
+
+        i.material-icons {
+            vertical-align: middle;
+        }
+        
+    }
+}

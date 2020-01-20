@@ -1,0 +1,30 @@
+@import "src/assets/scss/bootstrap-utils";
+
+.fancy-input {
+    @include box-shadow(none);
+
+    input {
+        outline: none;
+        border-bottom: 3px solid var(--default-color);
+        @include transition(border-color 300ms ease-out);
+
+        &:-webkit-autofill,
+        &:-webkit-autofill:hover, 
+        &:-webkit-autofill:focus, 
+        &:-webkit-autofill:active  {
+            @include box-shadow(0 0 0 30px white inset !important);
+        }
+        
+    }
+
+    box-sizing: border-box;
+
+    &.active-input {
+        input {
+            border-color: var(--active-color);
+        }
+        label {
+            color: var(--active-color) !important;
+        }
+    }
+}
