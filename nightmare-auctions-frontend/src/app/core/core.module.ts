@@ -8,6 +8,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ApiPrefixInterceptor } from './interceptors/api-prefix.interceptor';
 import { GreetingService } from './http/greeting/greeting.service';
 import { ErrorHandlerInterceptor } from './interceptors/error-handler.interceptor';
+import { TokenInterceptor } from './interceptors/token.interceptor';
 
 const componentsToExport: any[] = [
   NavigationBarComponent,
@@ -20,11 +21,8 @@ const sharedComponentsUsed: any[] = [
 
 const interceptors: any[] = [
   ApiPrefixInterceptor,
-  ErrorHandlerInterceptor
-];
-
-const services: any[] = [
-  GreetingService
+  ErrorHandlerInterceptor,
+  TokenInterceptor
 ];
 
 @NgModule({
@@ -43,8 +41,7 @@ const services: any[] = [
       provide: HTTP_INTERCEPTORS,
       useClass: interceptor,
       multi: true
-    })),
-    ...services
+    }))
   ]
 })
 export class CoreModule { }

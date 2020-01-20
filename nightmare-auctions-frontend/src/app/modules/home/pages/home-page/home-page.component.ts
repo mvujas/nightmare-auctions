@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GreetingService } from '@app/core/http/greeting/greeting.service';
+import { AuthenticationService } from '@app/core/authentication/authentication.service';
 
 @Component({
   selector: 'app-home-page',
@@ -8,12 +9,10 @@ import { GreetingService } from '@app/core/http/greeting/greeting.service';
 })
 export class HomePageComponent implements OnInit {
 
-  constructor(private greetingService: GreetingService) { }
+  constructor(private greetingService: GreetingService, private authenticationService: AuthenticationService) { }
 
   ngOnInit() {
-    this.greetingService.login("admin", "admin123").subscribe(console.log);
-
-    this.greetingService.greeting().subscribe(console.log)
+    this.authenticationService.login("admin", "admin123").subscribe();
   }
 
 }
