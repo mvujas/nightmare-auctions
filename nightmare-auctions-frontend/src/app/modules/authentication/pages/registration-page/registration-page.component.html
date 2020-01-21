@@ -10,46 +10,72 @@
         <!--You're just one step away from getting access to thousands of auctions-->
       </p> 
 
-      <div class="alert alert-danger" role="alert">
-        Incorrect password
-      </div>
+      <ngb-alert *ngIf="alert != null" [type]="alert.type" (click)="closeAlert()">
+        {{ alert.message }}
+      </ngb-alert>
 
-      <form>
+      <form [formGroup]="registrationForm" (ngSubmit)="attemptRegistration()" autocomplete="off">
 
-        <app-fancy-input-with-underline 
-          type="text" 
-          placeholder="Username"
-          activeColor="#98ce00">
-        </app-fancy-input-with-underline>
-        <br>
-        <br>
-        <app-fancy-input-with-underline 
-          type="email" 
-          placeholder="E-mail"
-          activeColor="#98ce00">
-        </app-fancy-input-with-underline>
-        <br>
-        <br>
-        <app-fancy-input-with-underline 
-          type="password" 
-          placeholder="Password"
-          activeColor="#98ce00">
-        </app-fancy-input-with-underline>
-        <br>
-        <br>
-        <app-fancy-input-with-underline 
-          type="password" 
-          placeholder="Confirm password"
-          activeColor="#98ce00">
-        </app-fancy-input-with-underline>
-        <br>
-        <br>
+        <div class="input-group">
+          <app-fancy-input-with-underline
+            class="w-100" 
+            type="text" 
+            placeholder="Username"
+            activeColor="#98ce00"
+            formControlName="username">
+          </app-fancy-input-with-underline>
+          <div class="errors" *ngIf="submitted && f.username.errors as e">
+            <p class="input-validation-error" *ngIf="e.required">Username is required</p>
+            <p class="input-validation-error" *ngIf="e.minlength">Username must have at least 4 characters</p>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <app-fancy-input-with-underline 
+            class="w-100"
+            type="email" 
+            placeholder="E-mail"
+            activeColor="#98ce00"
+            formControlName="email">
+          </app-fancy-input-with-underline>
+          <div class="errors" *ngIf="submitted && f.email.errors as e">
+            <p class="input-validation-error" *ngIf="e.required">Email is required</p>
+            <p class="input-validation-error" *ngIf="e.email">Invalid email format</p>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <app-fancy-input-with-underline 
+            class="w-100"
+            type="password" 
+            placeholder="Password"
+            activeColor="#98ce00"
+            formControlName="password">
+          </app-fancy-input-with-underline>
+          <div class="errors" *ngIf="submitted && f.password.errors as e">
+            <p class="input-validation-error" *ngIf="e.required">Password is required</p>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <app-fancy-input-with-underline 
+            class="w-100"
+            type="password" 
+            placeholder="Confirm password"
+            activeColor="#98ce00"
+            formControlName="confirmPassword">
+          </app-fancy-input-with-underline>
+          <div class="errors" *ngIf="submitted && f.confirmPassword.errors as e">
+            <p class="input-validation-error" *ngIf="e.required">Confirming password is required</p>
+            <p class="input-validation-error" *ngIf="e.mustMatch">Passwords do not match</p>
+          </div>
+        </div>
+        
         <button type="submit" class="btn btn-primary">Sign up</button>
-
-        <ul class="under-form-links">
-          <li>Already have an account? <a routerLink="/auth/login">Sign in</a></li>
-        </ul>
       </form>
+      <ul class="under-form-links">
+        <li>Already have an account? <a routerLink="/auth/login">Sign in</a></li>
+      </ul>
     </div>
   </div>
 </div>

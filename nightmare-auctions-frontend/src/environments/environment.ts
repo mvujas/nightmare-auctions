@@ -4,8 +4,9 @@
 
 export const environment = {
   production: false,
-  baseApiUrl: "http://localhost:8070/",
-  apiPrefix: "api/v1/"
+  defaultRedirectionUrl: '/home',
+  baseApiUrl: 'http://localhost:8070/',
+  apiPrefix: 'api/v1/'
 };
 
 /*

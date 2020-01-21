@@ -1,5 +1,11 @@
 <div class="fancy-input">
-  <input type="{{ type }}" name="{{ name }}" id="{{ inputId }}" spellcheck="false">
+  <input
+    type="{{ type }}" 
+    id="{{ inputId }}" 
+    spellcheck="false"
+    (change)="addEvent($event)"
+    [(ngModel)]="textValue"
+    autocomplete="off">
   <label for="{{ inputId }}" class="placeholder">
     {{ placeholder }}
   </label>

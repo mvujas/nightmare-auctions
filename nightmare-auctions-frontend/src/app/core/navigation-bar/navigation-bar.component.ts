@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthenticationService } from '../authentication/authentication.service';
+import { RedirectUrlService } from '../services/redirect-url.service';
 declare var $: any;
 
 @Component({
@@ -9,9 +11,16 @@ declare var $: any;
 })
 export class NavigationBarComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, 
+    private authService: AuthenticationService,
+    private redirectUrlService: RedirectUrlService) { }
+
+  private isUserAuthenticated: boolean;
 
   ngOnInit() {
+    this.authService.isAuthenticated.subscribe(
+      newValue => this.isUserAuthenticated = newValue);
+
     this.checkNavBarColor();
     $(document).ready(() => $(document).scroll(this.checkNavBarColor));
   }
@@ -19,6 +28,11 @@ export class NavigationBarComponent implements OnInit {
   checkNavBarColor() {
     let $nav = $('#main-navigation-bar');
     $nav.toggleClass('scrolled', $(document).scrollTop() > $nav.height());
+  }
+
+  logout() {
+    this.authService.logout();
+    this.redirectUrlService.redirectToUrl(this.router.url); // Enforces authorization
   }
 
 }

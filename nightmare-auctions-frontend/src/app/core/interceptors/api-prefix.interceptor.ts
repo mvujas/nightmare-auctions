@@ -17,6 +17,5 @@ export class ApiPrefixInterceptor implements HttpInterceptor {
         }
         return next.handle(request);
     }
-
-
+    
 }

@@ -12,6 +12,10 @@ export class GreetingService {
     return this.http.get("api/greeting");
   }
 
+  message() {
+    return this.http.get("api/message");
+  }
+
   login(username: string, password: string) {
     return this.http.post("login", {
       username: username,
