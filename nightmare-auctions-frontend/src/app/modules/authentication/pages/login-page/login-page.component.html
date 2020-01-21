@@ -10,9 +10,9 @@
         <!--You're just one step away from getting access to thousands of auctions-->
       </p> 
 
-      <div class="alert alert-danger" role="alert">
-        Incorrect password
-      </div>
+      <ngb-alert *ngIf="alert != null" [type]="alert.type" (click)="closeAlert()">
+        {{ alert.message }}
+      </ngb-alert>
 
       <form [formGroup]="loginForm" (submit)="attemptLogin(loginForm.value)">
 

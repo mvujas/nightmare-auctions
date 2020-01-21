@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '@app/core/authentication/authentication.service';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
+import { RedirectUrlService } from '@app/core/services/redirect-url.service';
 
 @Component({
   selector: 'app-login-page',
@@ -14,15 +16,38 @@ export class LoginPageComponent {
     password: new FormControl(''),
   });
 
-  constructor(private authService: AuthenticationService) { }
+  alert = null;
 
+  params = null;
+
+  constructor(private authService: AuthenticationService, 
+      private redirectUrlService: RedirectUrlService, 
+      private route: ActivatedRoute) {
+    this.route.queryParams.subscribe(params => this.params = params);
+  }
+
+  showErrorMessage(message) {
+    this.alert = {
+      type: 'danger',
+      message: message
+    }
+  }
+
+  closeAlert() {
+    this.alert = null;
+  }
 
   attemptLogin(formValue): void {
-    console.log('Pera!')
     this.authService.login(formValue).subscribe(
-      console.log,
-      console.log
+      this.handleSuccessfulLogin.bind(this),
+      () => this.showErrorMessage('Invalid credentials')
     );
   }
+
+  handleSuccessfulLogin() {
+    this.redirectUrlService.redirectToUrl(this.params['redirectUrl']);
+  }
+
+  
 
 }

@@ -1,21 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, catchError, tap } from 'rxjs/operators';
-import { assertNotNull } from '@angular/compiler/src/output/output_ast';
-import { Subject, Observable } from 'rxjs';
+import { Subject, Observable, BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
 
-  private loggedIn: Subject<boolean> = new Subject<boolean>();
+  private loggedIn: BehaviorSubject<boolean>;
 
   constructor(private http: HttpClient) {
-    this.updateLoggedIn();
+    this.loggedIn = new BehaviorSubject<boolean>(this.token != null);
   }
 
-  private updateLoggedIn(): void {
+  private updateLoggedIn() {
     this.loggedIn.next(this.token != null);
   }
 
@@ -23,7 +22,7 @@ export class AuthenticationService {
     return this.http
             .post("login", credentials, {observe: 'response'})
             .pipe(
-              map(this.handleSuccessfulLogin)
+              map(this.handleSuccessfulLogin.bind(this))
             );
   }
 
@@ -53,7 +52,7 @@ export class AuthenticationService {
     return localStorage.getItem('token');
   }
 
-  public get isAuthentication(): Observable<boolean> {
+  public get isAuthenticated(): Observable<boolean> {
     return this.loggedIn.asObservable();
   }
 
