@@ -2,15 +2,24 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { RegistrationPageComponent } from './pages/registration-page/registration-page.component';
+import { AuthGuard } from '@app/core/guards/auth.guard';
 
 const routes: Routes = [
   {
     path: 'login',
-    component: LoginPageComponent
+    component: LoginPageComponent,
+    canActivate: [AuthGuard],
+    data: {
+      nonAuthorisedOnly: true
+    }
   },
   {
     path: 'register',
-    component: RegistrationPageComponent
+    component: RegistrationPageComponent,
+    canActivate: [AuthGuard],
+    data: {
+      nonAuthorisedOnly: true
+    }
   },
   {
     path: '**',
