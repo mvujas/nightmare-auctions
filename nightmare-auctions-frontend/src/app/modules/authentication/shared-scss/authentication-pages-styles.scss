@@ -52,5 +52,25 @@ ul.under-form-links {
     a {
         font-weight: bold;
     }
-    
+}
+
+
+.input-group {
+    margin-bottom: 16px;
+
+    .errors {
+        color: #800000;
+        font-size: 0.8em;
+        padding-bottom: 0;
+        text-align: left;
+
+        p {
+            padding: 0;
+            margin: 0;
+
+            &::before {
+                content: '* '
+            }
+        }
+    }
 }

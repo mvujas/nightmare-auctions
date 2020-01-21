@@ -41,11 +41,14 @@ export class FancyInputComponent implements OnInit, AfterViewInit, ControlValueA
 
     inputContainer.css('--default-color', this.defaultColor);
     inputContainer.css('--active-color', this.activeColor);
+    
+    $(document).ready(() => this.checkActiveState(input, inputContainer)); 
+    input.on('change focus keyup blur', () => this.checkActiveState(input, inputContainer)); // AUTOFILL SUCKS...
+  }
 
-    input.on('change focus keyup blur', () => {
-      let isActive = input.is(':focus') || input.val() !== '';
-      inputContainer.toggleClass('active-input', isActive)
-    });
+  checkActiveState(input, inputContainer) {
+    let isActive = input.is(':focus') || input.val() !== '';
+    inputContainer.toggleClass('active-input', isActive);
   }
 
 

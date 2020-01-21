@@ -16,8 +16,6 @@ export class LoginPageComponent {
     password: new FormControl(''),
   });
 
-  alert = null;
-
   params = null;
 
   constructor(private authService: AuthenticationService, 
@@ -25,6 +23,8 @@ export class LoginPageComponent {
       private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => this.params = params);
   }
+
+  alert = null;
 
   showErrorMessage(message) {
     this.alert = {

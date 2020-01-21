@@ -4,7 +4,8 @@
     id="{{ inputId }}" 
     spellcheck="false"
     (change)="addEvent($event)"
-    [(ngModel)]="textValue">
+    [(ngModel)]="textValue"
+    autocomplete="off">
   <label for="{{ inputId }}" class="placeholder">
     {{ placeholder }}
   </label>
