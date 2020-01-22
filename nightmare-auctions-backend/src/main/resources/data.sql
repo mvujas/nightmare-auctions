@@ -4,6 +4,7 @@
 delete from user_role;
 delete from user;
 delete from role;
+delete from category;
 
 INSERT INTO role(id, name)
 VALUES (1, 'USER'), 
@@ -17,3 +18,7 @@ INSERT INTO user_role(users_id, roles_id)
 VALUES (2, 1), -- USER to admin
        (2, 2), -- ADMIN to admin
        (1, 1); -- USER to mvujas
+       
+INSERT INTO category(id, name)
+VALUES (1, 'CARS'),
+       (2, 'TECH');

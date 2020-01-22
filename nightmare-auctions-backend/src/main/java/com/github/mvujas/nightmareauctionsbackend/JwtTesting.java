@@ -26,7 +26,7 @@ public class JwtTesting {
 	@Autowired
 	UserRepository userRepo;
 	
-	@PostConstruct
+	//@PostConstruct
 	public void test() {
 		User user = userRepo.findByUsername("mvujas");
 		System.out.println("User: " + user);
