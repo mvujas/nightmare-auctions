@@ -2,20 +2,24 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, catchError, tap } from 'rxjs/operators';
 import { Subject, Observable, BehaviorSubject } from 'rxjs';
+import { UserDetails } from '@app/shared/domain/UserDetails';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
 
-  private loggedIn: BehaviorSubject<boolean>;
+  private userDetails: BehaviorSubject<UserDetails>;
 
   constructor(private http: HttpClient) {
-    this.loggedIn = new BehaviorSubject<boolean>(this.token != null);
+    localStorage.removeItem('token');
+    let storageUserDetails = JSON.parse(localStorage.getItem('userDetails'));
+    this.userDetails = new BehaviorSubject<UserDetails>(storageUserDetails);
   }
 
-  private updateLoggedIn() {
-    this.loggedIn.next(this.token != null);
+  private updateUserDetails(userDetails) {
+    localStorage.setItem('userDetails', JSON.stringify(userDetails));
+    this.userDetails.next(userDetails);
   }
 
   public login(credentials) {
@@ -40,20 +44,21 @@ export class AuthenticationService {
     let token = textTokens[1];
 
     localStorage.setItem('token', token);
-    this.updateLoggedIn();
+
+    this.updateUserDetails({ ...response.body });
   }
 
   public logout(): void {
     localStorage.removeItem('token');
-    this.updateLoggedIn();
+    this.updateUserDetails(null);
   }
 
   public get token(): string {
     return localStorage.getItem('token');
   }
 
-  public get isAuthenticated(): Observable<boolean> {
-    return this.loggedIn.asObservable();
+  public get basicUserDetails(): Observable<UserDetails> {
+    return this.userDetails.asObservable();
   }
 
 }

@@ -13,7 +13,7 @@
       </ul>
       <ul class="navbar-nav ml-auto">
         
-        <ng-template [ngIf]="!isUserAuthenticated" [ngIfElse]="loggedIn">
+        <ng-template [ngIf]="userDetails === null" [ngIfElse]="loggedIn">
           <li class="nav-item">
             <div id="navbar-account-group">
               <p class="navbar-btn">
@@ -29,7 +29,7 @@
         <ng-template #loggedIn>
           <li class="nav-item dropdown" id="user-account-actions-dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              pera12345
+              {{ userDetails.username }}
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
               <a class="dropdown-item" href="#">

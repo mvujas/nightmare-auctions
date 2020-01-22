@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../authentication/authentication.service';
 import { RedirectUrlService } from '../services/redirect-url.service';
+import { UserDetails } from '@app/shared/domain/UserDetails';
 declare var $: any;
 
 @Component({
@@ -15,11 +16,11 @@ export class NavigationBarComponent implements OnInit {
     private authService: AuthenticationService,
     private redirectUrlService: RedirectUrlService) { }
 
-  private isUserAuthenticated: boolean;
+  private userDetails: UserDetails;
 
   ngOnInit() {
-    this.authService.isAuthenticated.subscribe(
-      newValue => this.isUserAuthenticated = newValue);
+    this.authService.basicUserDetails.subscribe(
+      newUserDetails => this.userDetails = newUserDetails);
 
     this.checkNavBarColor();
     $(document).ready(() => $(document).scroll(this.checkNavBarColor));
