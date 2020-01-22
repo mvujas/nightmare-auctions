@@ -9,13 +9,13 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.github.mvujas.nightmareauctionsbackend.filters.JwtAuthenticationFilter;
 import com.github.mvujas.nightmareauctionsbackend.filters.JwtAuthorizationFilter;
 import com.github.mvujas.nightmareauctionsbackend.managers.jwt.JwtUsernameManager;
+import com.github.mvujas.nightmareauctionsbackend.services.UserService;
 
 @Configuration
 @EnableWebSecurity
@@ -25,7 +25,7 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
 	private JwtUsernameManager jwtManager;
 	
 	@Autowired
-	private UserDetailsService userDetailsService;
+	private UserService userService;
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -37,7 +37,7 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
 				.anyRequest().authenticated()
 			.and()
 			.addFilter(new JwtAuthenticationFilter(authenticationManager(), jwtManager))
-			.addFilter(new JwtAuthorizationFilter(authenticationManager(), jwtManager));
+			.addFilter(new JwtAuthorizationFilter(authenticationManager(), jwtManager, userService));
 //			.formLogin()
 //			.permitAll()
 //			.and()
@@ -46,7 +46,7 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userDetailsService);
+		auth.userDetailsService(userService);
 	}
 	
 	@Bean

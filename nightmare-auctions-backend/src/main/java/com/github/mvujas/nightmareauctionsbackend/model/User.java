@@ -1,5 +1,6 @@
 package com.github.mvujas.nightmareauctionsbackend.model;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -11,8 +12,16 @@ import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 @Entity(name = "user")
-public class User {
+public class User implements UserDetails {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3912356527437407900L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -87,5 +96,35 @@ public class User {
 		return "User [id=" + id + ", username=" + username + ", email=" + email + ", password=" + password + ", roles="
 				+ roles + "]";
 	}
+
+	
+	// UserDetails methods beginning
+	
+		@Override
+		public Collection<? extends GrantedAuthority> getAuthorities() {
+			return roles;
+		}
+	
+		@Override
+		public boolean isAccountNonExpired() {
+			return true;
+		}
+	
+		@Override
+		public boolean isAccountNonLocked() {
+			return true;
+		}
+	
+		@Override
+		public boolean isCredentialsNonExpired() {
+			return true;
+		}
+	
+		@Override
+		public boolean isEnabled() {
+			return true;
+		}
+	
+	// UserDetails methods end
 
 }

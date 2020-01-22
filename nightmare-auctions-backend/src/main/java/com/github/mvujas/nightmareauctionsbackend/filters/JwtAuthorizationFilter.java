@@ -11,19 +11,25 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import com.github.mvujas.nightmareauctionsbackend.managers.jwt.JwtUsernameManager;
+import com.github.mvujas.nightmareauctionsbackend.services.UserService;
 
 
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 	
 	private JwtUsernameManager jwtManager;
+	private UserService userService;
 	
 	public JwtAuthorizationFilter(
-			AuthenticationManager authenticationManager, JwtUsernameManager jwtManager) {
+			AuthenticationManager authenticationManager, 
+			JwtUsernameManager jwtManager, 
+			UserService userService) {
 		super(authenticationManager);
 		this.jwtManager = jwtManager;
+		this.userService = userService;
 	}
 
 	@Override
@@ -40,11 +46,11 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 	public Authentication getAuthenticationObject(HttpServletRequest request) {
 		String username = jwtManager.getUsernameFromRequestHeader(request);
 		
-		// TODO: get user from database when you implement entities and repositories
+		UserDetails user = userService.loadUserByUsername(username);
 		
 		UsernamePasswordAuthenticationToken authenticationToken = 
 				new UsernamePasswordAuthenticationToken(
-						username, null, null);
+						user.getUsername(), null, user.getAuthorities());
 		
 		return authenticationToken;
 	}

@@ -7,11 +7,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.github.mvujas.nightmareauctionsbackend.model.User;
-import com.github.mvujas.nightmareauctionsbackend.model.domain.UserDetailsImpl;
 import com.github.mvujas.nightmareauctionsbackend.repositories.UserRepository;
 
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class UserService implements UserDetailsService {
 
 	@Autowired
 	private UserRepository userRepo;
@@ -26,7 +25,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 					"User under given username doesn't exists");
 		}
 		
-		return new UserDetailsImpl(user);
+		return user;
 	}
 
 }
