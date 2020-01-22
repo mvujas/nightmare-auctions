@@ -6,6 +6,18 @@ public class SearchParameters {
 	private String categoryName;
 	private Integer minimumPrice, maximumPrice;
 	
+	public SearchParameters() {
+		super();
+	}
+	
+	public SearchParameters(String name, String categoryName, Integer minimumPrice, Integer maximumPrice) {
+		super();
+		this.name = name;
+		this.categoryName = categoryName;
+		this.minimumPrice = minimumPrice;
+		this.maximumPrice = maximumPrice;
+	}
+	
 	public String getName() {
 		return name;
 	}

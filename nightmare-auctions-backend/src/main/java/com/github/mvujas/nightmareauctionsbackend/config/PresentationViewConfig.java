@@ -11,7 +11,7 @@ import com.github.mvujas.nightmareauctionsbackend.serializers.PageSerializer;
 
 @Configuration
 public class PresentationViewConfig {
-
+	
 	@Bean
 	public Module jacksonPageWithJsonViewModule() {
 		SimpleModule module = new SimpleModule("jackson-page-with-jsonview", Version.unknownVersion());

@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
@@ -25,8 +26,18 @@ public class ItemRestController {
 	@GetMapping
 	@JsonView(ItemPresentationView.SummaryView.class)
 	public Page<Item> getAllItems(
-			@RequestBody(required = false) SearchParameters searchParams,
+			@RequestParam(required = false) String name,
+			@RequestParam(required = false) String categoryName,
+			@RequestParam(required = false) Integer minimumPrice,
+			@RequestParam(required = false) Integer maximumPrice,
 			Pageable pageable) {
+		
+		SearchParameters searchParams = new SearchParameters(
+				name, 
+				categoryName, 
+				minimumPrice, 
+				maximumPrice);
+	
 		return itemService.getAll(
 				new ItemAllSearchSpecification(searchParams),
 				pageable);
