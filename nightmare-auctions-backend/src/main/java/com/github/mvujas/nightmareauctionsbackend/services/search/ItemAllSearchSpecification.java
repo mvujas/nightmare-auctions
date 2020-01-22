@@ -44,15 +44,15 @@ public class ItemAllSearchSpecification implements Specification<Item> {
 		filtersToPerform = new LinkedList<>();
 		filtersToPerform.add(this::filterMinimumPrice);
 		filtersToPerform.add(this::filterMaximumPrice);
+		filtersToPerform.add(this::filterCategory);
+		filtersToPerform.add(this::filterName);
 	}
 
 	@Override
 	public Predicate toPredicate(
 			Root<Item> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
-		System.out.println(searchParameters);
-
 		Predicate[] predicates = 
-				filtersToPerform
+			filtersToPerform
 				.stream()
 				.map(check -> check.apply(root, query, builder))
 				.filter(Objects::nonNull)
@@ -60,8 +60,6 @@ public class ItemAllSearchSpecification implements Specification<Item> {
 		
 		return builder.and(predicates);
 	}
-	
-	
 	
 	private Predicate filterMinimumPrice(
 			Root<Item> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
@@ -83,6 +81,35 @@ public class ItemAllSearchSpecification implements Specification<Item> {
 					root.get("startingPrice"), maximumPrice);
 		}
 		return predicate;
+	}
+	
+	private Predicate filterCategory(
+			Root<Item> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
+		String categoryName = searchParameters.getCategoryName();
+		Predicate predicate = null;
+		if(categoryName != null) {
+			predicate = builder.equal(
+					root.join("category").get("name"), 
+					categoryName);
+		}
+		return predicate;
+	}
+	
+	private Predicate filterName(
+			Root<Item> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
+		String name = searchParameters.getName();
+		Predicate predicate = null;
+		if(name != null) {
+			predicate = builder
+					.like(
+						builder.lower(root.get("name")), 
+						containsLowerCase(name));
+		}
+		return predicate;
+	}
+	
+	private String containsLowerCase(String searchField) {
+	    return "%" + searchField.toLowerCase() + "%";
 	}
 
 }
