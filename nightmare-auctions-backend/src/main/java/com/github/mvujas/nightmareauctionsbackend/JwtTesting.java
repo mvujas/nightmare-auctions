@@ -3,6 +3,7 @@ package com.github.mvujas.nightmareauctionsbackend;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -25,6 +26,11 @@ public class JwtTesting {
 	
 	@Autowired
 	UserRepository userRepo;
+	
+	// Method security pre/post authorize language
+	// @PreAuthorize("not(isAuthenticated())")
+	// or/and = binary operators
+	// hasRole('ROLE_ADMIN')
 	
 	//@PostConstruct
 	public void test() {
