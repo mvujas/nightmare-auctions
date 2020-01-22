@@ -1,6 +1,8 @@
 package com.github.mvujas.nightmareauctionsbackend.filters;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -16,6 +18,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.mvujas.nightmareauctionsbackend.managers.jwt.JwtUsernameManager;
+import com.github.mvujas.nightmareauctionsbackend.model.Role;
+import com.github.mvujas.nightmareauctionsbackend.model.User;
 
 class LoginData {
 	private String username;
@@ -35,6 +39,32 @@ class LoginData {
 	@SuppressWarnings("unused")
 	public void setPassword(String password) {
 		this.password = password;
+	}
+}
+
+class LoginResponseBody {
+	private String username;
+	private List<String> roles;
+	
+	public LoginResponseBody(User user) {
+		if(user == null) {
+			throw new NullPointerException(
+					"User for response cannot be null");
+		}
+		this.username = user.getUsername();
+		this.roles = user
+				.getRoles()
+				.stream()
+				.map(Role::getName)
+				.collect(Collectors.toList());
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public List<String> getRoles() {
+		return roles;
 	}
 }
 
@@ -76,10 +106,18 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
 			Authentication authResult) throws IOException, ServletException {
 		
-		UserDetails principal = (UserDetails)authResult.getPrincipal();
+		User principal = (User)authResult.getPrincipal();
 		
 		jwtManager.setAuthorizationHeaderUsingUserId(
 				response, principal.getUsername());
+		
+		// TODO: Refactor eventually
+		String body = new ObjectMapper()
+				.writeValueAsString(new LoginResponseBody(principal));
+		
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().append(body).flush();
 	}
 
 }
