@@ -1,0 +1,15 @@
+@import "src/assets/scss/bootstrap-utils";
+@import "src/assets/scss/partials/navbar.vars";
+
+.all-items-ads-list {
+    padding: 10px 0 25px 0;
+}
+
+.sticky-search {
+    position: sticky;
+    top: $global-navbar-height + 15px;
+
+    @include media-breakpoint-down(md) {
+        margin-bottom: 15px;
+    }
+}

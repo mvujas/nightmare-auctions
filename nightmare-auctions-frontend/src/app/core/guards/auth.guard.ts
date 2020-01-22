@@ -3,6 +3,7 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from
 import { AuthenticationService } from '../authentication/authentication.service';
 import { take } from 'rxjs/operators';
 import { Statement } from '@angular/compiler';
+import { UserDetails } from '@app/shared/domain/UserDetails';
 
 @Injectable({
     providedIn: 'root'
@@ -11,21 +12,21 @@ export class AuthGuard implements CanActivate {
     
     constructor(private router: Router, private authService: AuthenticationService) {}
     
-    readonly routeChecks:((ActivatedRouteSnapshot, RouterStateSnapshot, boolean) => boolean)[] = [
+    readonly routeChecks:((ActivatedRouteSnapshot, RouterStateSnapshot, UserDetails) => boolean)[] = [
         this.checkForLoggedAccessBlock,
         this.checkForNonLoggedAccessBlock
     ];
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        let isUserLoggedIn: boolean;
-        this.authService.isAuthenticated
+        let userDetails: UserDetails;
+        this.authService.basicUserDetails
             .pipe(take(1))
-            .subscribe(value => isUserLoggedIn = value);
+            .subscribe(value => userDetails = value);
 
         let canUserAccess: boolean = true;
         for(let i: number = 0; i < this.routeChecks.length && canUserAccess; i++) {
             let routeCheckFunction = this.routeChecks[i].bind(this);
-            let isUserAllowedForThisCheck = routeCheckFunction(route, state, isUserLoggedIn);
+            let isUserAllowedForThisCheck = routeCheckFunction(route, state, userDetails);
             canUserAccess = canUserAccess && isUserAllowedForThisCheck;
         }
 
@@ -35,10 +36,14 @@ export class AuthGuard implements CanActivate {
     private checkForLoggedAccessBlock(
             route: ActivatedRouteSnapshot, 
             state: RouterStateSnapshot, 
-            isUserLoggedIn: boolean) : boolean {
+            userDetails: UserDetails) : boolean {
+        if(route.data.nonAuthorisedOnly !== true) {
+            return true;
+        }
 
-        let isBlocked: boolean = 
-            isUserLoggedIn && route.data.nonAuthorisedOnly === true;
+        let isUserLoggedIn = userDetails !== null;
+
+        let isBlocked: boolean = isUserLoggedIn;
 
         if(isBlocked) {
             this.router.navigate(['/home']);
@@ -49,10 +54,14 @@ export class AuthGuard implements CanActivate {
     private checkForNonLoggedAccessBlock(
         route: ActivatedRouteSnapshot, 
         state: RouterStateSnapshot, 
-        isUserLoggedIn: boolean) : boolean {
+        userDetails: UserDetails) : boolean {
+    if(route.data.authorisedOnly !== true) {
+        return true;
+    }
 
-    let isBlocked: boolean = 
-        !isUserLoggedIn && route.data.authorisedOnly === true;
+    let isUserLoggedIn = userDetails !== null;
+
+    let isBlocked: boolean = !isUserLoggedIn;
 
     if(isBlocked) {
         this.router.navigate(['/auth/login'], {
