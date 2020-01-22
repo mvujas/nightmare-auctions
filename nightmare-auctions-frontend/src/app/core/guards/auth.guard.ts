@@ -37,10 +37,13 @@ export class AuthGuard implements CanActivate {
             route: ActivatedRouteSnapshot, 
             state: RouterStateSnapshot, 
             userDetails: UserDetails) : boolean {
+        if(route.data.nonAuthorisedOnly !== true) {
+            return true;
+        }
+
         let isUserLoggedIn = userDetails !== null;
 
-        let isBlocked: boolean = 
-            isUserLoggedIn && route.data.nonAuthorisedOnly === true;
+        let isBlocked: boolean = isUserLoggedIn;
 
         if(isBlocked) {
             this.router.navigate(['/home']);
@@ -52,10 +55,13 @@ export class AuthGuard implements CanActivate {
         route: ActivatedRouteSnapshot, 
         state: RouterStateSnapshot, 
         userDetails: UserDetails) : boolean {
+    if(route.data.authorisedOnly !== true) {
+        return true;
+    }
+
     let isUserLoggedIn = userDetails !== null;
 
-    let isBlocked: boolean = 
-        !isUserLoggedIn && route.data.authorisedOnly === true;
+    let isBlocked: boolean = !isUserLoggedIn;
 
     if(isBlocked) {
         this.router.navigate(['/auth/login'], {
