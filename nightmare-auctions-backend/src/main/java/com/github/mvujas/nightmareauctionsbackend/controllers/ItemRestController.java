@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.github.mvujas.nightmareauctionsbackend.model.Item;
+import com.github.mvujas.nightmareauctionsbackend.presentationview.ItemPresentationView;
 import com.github.mvujas.nightmareauctionsbackend.services.ItemService;
 import com.github.mvujas.nightmareauctionsbackend.services.search.ItemAllSearchSpecification;
 import com.github.mvujas.nightmareauctionsbackend.services.search.SearchParameters;
@@ -21,6 +23,7 @@ public class ItemRestController {
 	private ItemService itemService;
 	
 	@GetMapping
+	@JsonView(ItemPresentationView.SummaryView.class)
 	public Page<Item> getAllItems(
 			@RequestBody(required = false) SearchParameters searchParams,
 			Pageable pageable) {

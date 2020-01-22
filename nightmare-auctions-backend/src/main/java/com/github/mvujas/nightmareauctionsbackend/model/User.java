@@ -1,5 +1,6 @@
 package com.github.mvujas.nightmareauctionsbackend.model;
 
+import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.List;
 
@@ -12,13 +13,19 @@ import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.Table;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.github.mvujas.nightmareauctionsbackend.presentationview.ItemPresentationView;
+import com.github.mvujas.nightmareauctionsbackend.util.TimeUtils;
 
-@Entity(name = "user")
+@Entity
+@Table(name = "user")
 @JsonIgnoreProperties(value = {
 	"password"
 })
@@ -31,9 +38,11 @@ public class User implements UserDetails {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonView(ItemPresentationView.SummaryView.class)
 	private int id;
 	
 	@Column(unique = true, nullable = false)
+	@JsonView(ItemPresentationView.SummaryView.class)
 	private String username;
 
 	@Column(nullable = false)
@@ -42,6 +51,9 @@ public class User implements UserDetails {
 	@Column(nullable = false)
 	private String password;
 	
+	@Column(updatable = false, nullable = false)
+	private Timestamp registrationTime;
+	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "user_role")
 	private List<Role> roles;
@@ -49,6 +61,13 @@ public class User implements UserDetails {
 	@OneToMany(mappedBy = "author")
 	private List<Item> items;
 
+	
+	@PrePersist
+	protected void onCreate() {
+		registrationTime = TimeUtils.getCurrentTimestamp();
+	}
+	
+	
 	public User() {
 		super();
 	}

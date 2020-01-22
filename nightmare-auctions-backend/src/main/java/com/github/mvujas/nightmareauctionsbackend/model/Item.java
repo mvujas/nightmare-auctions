@@ -1,35 +1,58 @@
 package com.github.mvujas.nightmareauctionsbackend.model;
 
+import java.sql.Timestamp;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.github.mvujas.nightmareauctionsbackend.presentationview.ItemPresentationView;
+import com.github.mvujas.nightmareauctionsbackend.util.TimeUtils;
 
-@Entity(name = "item")
+@Entity
+@Table(name = "item")
 public class Item {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonView(ItemPresentationView.SummaryView.class)
 	private int id;
 	
 	@Column(unique = true, nullable = false)
+	@JsonView(ItemPresentationView.SummaryView.class)
 	private String name;
 	
 	@Column(nullable = false)
 	private int startingPrice;
 	
+	@Column(nullable = false, updatable = false)
+	@JsonView(ItemPresentationView.SummaryView.class)
+	private Timestamp postingTime;
+	
 	@ManyToOne(optional = false)
     @JsonManagedReference
+	@JsonView(ItemPresentationView.SummaryView.class)
 	private User author;
 
 	@ManyToOne(optional = false)
     @JsonManagedReference
+	@JsonView(ItemPresentationView.SummaryView.class)
 	private Category category;
 
+	
+	@PrePersist
+	protected void onCreate() {
+		postingTime = TimeUtils.getCurrentTimestamp();
+	}
+	
+	
 	public Item(String name, int startingPrice, Category category) {
 		super();
 		this.name = name;
@@ -72,6 +95,23 @@ public class Item {
 	public void setCategory(Category category) {
 		this.category = category;
 	}
+	
+	public Timestamp getPostingTime() {
+		return postingTime;
+	}
+
+	public void setPostingTime(Timestamp postingTime) {
+		this.postingTime = postingTime;
+	}
+
+	public User getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(User author) {
+		this.author = author;
+	}
+
 
 	@Override
 	public String toString() {

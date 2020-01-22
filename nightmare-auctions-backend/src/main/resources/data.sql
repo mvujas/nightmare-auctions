@@ -11,9 +11,9 @@ INSERT INTO role(id, name)
 VALUES (1, 'USER'), 
        (2, 'ADMIN');
        
-INSERT INTO user(id, username, email, password)
-VALUES (1, 'mvujas', 'pera@example.com', '$2a$10$DGLg18J2x5HELp88hQrVVua7a5svZzBGD44IFjD76YJBDu/cT/TCq'), -- password: maliPerica
-       (2, 'admin', 'admin@example.com', '$2a$10$RaAr5cYGq6.NSc2nODLgYeDsgWfalcJuVJyQg.nQPk.cRPJkPE4cq'); -- password: admin123
+INSERT INTO user(id, username, email, password, registration_time)
+VALUES (1, 'mvujas', 'pera@example.com', '$2a$10$DGLg18J2x5HELp88hQrVVua7a5svZzBGD44IFjD76YJBDu/cT/TCq', now()), -- password: maliPerica
+       (2, 'admin', 'admin@example.com', '$2a$10$RaAr5cYGq6.NSc2nODLgYeDsgWfalcJuVJyQg.nQPk.cRPJkPE4cq', now()); -- password: admin123
        
 INSERT INTO user_role(users_id, roles_id)
 VALUES (2, 1), -- USER to admin
@@ -24,7 +24,7 @@ INSERT INTO category(id, name)
 VALUES (1, 'CARS'),
        (2, 'TECH');
        
-INSERT INTO item(id, name, starting_price, category_id, author_id)
-VALUES (1, 'Audi Q5 2.0 tdi 190 Quatt At 2015. godište', 18900, 1, 1), -- CATEGORY: CARS, AUTHOR: mvujas
-       (2, 'Peugeot 2008 // Feline Titane // 2013. godište', 8200, 1, 1), -- CATEGORY: CARS, AUTHOR: mvujas
-       (3, 'Renault Captur INTENS TCE 100 2019. godište', 18800, 1, 2); -- CATEGORY: CARS, AUTHOR: admin
+INSERT INTO item(id, name, starting_price, category_id, author_id, posting_time)
+VALUES (1, 'Audi Q5 2.0 tdi 190 Quatt At 2015. godište', 18900, 1, 1, now()), -- CATEGORY: CARS, AUTHOR: mvujas
+       (2, 'Peugeot 2008 // Feline Titane // 2013. godište', 8200, 1, 1, now()), -- CATEGORY: CARS, AUTHOR: mvujas
+       (3, 'Renault Captur INTENS TCE 100 2019. godište', 18800, 1, 2, now()); -- CATEGORY: CARS, AUTHOR: admin

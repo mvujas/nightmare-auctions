@@ -8,17 +8,23 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.github.mvujas.nightmareauctionsbackend.presentationview.ItemPresentationView;
 
-@Entity(name = "category")
+@Entity
+@Table(name = "category")
 public class Category {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonView(ItemPresentationView.SummaryView.class)
 	private int id;
 	
 	@Column(unique = true, nullable = false)
+	@JsonView(ItemPresentationView.SummaryView.class)
 	private String name;
 	
 	@OneToMany(mappedBy = "category")
