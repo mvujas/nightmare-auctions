@@ -4,6 +4,7 @@
 delete from user_role;
 delete from user;
 delete from role;
+delete from item;
 delete from category;
 
 INSERT INTO role(id, name)
@@ -22,3 +23,8 @@ VALUES (2, 1), -- USER to admin
 INSERT INTO category(id, name)
 VALUES (1, 'CARS'),
        (2, 'TECH');
+       
+INSERT INTO item(id, name, starting_price, category_id)
+VALUES (1, 'Audi Q5 2.0 tdi 190 Quatt At 2015. godište', 18900, 1), -- CATEGORY: CARS
+       (2, 'Peugeot 2008 // Feline Titane // 2013. godište', 8200, 1), -- CATEGORY: CARS
+       (3, 'Renault Captur INTENS TCE 100 2019. godište', 18800, 1); -- CATEGORY: CARS

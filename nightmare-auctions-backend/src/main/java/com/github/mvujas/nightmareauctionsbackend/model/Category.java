@@ -1,10 +1,13 @@
 package com.github.mvujas.nightmareauctionsbackend.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity(name = "category")
 public class Category {
@@ -15,6 +18,9 @@ public class Category {
 	
 	@Column(unique = true, nullable = false)
 	private String name;
+	
+	@OneToMany(mappedBy = "category")
+	private List<Item> items;
 	
 	public Category(String name) {
 		super();
@@ -39,6 +45,14 @@ public class Category {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public List<Item> getItems() {
+		return items;
+	}
+
+	public void setItems(List<Item> items) {
+		this.items = items;
 	}
 
 	@Override
