@@ -14,7 +14,7 @@ import com.github.mvujas.nightmareauctionsbackend.services.search.ItemAllSearchS
 import com.github.mvujas.nightmareauctionsbackend.services.search.SearchParameters;
 
 @RestController
-@RequestMapping("${api.url}/items")
+@RequestMapping("${api.url}/item")
 public class ItemRestController {
 
 	@Autowired

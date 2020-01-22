@@ -6,8 +6,9 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 
 @SpringBootApplication
 @EnableGlobalMethodSecurity(
-		securedEnabled = true,
-		prePostEnabled = true)
+	prePostEnabled = true, 
+	securedEnabled = true, 
+	jsr250Enabled = true)
 public class NightmareAuctionsBackendApplication {
 
 	public static void main(String[] args) {

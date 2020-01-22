@@ -34,7 +34,7 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
 			.and()
 			.csrf().disable()
 			.authorizeRequests()
-				.anyRequest().authenticated()
+				.antMatchers("/**").permitAll()
 			.and()
 			.addFilter(new JwtAuthenticationFilter(authenticationManager(), jwtManager))
 			.addFilter(new JwtAuthorizationFilter(authenticationManager(), jwtManager, userService));

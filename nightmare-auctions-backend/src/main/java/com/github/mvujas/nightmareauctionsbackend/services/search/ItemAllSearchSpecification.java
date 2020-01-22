@@ -51,12 +51,16 @@ public class ItemAllSearchSpecification implements Specification<Item> {
 	@Override
 	public Predicate toPredicate(
 			Root<Item> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
-		Predicate[] predicates = 
-			filtersToPerform
-				.stream()
-				.map(check -> check.apply(root, query, builder))
-				.filter(Objects::nonNull)
-				.toArray(Predicate[]::new);
+		Predicate[] predicates = new Predicate[0];
+		
+		if(searchParameters != null) {
+			predicates = 
+				filtersToPerform
+					.stream()
+					.map(check -> check.apply(root, query, builder))
+					.filter(Objects::nonNull)
+					.toArray(Predicate[]::new);
+		}
 		
 		return builder.and(predicates);
 	}

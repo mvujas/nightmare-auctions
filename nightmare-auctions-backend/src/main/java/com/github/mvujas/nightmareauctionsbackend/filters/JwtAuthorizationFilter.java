@@ -14,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
+import com.github.mvujas.nightmareauctionsbackend.managers.jwt.IllegalJsonWebTokenException;
 import com.github.mvujas.nightmareauctionsbackend.managers.jwt.JwtUsernameManager;
 import com.github.mvujas.nightmareauctionsbackend.services.UserService;
 
@@ -37,13 +38,17 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 			HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		
-		Authentication authentication = getAuthenticationObject(request);
-		SecurityContextHolder.getContext().setAuthentication(authentication);
+		try {
+			Authentication authentication = getAuthenticationObject(request);
+			SecurityContextHolder.getContext().setAuthentication(authentication);
+		}
+		catch(IllegalJsonWebTokenException e) {}
 
 		chain.doFilter(request, response);
 	}
 	
-	public Authentication getAuthenticationObject(HttpServletRequest request) {
+	public Authentication getAuthenticationObject(HttpServletRequest request)
+			throws IllegalJsonWebTokenException {
 		String username = jwtManager.getUsernameFromRequestHeader(request);
 		
 		UserDetails user = userService.loadUserByUsername(username);
