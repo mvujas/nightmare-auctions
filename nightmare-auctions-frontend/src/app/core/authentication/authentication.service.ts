@@ -2,19 +2,19 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, catchError, tap } from 'rxjs/operators';
 import { Subject, Observable, BehaviorSubject } from 'rxjs';
-import { UserDetails } from '@app/shared/domain/UserDetails';
+import { UserAuthHolder } from '@app/shared/domain/user-auth-holder';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
 
-  private userDetails: BehaviorSubject<UserDetails>;
+  private userDetails: BehaviorSubject<UserAuthHolder>;
 
   constructor(private http: HttpClient) {
     localStorage.removeItem('token');
     let storageUserDetails = JSON.parse(localStorage.getItem('userDetails'));
-    this.userDetails = new BehaviorSubject<UserDetails>(storageUserDetails);
+    this.userDetails = new BehaviorSubject<UserAuthHolder>(storageUserDetails);
   }
 
   private updateUserDetails(userDetails) {
@@ -57,7 +57,7 @@ export class AuthenticationService {
     return localStorage.getItem('token');
   }
 
-  public get basicUserDetails(): Observable<UserDetails> {
+  public get basicUserDetails(): Observable<UserAuthHolder> {
     return this.userDetails.asObservable();
   }
 

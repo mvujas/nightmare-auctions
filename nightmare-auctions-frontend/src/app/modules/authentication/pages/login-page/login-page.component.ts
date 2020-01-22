@@ -11,7 +11,7 @@ import { RedirectUrlService } from '@app/core/services/redirect-url.service';
 })
 export class LoginPageComponent {
 
-  private loginForm = new FormGroup({
+  loginForm = new FormGroup({
     username: new FormControl(''),
     password: new FormControl(''),
   });

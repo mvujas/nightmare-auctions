@@ -1,4 +1,4 @@
-export interface UserDetails {
+export interface UserAuthHolder {
     username: string;
     roles: string[];
 }

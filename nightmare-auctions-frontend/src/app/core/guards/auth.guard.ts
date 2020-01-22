@@ -3,7 +3,7 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from
 import { AuthenticationService } from '../authentication/authentication.service';
 import { take } from 'rxjs/operators';
 import { Statement } from '@angular/compiler';
-import { UserDetails } from '@app/shared/domain/UserDetails';
+import { UserAuthHolder } from '@app/shared/domain/user-auth-holder';
 
 @Injectable({
     providedIn: 'root'
@@ -18,7 +18,7 @@ export class AuthGuard implements CanActivate {
     ];
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        let userDetails: UserDetails;
+        let userDetails: UserAuthHolder;
         this.authService.basicUserDetails
             .pipe(take(1))
             .subscribe(value => userDetails = value);
@@ -36,7 +36,7 @@ export class AuthGuard implements CanActivate {
     private checkForLoggedAccessBlock(
             route: ActivatedRouteSnapshot, 
             state: RouterStateSnapshot, 
-            userDetails: UserDetails) : boolean {
+            userDetails: UserAuthHolder) : boolean {
         if(route.data.nonAuthorisedOnly !== true) {
             return true;
         }
@@ -54,7 +54,7 @@ export class AuthGuard implements CanActivate {
     private checkForNonLoggedAccessBlock(
         route: ActivatedRouteSnapshot, 
         state: RouterStateSnapshot, 
-        userDetails: UserDetails) : boolean {
+        userDetails: UserAuthHolder) : boolean {
     if(route.data.authorisedOnly !== true) {
         return true;
     }
