@@ -21,6 +21,10 @@ public class Item {
 	
 	@Column(nullable = false)
 	private int startingPrice;
+	
+	@ManyToOne(optional = false)
+    @JsonManagedReference
+	private User author;
 
 	@ManyToOne(optional = false)
     @JsonManagedReference

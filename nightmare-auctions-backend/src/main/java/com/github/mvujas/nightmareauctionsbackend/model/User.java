@@ -11,11 +11,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity(name = "user")
+@JsonIgnoreProperties(value = {
+	"password"
+})
 public class User implements UserDetails {
 
 	/**
@@ -39,6 +45,9 @@ public class User implements UserDetails {
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "user_role")
 	private List<Role> roles;
+	
+	@OneToMany(mappedBy = "author")
+	private List<Item> items;
 
 	public User() {
 		super();
