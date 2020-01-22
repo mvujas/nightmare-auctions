@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../authentication/authentication.service';
 import { RedirectUrlService } from '../services/redirect-url.service';
-import { UserDetails } from '@app/shared/domain/UserDetails';
+import { UserAuthHolder } from '@app/shared/domain/user-auth-holder';
 declare var $: any;
 
 @Component({
@@ -16,7 +16,7 @@ export class NavigationBarComponent implements OnInit {
     private authService: AuthenticationService,
     private redirectUrlService: RedirectUrlService) { }
 
-  private userDetails: UserDetails;
+  private userDetails: UserAuthHolder;
 
   ngOnInit() {
     this.authService.basicUserDetails.subscribe(
