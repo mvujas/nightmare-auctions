@@ -14,25 +14,26 @@
         <div class="col col-12 no-padding">
           <label for="searchCategory">Category</label><br>
           <select class="form-control" formControlName="category" id="searchCategory">
-            <option value="10">All</option>
-            <option value="25">Cars</option>
+            <option value="">All</option>
+            <option value="CARS">Cars</option>
           </select>
         </div>
 
         <div class="col col-12 no-padding">
           <label for="searchSortCriteria">Sort by</label><br>
           <select class="form-control" formControlName="sortCriteria" id="searchSortCriteria">
-            <option value="10">Name</option>
-            <option value="25">Price</option>
-            <option value="50">Number of bids</option>
+            <option value="">Default</option>
+            <option value="name">Name</option>
+            <option value="startingPrice">Price</option>
+            <option value="numberOfBids">Number of bids</option>
           </select>
         </div>
 
         <div class="col col-12 no-padding">
           <label for="searchSortStyle">Sort style</label><br>
           <select class="form-control" formControlName="sortStyle" id="searchSortStyle">
-            <option value="10">Ascending</option>
-            <option value="25">Descending</option>
+            <option value="asc">Ascending</option>
+            <option value="desc">Descending</option>
           </select>
         </div>
 
@@ -70,9 +71,9 @@
 
         <div class="col col-6 two-part-row-group-item">
           <select class="form-control" formControlName="pageNumber" id="searchPageNumber">
-            <option value="10">10</option>
-            <option value="25">25</option>
-            <option value="50">50</option>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
           </select>
         </div>
 
