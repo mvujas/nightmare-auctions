@@ -11,12 +11,12 @@ import { RedirectUrlService } from '@app/core/services/redirect-url.service';
 })
 export class LoginPageComponent {
 
-  loginForm = new FormGroup({
+  private loginForm = new FormGroup({
     username: new FormControl(''),
     password: new FormControl(''),
   });
 
-  params = null;
+  private params = null;
 
   constructor(private authService: AuthenticationService, 
       private redirectUrlService: RedirectUrlService, 
@@ -47,7 +47,5 @@ export class LoginPageComponent {
   handleSuccessfulLogin() {
     this.redirectUrlService.redirectToUrl(this.params['redirectUrl']);
   }
-
-  
 
 }
