@@ -5,6 +5,4 @@ export interface SearchItemsValueHolder {
     sortStyle: string;
     minimumPrice: number;
     maximumPrice: number;
-    itemsPerPage: number;
-    pageNumber: number;
 }

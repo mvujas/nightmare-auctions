@@ -8,24 +8,19 @@
     </div>
   
     <div class="col col-12 col-lg-8 col-xl-9">
-
-      <!--<div class="text-center" style="padding: 50px 0;" #loader>
-        <div class="spinner-border" role="status">
-          <span class="sr-only">Loading...</span>
-        </div>
-      </div>-->
       
-      
-      <div class="row" *ngIf="itemsPage != null; else loader">
+      <ng-container *ngIf="items != null; else loader">
+        <div class="row">
         
-        <app-list-item 
-          class="col col-12 col-lg-4 col-xl-3 col-sm-6" 
-          *ngFor="let item of itemsPage.content"
-          [item]="item"
-        ></app-list-item>
-
-      </div>
-
+          <app-list-item 
+            class="col col-12 col-lg-4 col-xl-3 col-sm-6" 
+            *ngFor="let item of items"
+            [item]="item"
+          ></app-list-item>
+  
+        </div>
+      </ng-container>
+      
       <ng-template #loader>
         <div class="text-center" style="padding: 50px 0;">
           <div class="spinner-border" role="status">
@@ -33,7 +28,19 @@
           </div>
         </div>
       </ng-template>
-      
+
+      <div class="d-flex justify-content-center" style="padding: 50px 0;">
+        <ngb-pagination 
+          [collectionSize]="collectionSize"
+          [maxSize]="5"
+          [pageSize]="pageSize"
+          [page]="currentPage" 
+          [boundaryLinks]="true"
+          [disabled]="items === null"
+          (pageChange)="onPageChanged($event)"
+        ></ngb-pagination>
+      </div>
+            
     </div>
   </div>
 </div>

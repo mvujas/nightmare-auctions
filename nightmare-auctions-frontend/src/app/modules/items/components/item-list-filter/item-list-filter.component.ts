@@ -28,7 +28,6 @@ export class ItemListFilterComponent implements OnInit {
   private filterForm: FormGroup;
   private categories$: Category[];
   private formValueSubject: BehaviorSubject<SearchItemsValueHolder>;
-  private avaliablePageSizes: number[] = [10, 25, 40, 60];
 
   private maxPages: number;
 
@@ -39,7 +38,6 @@ export class ItemListFilterComponent implements OnInit {
   ngOnInit() {
     this.createForm();
 
-    this.updatePages(0, 1);
     this.formValueSubject = new BehaviorSubject<SearchItemsValueHolder>(
       this.formValueToSearchItemsValueHolder(this.filterForm.value));
 
@@ -53,9 +51,7 @@ export class ItemListFilterComponent implements OnInit {
       sortCriteria: '',
       sortStyle: 'asc',
       minimumPrice: 0,
-      maximumPrice: 100000,
-      itemsPerPage: "10",
-      pageNumber: "10"
+      maximumPrice: 100000
     });
   }
 
@@ -76,21 +72,9 @@ export class ItemListFilterComponent implements OnInit {
     this.subjectValue = this.filterForm.value;
   }
 
-  public updatePages(currentPage: number, maxPages: number) {
-    this.filterForm.controls.pageNumber.setValue(currentPage);
-    this.maxPages = maxPages;
-  }
-
   private formValueToSearchItemsValueHolder(formValue): SearchItemsValueHolder {
     return {
-      name: formValue.name,
-      category: formValue.category,
-      sortCriteria: formValue.sortCriteria,
-      sortStyle: formValue.sortStyle,
-      minimumPrice: formValue.minimumPrice,
-      maximumPrice: formValue.maximumPrice,
-      itemsPerPage: +formValue.itemsPerPage, // WHY JS WHY?! (if there's a bug here's a +, dont overlook it)
-      pageNumber: +formValue.itemsPerPage
+      ...formValue
     };
   }
 
