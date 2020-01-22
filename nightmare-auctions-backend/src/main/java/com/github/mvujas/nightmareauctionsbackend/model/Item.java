@@ -2,11 +2,12 @@ package com.github.mvujas.nightmareauctionsbackend.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity(name = "item")
 public class Item {
@@ -21,7 +22,8 @@ public class Item {
 	@Column(nullable = false)
 	private int startingPrice;
 
-	@ManyToOne(optional = false, fetch = FetchType.EAGER)
+	@ManyToOne(optional = false)
+    @JsonManagedReference
 	private Category category;
 
 	public Item(String name, int startingPrice, Category category) {

@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity(name = "category")
 public class Category {
 
@@ -20,6 +22,7 @@ public class Category {
 	private String name;
 	
 	@OneToMany(mappedBy = "category")
+	@JsonBackReference
 	private List<Item> items;
 	
 	public Category(String name) {
