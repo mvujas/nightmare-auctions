@@ -1,6 +1,7 @@
 package com.github.mvujas.nightmareauctionsbackend.model;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -15,6 +16,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -56,7 +58,7 @@ public class User implements UserDetails {
 	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "user_role")
-	private List<Role> roles;
+	private List<Role> roles = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "author")
 	private List<Item> items;
@@ -117,6 +119,10 @@ public class User implements UserDetails {
 
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
+	}
+	
+	public void addRole(Role role) {
+		this.roles.add(role);
 	}
 
 	@Override
