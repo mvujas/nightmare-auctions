@@ -5,6 +5,7 @@ import { AllItemsPageComponent } from './pages/all-items-page/all-items-page.com
 import { ItemListFilterComponent } from './components/item-list-filter/item-list-filter.component';
 import { ListItemComponent } from './components/list-item/list-item.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 const components: any[] = [
   AllItemsPageComponent,
@@ -17,7 +18,8 @@ const components: any[] = [
     CommonModule,
     ItemsRoutingModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    NgbModule
   ],
   declarations: [ ...components ]
 })

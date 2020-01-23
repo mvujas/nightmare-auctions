@@ -16,7 +16,7 @@
           <select class="form-control" formControlName="category" id="searchCategory">
             <option value="" selected>All</option>
 
-            <option *ngFor="let category of categories$" value="{{ category.id }}">
+            <option *ngFor="let category of categories$" value="{{ category.name }}">
               {{ category.name }}
             </option>
           </select>
@@ -54,30 +54,6 @@
 
         <div class="col col-6 two-part-row-group-item">
           <input class="form-control" type="number" min="0" formControlName="maximumPrice" id="searchMinimumPrice" value="1000000">
-        </div>
-
-        <div class="col col-6 two-part-row-group-item">
-          <label for="searchItemsPerPage">Items per page</label>
-        </div>
-
-        <div class="col col-6 two-part-row-group-item">
-          <label for="searchPageNumber">Page</label>
-        </div>
-
-        <div class="col col-6 two-part-row-group-item">
-          <select class="form-control" formControlName="itemsPerPage" id="searchItemsPerPage">
-            <option *ngFor="let pageSize of avaliablePageSizes" value="{{ pageSize }}">
-              {{ pageSize }}
-            </option>
-          </select>
-        </div>
-
-        <div class="col col-6 two-part-row-group-item">
-          <select class="form-control" formControlName="pageNumber" id="searchPageNumber">
-            <option *ngFor="let tmp of range(maxPages); let i = index" value="{{ i }}">
-              {{ i }}
-            </option>
-          </select>
         </div>
 
         <div class="col col-12 no-padding" id="search-filter-button-container">

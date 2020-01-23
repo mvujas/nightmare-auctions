@@ -8,24 +8,51 @@
     </div>
   
     <div class="col col-12 col-lg-8 col-xl-9">
-
-      <!--<div class="text-center" style="padding: 50px 0;" #loader>
-        <div class="spinner-border" role="status">
-          <span class="sr-only">Loading...</span>
-        </div>
-      </div>-->
       
+      <ng-container *ngIf="restResult != null; else loader">
+
+        <ng-container *ngIf="restResult.success; else failedToLoad">
+
+          <ng-container *ngIf="restResult.items.length == 0; else resultsAvaliable">
+            <div class="text-center">
+              There are no results for given filter
+            </div>
+          </ng-container>
+
+          <ng-template #resultsAvaliable>
+            <div class="row">
+          
+              <app-list-item 
+                class="col col-12 col-lg-4 col-xl-3 col-sm-6" 
+                *ngFor="let item of items"
+                [item]="item"
+              ></app-list-item>
       
-      <div class="row" *ngIf="itemsPage != null; else loader">
-        
-        <app-list-item 
-          class="col col-12 col-lg-4 col-xl-3 col-sm-6" 
-          *ngFor="let item of itemsPage.content"
-          [item]="item"
-        ></app-list-item>
+            </div>
+  
+            
+            <div class="d-flex justify-content-center" style="padding: 50px 0;">
+              <ngb-pagination 
+                [collectionSize]="collectionSize"
+                [maxSize]="5"
+                [pageSize]="pageSize"
+                [page]="currentPage" 
+                [boundaryLinks]="true"
+                [disabled]="items === null"
+                (pageChange)="onPageChanged($event)"
+              ></ngb-pagination>
+            </div>
+          </ng-template>
+        </ng-container>
 
-      </div>
+        <ng-template #failedToLoad>
+          <div class="loading-error-message">
+            There was an error trying to load data
+          </div>
+        </ng-template>
 
+      </ng-container>
+      
       <ng-template #loader>
         <div class="text-center" style="padding: 50px 0;">
           <div class="spinner-border" role="status">
@@ -33,7 +60,11 @@
           </div>
         </div>
       </ng-template>
-      
+
+      <div class="d-flex justify-content-center" style="padding: 50px 0;">
+        
+      </div>
+            
     </div>
   </div>
 </div>

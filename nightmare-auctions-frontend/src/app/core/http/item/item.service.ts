@@ -12,7 +12,11 @@ export class ItemService {
   constructor(private http: HttpClient) { }
 
   public getAll(): Observable<Page<Item>> {
-    return this.http.get<Page<Item>>('api/item');
+    return this.http.get<Page<Item>>('api/item', );
+  }
+
+  public getAllFiltered(queryParams: string): Observable<Page<Item>> {
+    return this.http.get<Page<Item>>(`api/item?${queryParams}`);
   }
 
 }
