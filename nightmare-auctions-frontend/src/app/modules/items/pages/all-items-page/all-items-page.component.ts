@@ -21,6 +21,7 @@ export class AllItemsPageComponent implements OnInit, AfterViewInit {
   private NgbPagination
 
   private items: Item;
+  private restResult;
   private previousSearchParams: SearchItemsValueHolder;
   private currentPage: number = 1;
   private collectionSize: number = 0;
@@ -30,6 +31,7 @@ export class AllItemsPageComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.items = null;
+    this.restResult = null;
   }
 
   ngAfterViewInit(): void {
@@ -45,6 +47,8 @@ export class AllItemsPageComponent implements OnInit, AfterViewInit {
 
     if(changed) {
       this.previousSearchParams = searchParams;
+
+      this.currentPage = 1;
 
       this.performItemRetrieval();
     }
@@ -76,12 +80,18 @@ export class AllItemsPageComponent implements OnInit, AfterViewInit {
     queryParams += this.searchItemsValueHolderToQueryParams();
 
     this.items = null;
-      this.itemService.getAllFiltered(queryParams)
-        .subscribe(
-          this.handleDataReceive.bind(this));
+    this.restResult = null;
+    this.itemService.getAllFiltered(queryParams)
+      .subscribe(
+        this.handleDataReceive.bind(this),
+        this.setErrorResult.bind(this));
   }
 
   handleDataReceive(value) {
+    this.restResult = {
+      success: true,
+      items: value.content
+    };
     this.items = value.content;
     this.setPagination(value.number + 1, value.totalElements)
   }
@@ -94,6 +104,12 @@ export class AllItemsPageComponent implements OnInit, AfterViewInit {
   onPageChanged(newPage) {
     this.currentPage = newPage;
     this.performItemRetrieval();
+  }
+
+  setErrorResult() {
+    this.restResult = {
+      success: false
+    };
   }
 
 }
