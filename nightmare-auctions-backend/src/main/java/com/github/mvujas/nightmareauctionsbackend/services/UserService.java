@@ -1,5 +1,7 @@
 package com.github.mvujas.nightmareauctionsbackend.services;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -7,6 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.github.mvujas.nightmareauctionsbackend.controllers.messages.UserRegistrationMessage;
 import com.github.mvujas.nightmareauctionsbackend.model.User;
 import com.github.mvujas.nightmareauctionsbackend.repositories.RoleRepository;
 import com.github.mvujas.nightmareauctionsbackend.repositories.UserRepository;
@@ -19,6 +22,8 @@ public class UserService implements UserDetailsService {
 	@Autowired
 	private RoleRepository roleRepository;
 	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) 
@@ -33,13 +38,21 @@ public class UserService implements UserDetailsService {
 		return user;
 	}
 
-	public boolean registerUser(
-			String username, String hashedPassword, String email) {
-		User user = new User(username, email, hashedPassword);
+	public void registerUser(
+			@Valid UserRegistrationMessage userRegistrationData) {
+		
+		User user = new User(
+				userRegistrationData.getUsername(), 
+				userRegistrationData.getEmail(), 
+				passwordEncoder.encode(userRegistrationData.getPassword()));
 		
 		user.addRole(roleRepository.findByName("USER"));
 		
-		return userRepository.saveAndFlush(user) != null;
+		userRepository.saveAndFlush(user);
+	}
+	
+	public User getUserByUsername(String username) {
+		return userRepository.findByUsername(username);
 	}
 	
 }
