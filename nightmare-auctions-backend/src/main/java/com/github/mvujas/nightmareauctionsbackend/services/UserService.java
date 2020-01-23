@@ -10,6 +10,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.github.mvujas.nightmareauctionsbackend.controllers.messages.UserRegistrationMessage;
+import com.github.mvujas.nightmareauctionsbackend.exceptionhandling.exceptions.DuplicateResourceException;
+import com.github.mvujas.nightmareauctionsbackend.exceptionhandling.exceptions.ResourceNotFoundException;
 import com.github.mvujas.nightmareauctionsbackend.model.User;
 import com.github.mvujas.nightmareauctionsbackend.repositories.RoleRepository;
 import com.github.mvujas.nightmareauctionsbackend.repositories.UserRepository;
@@ -41,10 +43,17 @@ public class UserService implements UserDetailsService {
 	public void registerUser(
 			@Valid UserRegistrationMessage userRegistrationData) {
 		
+		if(userRepository.doesUserWithUsernameExist(
+				userRegistrationData.getUsername())) {
+			throw new DuplicateResourceException(
+					"The given username is already taken");
+		}
+		
 		User user = new User(
 				userRegistrationData.getUsername(), 
 				userRegistrationData.getEmail(), 
 				passwordEncoder.encode(userRegistrationData.getPassword()));
+		
 		
 		user.addRole(roleRepository.findByName("USER"));
 		
@@ -52,6 +61,13 @@ public class UserService implements UserDetailsService {
 	}
 	
 	public User getUserByUsername(String username) {
+		User user = userRepository.findByUsername(username);
+		
+		if(user == null) {
+			throw new ResourceNotFoundException(
+					"There is no user under given username");
+		}
+		
 		return userRepository.findByUsername(username);
 	}
 	
