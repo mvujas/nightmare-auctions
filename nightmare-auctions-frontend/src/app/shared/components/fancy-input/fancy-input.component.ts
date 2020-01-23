@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, AfterViewInit, forwardRef } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit, forwardRef, HostListener } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 declare var $: any;
 
@@ -47,8 +47,17 @@ export class FancyInputComponent implements OnInit, AfterViewInit, ControlValueA
   }
 
   checkActiveState(input, inputContainer) {
-    let isActive = input.is(':focus') || input.val() !== '';
+    let isActive = input.is(':focus') || (input.val() != null && input.val().length > 0);
     inputContainer.toggleClass('active-input', isActive);
+  }
+
+  callActiveCheckWithDelay() {
+    setTimeout((() => {
+      let input = $('input#' + this.inputId);
+      let inputContainer = input.parent();
+
+      this.checkActiveState(input, inputContainer);
+    }).bind(this), 100);
   }
 
 
@@ -74,9 +83,16 @@ export class FancyInputComponent implements OnInit, AfterViewInit, ControlValueA
     }
 
     set value(val) {
-      if(val) {
-        this._value = val;
-        this.propagateChange(this._value);
+      let empty: boolean = !val;
+      if(empty) {
+        val = '';
+      }
+      this._value = val;
+      this.textValue = val;
+      this.propagateChange(this._value);
+
+      if(empty) {
+        this.callActiveCheckWithDelay();
       }
     }
 
