@@ -28,6 +28,7 @@ public class UserController {
 			@Valid @RequestBody UserRegistrationMessage userRegistrationData) {
 		System.out.println(userRegistrationData);
 		
+		// Add username already exist error eventually
 		userService.registerUser(
 				userRegistrationData.getUsername(), 
 				passwordEncoder.encode(userRegistrationData.getPassword()), 
