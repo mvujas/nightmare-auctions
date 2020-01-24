@@ -6,6 +6,7 @@ import { ItemService } from '@app/core/http/item/item.service';
 import { Page } from '@app/shared/domain/page';
 import deepEqual from 'deep-equal';
 import { SearchItemsValueHolder } from '../../domain/search-items-value-holder';
+import { DownloadService } from '@app/core/services/download.service';
 
 @Component({
   selector: 'app-all-items-page',
@@ -27,7 +28,9 @@ export class AllItemsPageComponent implements OnInit, AfterViewInit {
   private collectionSize: number = 0;
   private pageSize: number = 12;
 
-  constructor(private itemService: ItemService) { }
+  constructor(
+    private itemService: ItemService,
+    private downloadService: DownloadService) { }
 
   ngOnInit() {
     this.items = null;
@@ -110,6 +113,10 @@ export class AllItemsPageComponent implements OnInit, AfterViewInit {
     this.restResult = {
       success: false
     };
+  }
+
+  downloadReport() {
+    this.downloadService.downloadPDF('api/item/report', 'Ongoing auctions - Nightmare Auctions.pdf', console.log);
   }
 
 }
