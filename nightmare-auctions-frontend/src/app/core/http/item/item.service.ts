@@ -23,4 +23,8 @@ export class ItemService {
     return this.http.post('api/item', item);
   }
 
+  public getById(id: number): Observable<Item> {
+    return this.http.get<Item>(`api/item/${id}`);
+  }
+
 }
