@@ -16,6 +16,10 @@ const routes: Routes = [
   {
     path: ':id',
     component: SingleItemPageComponent
+  },
+  {
+    path: '**',
+    redirectTo: '/404'
   }
 ];
 
