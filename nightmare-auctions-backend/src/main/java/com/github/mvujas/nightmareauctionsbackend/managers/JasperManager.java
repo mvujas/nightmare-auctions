@@ -11,6 +11,7 @@ import java.util.concurrent.ConcurrentMap;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import net.sf.jasperreports.engine.JRDataSource;
@@ -26,6 +27,9 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 @Component
 public class JasperManager {
 
+	@Value("${jasper.directory}")
+	private String jasperDirectory;
+	
 	private ConcurrentMap<String, JasperReport> nameToReportMapping;
 	
 	public JasperManager() {
@@ -42,9 +46,8 @@ public class JasperManager {
 			report = nameToReportMapping.get(name);
 		}
 		else {
-			String path = "/jasper/" + name + ".jrxml";
-			InputStream reportStream
-        		= getClass().getResourceAsStream(path);
+			String path = jasperDirectory + name + ".jrxml";
+			InputStream reportStream = getClass().getResourceAsStream(path);
 			report = JasperCompileManager.compileReport(reportStream);
 			
 			nameToReportMapping.putIfAbsent(name, report);
