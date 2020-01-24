@@ -6,11 +6,13 @@ import { ItemListFilterComponent } from './components/item-list-filter/item-list
 import { ListItemComponent } from './components/list-item/list-item.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AddItemPageComponent } from './pages/all-items-page/add-item-page/add-item-page.component';
 
 const components: any[] = [
   AllItemsPageComponent,
   ItemListFilterComponent,
-  ListItemComponent
+  ListItemComponent,
+  AddItemPageComponent
 ];
 
 @NgModule({

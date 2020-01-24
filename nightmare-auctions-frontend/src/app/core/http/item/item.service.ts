@@ -19,4 +19,8 @@ export class ItemService {
     return this.http.get<Page<Item>>(`api/item?${queryParams}`);
   }
 
+  public saveItem(item: Item) {
+    return this.http.post('api/item', item);
+  }
+
 }

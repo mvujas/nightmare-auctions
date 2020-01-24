@@ -1,8 +1,14 @@
 <div class="container">
   <h1>Ongoing auctions</h1>
 
-  <div class="add-download-action-container">
-    <a class="btn btn-primary" (click)="downloadReport()" routerLink=".">Download items as PDF</a>
+  <div class="add-download-action-container" *ngIf="isUserLoggedIn">
+    <ngb-alert *ngIf="downloadAlert != null" [type]="downloadAlert.type" (click)="closeAlert()">
+      {{ downloadAlert.message }}
+    </ngb-alert>
+
+    <a class="btn btn-primary" (click)="downloadReport()" routerLink=".">Download auctions as PDF</a>
+    &nbsp;
+    <a class="btn btn-primary" routerLink="/items/add">Create auction</a>
   </div>
 
   <div class="row all-items-ads-list">

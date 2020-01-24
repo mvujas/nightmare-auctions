@@ -7,6 +7,7 @@ import { Page } from '@app/shared/domain/page';
 import deepEqual from 'deep-equal';
 import { SearchItemsValueHolder } from '../../domain/search-items-value-holder';
 import { DownloadService } from '@app/core/services/download.service';
+import { AuthenticationService } from '@app/core/authentication/authentication.service';
 
 @Component({
   selector: 'app-all-items-page',
@@ -28,13 +29,19 @@ export class AllItemsPageComponent implements OnInit, AfterViewInit {
   private collectionSize: number = 0;
   private pageSize: number = 12;
 
+  private isUserLoggedIn: boolean = false; 
+
   constructor(
     private itemService: ItemService,
-    private downloadService: DownloadService) { }
+    private downloadService: DownloadService,
+    private authService: AuthenticationService) { }
 
   ngOnInit() {
     this.items = null;
     this.restResult = null;
+
+    this.authService.basicUserDetails.subscribe(
+      userDetails => this.isUserLoggedIn = userDetails !== null)
   }
 
   ngAfterViewInit(): void {
@@ -115,8 +122,30 @@ export class AllItemsPageComponent implements OnInit, AfterViewInit {
     };
   }
 
+  private downloadAlert;
+
+  showErrorMessage(message) {
+    this.downloadAlert = {
+      type: 'danger',
+      message: message
+    }
+  }
+
+  showSuccessMessage(message) {
+    this.downloadAlert = {
+      type: 'success',
+      message: message
+    }
+  }
+
+  closeAlert() {
+    this.downloadAlert = null;
+  }
+
   downloadReport() {
-    this.downloadService.downloadPDF('api/item/report', 'Ongoing auctions - Nightmare Auctions.pdf', console.log);
+    this.downloadService.downloadPDF('api/item/report', 'Ongoing auctions - Nightmare Auctions.pdf', (() => {
+      this.showErrorMessage("There was an error trying to download file");
+    }).bind(this));
   }
 
 }

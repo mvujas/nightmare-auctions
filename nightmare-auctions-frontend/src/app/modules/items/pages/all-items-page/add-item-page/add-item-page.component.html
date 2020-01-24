@@ -1,0 +1,83 @@
+<div class="container">
+  <h1>Create auction</h1>
+
+  <div class="row">
+    <div class="col col-12 col-lg-6 col-md-8">
+
+      <ng-container *ngIf="categoriesResult !== null; else loader">
+    
+        <ng-container *ngIf="categoriesResult.success; else failedLoading">
+
+          <ngb-alert *ngIf="alert != null" [type]="alert.type" (click)="closeAlert()">
+            {{ alert.message }}
+          </ngb-alert>
+
+          <form [formGroup]="newItemForm" (ngSubmit)="handleFormSubmission()">
+            <div class="form-group">
+              <label for="create-auction-input-item-name">Item name</label>
+              <input 
+                type="text" 
+                class="form-control" 
+                id="create-auction-input-item-name" 
+                formControlName="name"
+                placeholder="Enter item name">
+              <ng-container *ngIf="submitted && f.name.errors as e">
+                <small class="form-text text-danger" *ngIf="e.required">Item name is required</small>
+                <small class="form-text text-danger" *ngIf="e.pattern">Item name cannot be empty</small>
+              </ng-container>
+              
+            </div>
+            <!-- create-auction-input- -->
+            <div class="form-group">
+              <label for="create-auction-input-starting-price">Starting price ($)</label>
+              <input 
+                type="number"
+                class="form-control" 
+                id="create-auction-input-starting-price" 
+                formControlName="startingPrice"
+                placeholder="Enter starting price">
+              <ng-container *ngIf="submitted && f.startingPrice.errors as e">
+                <small class="form-text text-danger" *ngIf="e.required">Starting price is required</small>
+                <small class="form-text text-danger" *ngIf="e.min">Item must cost at least $1</small>
+              </ng-container>
+            </div>
+            <div class="form-group">
+              <label for="create-auction-input-category-name">Category</label>
+              <select id="create-auction-input-category-name" formControlName="categoryName" class="form-control">
+                <option [value]="category.name" *ngFor="let category of categoriesResult.data">{{ category.name }}</option>
+              </select>
+              <ng-container *ngIf="submitted && f.categoryName.errors as e">
+                <small class="form-text text-danger" *ngIf="e.required">Category is required</small>
+              </ng-container>
+              <!--<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>-->
+            </div>
+            <button type="submit" class="btn btn-primary">Create</button>
+          </form>
+
+        </ng-container>
+
+
+        <ng-template #failedLoading>
+          <div class="loading-error-message">
+            There was an error trying to connect to server
+          </div>
+        </ng-template>
+        
+
+        
+
+      </ng-container>
+    
+      <ng-template #loader>
+        <div class="text-center loader-container">
+          <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+      </ng-template>
+
+
+      
+    </div>
+  </div>
+</div>
