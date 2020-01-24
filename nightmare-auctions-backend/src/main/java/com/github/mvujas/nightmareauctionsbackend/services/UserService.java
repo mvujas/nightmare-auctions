@@ -42,7 +42,6 @@ public class UserService implements UserDetailsService {
 
 	public void registerUser(
 			@Valid UserRegistrationMessage userRegistrationData) {
-		
 		if(userRepository.doesUserWithUsernameExist(
 				userRegistrationData.getUsername())) {
 			throw new DuplicateResourceException(
@@ -54,7 +53,6 @@ public class UserService implements UserDetailsService {
 				userRegistrationData.getEmail(), 
 				passwordEncoder.encode(userRegistrationData.getPassword()));
 		
-		
 		user.addRole(roleRepository.findByName("USER"));
 		
 		userRepository.saveAndFlush(user);
@@ -65,7 +63,7 @@ public class UserService implements UserDetailsService {
 		
 		if(user == null) {
 			throw new ResourceNotFoundException(
-					"There is no user under given username");
+					"There is no user with given username");
 		}
 		
 		return userRepository.findByUsername(username);
