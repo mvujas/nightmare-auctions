@@ -41,7 +41,7 @@ public class UserService implements UserDetailsService {
 	}
 
 	public void registerUser(
-			@Valid UserRegistrationMessage userRegistrationData) {
+			UserRegistrationMessage userRegistrationData) {
 		if(userRepository.doesUserWithUsernameExist(
 				userRegistrationData.getUsername())) {
 			throw new DuplicateResourceException(

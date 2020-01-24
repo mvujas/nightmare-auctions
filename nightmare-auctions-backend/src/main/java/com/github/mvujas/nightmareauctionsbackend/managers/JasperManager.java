@@ -38,7 +38,7 @@ public class JasperManager {
 	
 	public JasperReport loadReport(String name) throws JRException {
 		if(name == null) {
-			throw new NullPointerException("Jasper report path cannot be null");
+			throw new NullPointerException("Jasper report name cannot be null");
 		}
 		
 		JasperReport report;
@@ -46,6 +46,9 @@ public class JasperManager {
 			report = nameToReportMapping.get(name);
 		}
 		else {
+			
+			// TODO: Throw exception if file doesnt exist
+			
 			String path = jasperDirectory + name + ".jrxml";
 			InputStream reportStream = getClass().getResourceAsStream(path);
 			report = JasperCompileManager.compileReport(reportStream);

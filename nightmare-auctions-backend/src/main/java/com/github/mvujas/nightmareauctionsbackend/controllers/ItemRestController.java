@@ -1,22 +1,30 @@
 package com.github.mvujas.nightmareauctionsbackend.controllers;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.github.mvujas.nightmareauctionsbackend.controllers.messages.ItemCreationMessage;
 import com.github.mvujas.nightmareauctionsbackend.managers.JasperManager;
 import com.github.mvujas.nightmareauctionsbackend.model.Item;
+import com.github.mvujas.nightmareauctionsbackend.model.User;
 import com.github.mvujas.nightmareauctionsbackend.presentationview.ItemPresentationView;
 import com.github.mvujas.nightmareauctionsbackend.services.ItemService;
 import com.github.mvujas.nightmareauctionsbackend.services.search.ItemAllSearchSpecification;
@@ -54,6 +62,18 @@ public class ItemRestController {
 		return itemService.getAll(
 				new ItemAllSearchSpecification(searchParams),
 				pageable);
+	}
+	
+	@PostMapping
+	@PreAuthorize("isAuthenticated()")
+	public void addItem(
+			@Valid @RequestBody ItemCreationMessage itemCreationMessage,
+			Principal principal) {
+		itemService.createItem(
+				itemCreationMessage.getName().trim(),
+				itemCreationMessage.getStartingPrice(),
+				itemCreationMessage.getCategoryName(),
+				principal.getName());
 	}
 	
 	@GetMapping("/report")

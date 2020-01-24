@@ -24,12 +24,12 @@ public class UserController {
 	
 	@PostMapping
 	public void registerUser(
-			@Valid @RequestBody UserRegistrationMessage userRegistrationData) {
+			@Valid @RequestBody(required = true) UserRegistrationMessage userRegistrationData) {
 		userService.registerUser(userRegistrationData);
 	}
 	
 	@GetMapping("/{username}")
-	public User getUserByUsername(@PathVariable String username) {
+	public User getUserByUsername(@PathVariable(required = true) String username) {
 		return userService.getUserByUsername(username);
 	}
 	
