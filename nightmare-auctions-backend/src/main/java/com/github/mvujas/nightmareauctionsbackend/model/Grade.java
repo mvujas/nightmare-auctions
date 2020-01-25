@@ -1,9 +1,9 @@
 package com.github.mvujas.nightmareauctionsbackend.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -23,8 +23,11 @@ public class Grade {
 	@OneToOne
 	private Bid bid;
 
-	private Integer gradeForAuthor;
-	private Integer gradeForBuyer;
+	@OneToOne(optional = false, cascade = CascadeType.ALL)
+	private GradeHolder authorGrade;
+
+	@OneToOne(optional = false, cascade = CascadeType.ALL)
+	private GradeHolder buyerGrade;
 	
 	public int getId() {
 		return id;
@@ -50,20 +53,20 @@ public class Grade {
 		this.bid = bid;
 	}
 
-	public Integer getGradeForAuthor() {
-		return gradeForAuthor;
+	public GradeHolder getAuthorGrade() {
+		return authorGrade;
 	}
 
-	public void setGradeForAuthor(Integer gradeForAuthor) {
-		this.gradeForAuthor = gradeForAuthor;
+	public void setAuthorGrade(GradeHolder authorGrade) {
+		this.authorGrade = authorGrade;
 	}
 
-	public Integer getGradeForBuyer() {
-		return gradeForBuyer;
+	public GradeHolder getBuyerGrade() {
+		return buyerGrade;
 	}
 
-	public void setGradeForBuyer(Integer gradeForBuyer) {
-		this.gradeForBuyer = gradeForBuyer;
+	public void setBuyerGrade(GradeHolder buyerGrade) {
+		this.buyerGrade = buyerGrade;
 	}
 	
 }

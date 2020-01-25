@@ -1,8 +1,8 @@
 -- to disable running this script every startup remove 
 -- spring.datasource.initialization-mode=always from application.properties
 
-delete from grade_holder;
 delete from grade;
+delete from grade_holder;
 delete from bid;
 delete from item;
 delete from user_role;
@@ -63,6 +63,22 @@ VALUES (1, '2018-09-15 06:47:24', 21000, 2, 1),
        (15, now(), 121000, 3, 3),
        (16, now(), 150000, 1, 3),
        (17, now(), 200000, 3, 3);
+       
+UPDATE item i
+SET closing_time = now()
+WHERE i.id = 1 OR
+      i.id = 3;
+      --i.id =  OR
+
+INSERT INTO grade_holder(id, value, giving_grade_id, receiving_grade_id)
+VALUES (1, 2, 2, 1),
+       (2, null, 1, 2),
+       (3, null, 3, 2),
+       (4, 0, 2, 3);
+
+INSERT INTO grade(id, author_grade_id,	bid_id, buyer_grade_id)
+VALUES (1, 2, 5, 1),
+       (3, 4, 17, 3);
        
        
        

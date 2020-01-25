@@ -16,14 +16,16 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
-import javax.validation.constraints.Min;
 
+import org.hibernate.annotations.Formula;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
+import com.github.mvujas.nightmareauctionsbackend.presentationview.GradePresentationView;
 import com.github.mvujas.nightmareauctionsbackend.presentationview.ItemPresentationView;
+import com.github.mvujas.nightmareauctionsbackend.presentationview.UserPresentationView;
 import com.github.mvujas.nightmareauctionsbackend.util.TimeUtils;
 
 @Entity
@@ -63,7 +65,13 @@ public class User implements UserDetails {
 	
 	@OneToMany(mappedBy = "author")
 	private List<Bid> bids;
-
+	
+	@Formula(
+		"(SELECT AVG(gh.value) "
+		+ "FROM grade_holder gh "
+		+ "WHERE gh.receiving_grade_id = id)")
+	private Double avgGrade;
+	
 	
 	@PrePersist
 	protected void onCreate() {
@@ -90,7 +98,7 @@ public class User implements UserDetails {
 		this.id = id;
 	}
 
-	@JsonView(ItemPresentationView.SummaryView.class)
+	@JsonView(UserPresentationView.UsernameOnly.class)
 	public String getUsername() {
 		return username;
 	}
@@ -126,6 +134,12 @@ public class User implements UserDetails {
 	public void addRole(Role role) {
 		this.roles.add(role);
 	}
+
+	@JsonView(UserPresentationView.UsernameOnly.class)
+	public Double getAvgGrade() {
+		return avgGrade;
+	}
+
 
 	@Override
 	public String toString() {

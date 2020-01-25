@@ -14,10 +14,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.github.mvujas.nightmareauctionsbackend.controllers.messages.UserRegistrationMessage;
 import com.github.mvujas.nightmareauctionsbackend.exceptionhandling.exceptions.ResourceOperationException;
 import com.github.mvujas.nightmareauctionsbackend.model.Grade;
+import com.github.mvujas.nightmareauctionsbackend.model.GradeHolder;
 import com.github.mvujas.nightmareauctionsbackend.model.User;
+import com.github.mvujas.nightmareauctionsbackend.presentationview.GradePresentationView;
 import com.github.mvujas.nightmareauctionsbackend.repositories.GradeRepository;
 import com.github.mvujas.nightmareauctionsbackend.services.UserService;
 
@@ -41,18 +44,36 @@ public class UserController {
 		return userService.getUserByUsername(username);
 	}
 	
+	private void checkPrincipalWithUsername(
+			String username, Principal principal, String exceptionText) {
+		if(!principal.getName().equals(username)) {
+			throw new ResourceOperationException(exceptionText);
+		}
+	}
+	
 	@GetMapping("/{username}/grades")
+	@JsonView(GradePresentationView.UserReceivedGradesView.class)
 	@PreAuthorize("isAuthenticated()")
-	public List<Grade> getUserGrades(
+	public List<GradeHolder> getUserGrades(
 			@PathVariable(required = true) String username,
 			Principal principal) {
-		if(!principal.getName().equals(username)) {
-			throw new ResourceOperationException(
-					"User can show only their own grades");
-		}
+		checkPrincipalWithUsername(
+				username, principal, "User can show only their own grades");
 		
 		User user = userService.getUserByUsername(username);
-		return gradeRepository.getUsersGrades(user);
+		return gradeRepository.getFinishedGradesForUser(user);
 	}
-
+	
+	@GetMapping("/{username}/grades/waiting")
+	@JsonView(GradePresentationView.IncompletedGradesView.class)
+	@PreAuthorize("isAuthenticated()")
+	public List<GradeHolder> getWaitingGrades(
+			@PathVariable(required = true) String username,
+			Principal principal) {
+		checkPrincipalWithUsername(
+				username, principal, "User can show only their own grades");
+		User user = userService.getUserByUsername(username);
+		return gradeRepository.getWaitingGradesForGivingUser(user);
+	}
+	
 }

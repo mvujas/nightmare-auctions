@@ -13,6 +13,7 @@ import com.github.mvujas.nightmareauctionsbackend.exceptionhandling.exceptions.R
 import com.github.mvujas.nightmareauctionsbackend.model.Bid;
 import com.github.mvujas.nightmareauctionsbackend.model.Category;
 import com.github.mvujas.nightmareauctionsbackend.model.Grade;
+import com.github.mvujas.nightmareauctionsbackend.model.GradeHolder;
 import com.github.mvujas.nightmareauctionsbackend.model.Item;
 import com.github.mvujas.nightmareauctionsbackend.model.User;
 import com.github.mvujas.nightmareauctionsbackend.repositories.BidRepository;
@@ -140,6 +141,17 @@ public class ItemService {
 			Grade grade = new Grade();
 			grade.setItem(item);
 			grade.setBid(highestBid);
+			
+			GradeHolder authorHolder = new GradeHolder();
+			authorHolder.setGivingGrade(user);
+			authorHolder.setReceivingGrade(highestBid.getAuthor());
+			
+			GradeHolder buyerHolder = new GradeHolder();
+			buyerHolder.setGivingGrade(highestBid.getAuthor());
+			buyerHolder.setReceivingGrade(user);
+
+			grade.setAuthorGrade(authorHolder);
+			grade.setBuyerGrade(buyerHolder);
 			
 			item.setGrade(grade);
 			

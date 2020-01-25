@@ -108,6 +108,8 @@ public class ItemRestController {
 	public void endAuction(
 			@PathVariable(required = true) Integer id,
 			Principal principal) {
+		System.out.println("Stiglo nesto");
+		
 		itemService.endAuction(id, principal.getName());
 	}
 
