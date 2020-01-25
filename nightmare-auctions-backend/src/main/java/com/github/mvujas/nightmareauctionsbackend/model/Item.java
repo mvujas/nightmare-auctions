@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -52,11 +53,16 @@ public class Item {
 	@OneToMany(mappedBy = "item")
 	private List<Bid> bids;
 	
+	@OneToOne(mappedBy = "item")
+	private Grade grade;
+	
+	
 	@PrePersist
 	protected void onCreate() {
 		postingTime = TimeUtils.getCurrentTimestamp();
 	}
 
+	
 	@Formula(
 			"(SELECT COUNT(b.id) "
 			+ "FROM bid b "
@@ -179,7 +185,14 @@ public class Item {
 	public void setClosingTime(Timestamp closingTime) {
 		this.closingTime = closingTime;
 	}
-	
+
+	public Grade getGrade() {
+		return grade;
+	}
+
+	public void setGrade(Grade grade) {
+		this.grade = grade;
+	}
 
 	@Override
 	public String toString() {

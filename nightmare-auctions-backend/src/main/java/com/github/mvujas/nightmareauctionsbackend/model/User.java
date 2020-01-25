@@ -82,7 +82,6 @@ public class User implements UserDetails {
 		this.password = password;
 	}
 
-	@JsonView(ItemPresentationView.SummaryView.class)
 	public int getId() {
 		return id;
 	}

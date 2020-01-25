@@ -12,10 +12,12 @@ import com.github.mvujas.nightmareauctionsbackend.exceptionhandling.exceptions.R
 import com.github.mvujas.nightmareauctionsbackend.exceptionhandling.exceptions.ResourceOperationException;
 import com.github.mvujas.nightmareauctionsbackend.model.Bid;
 import com.github.mvujas.nightmareauctionsbackend.model.Category;
+import com.github.mvujas.nightmareauctionsbackend.model.Grade;
 import com.github.mvujas.nightmareauctionsbackend.model.Item;
 import com.github.mvujas.nightmareauctionsbackend.model.User;
 import com.github.mvujas.nightmareauctionsbackend.repositories.BidRepository;
 import com.github.mvujas.nightmareauctionsbackend.repositories.CategoryRepository;
+import com.github.mvujas.nightmareauctionsbackend.repositories.GradeRepository;
 import com.github.mvujas.nightmareauctionsbackend.repositories.ItemRepository;
 import com.github.mvujas.nightmareauctionsbackend.repositories.UserRepository;
 
@@ -30,6 +32,8 @@ public class ItemService {
 	private UserRepository userRepository;
 	@Autowired
 	private BidRepository bidRepository;
+	@Autowired
+	private GradeRepository gradeRepository;
 	
 	public List<Item> getAll() {
 		return itemRepository.findAll();
@@ -131,9 +135,18 @@ public class ItemService {
 		
 		item.endAuction();
 		
-		itemRepository.saveAndFlush(item);
+		Bid highestBid = bidRepository.findFirstByItemOrderByPriceDesc(item);
+		if(highestBid != null) {
+			Grade grade = new Grade();
+			grade.setItem(item);
+			grade.setBid(highestBid);
+			
+			item.setGrade(grade);
+			
+			gradeRepository.saveAndFlush(grade);
+		}
 		
-		// TO-DO create ocena object
+		itemRepository.saveAndFlush(item);
 	}
 
 }

@@ -8,9 +8,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.github.mvujas.nightmareauctionsbackend.presentationview.ItemPresentationView;
 import com.github.mvujas.nightmareauctionsbackend.util.TimeUtils;
 
 @Entity
@@ -33,6 +36,9 @@ public class Bid {
 	@ManyToOne(optional = false)
 	private Item item;
 	
+	@OneToOne(mappedBy = "bid")
+	private Grade grade;
+	
 	
 	@PrePersist
 	protected void onCreate() {
@@ -48,6 +54,7 @@ public class Bid {
 		this.id = id;
 	}
 
+	@JsonView(ItemPresentationView.FullView.class)
 	public int getPrice() {
 		return price;
 	}
@@ -56,6 +63,7 @@ public class Bid {
 		this.price = price;
 	}
 
+	@JsonView(ItemPresentationView.FullView.class)
 	public User getAuthor() {
 		return author;
 	}
@@ -63,7 +71,8 @@ public class Bid {
 	public void setAuthor(User author) {
 		this.author = author;
 	}
-
+	
+	@JsonView(ItemPresentationView.FullView.class)
 	public Timestamp getPostingTime() {
 		return postingTime;
 	}
@@ -78,6 +87,14 @@ public class Bid {
 
 	public void setItem(Item item) {
 		this.item = item;
+	}
+
+	public Grade getGrade() {
+		return grade;
+	}
+
+	public void setGrade(Grade grade) {
+		this.grade = grade;
 	}
 
 }
