@@ -20,15 +20,12 @@ public class Category {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@JsonView(ItemPresentationView.SummaryView.class)
 	private int id;
 	
 	@Column(unique = true, nullable = false)
-	@JsonView(ItemPresentationView.SummaryView.class)
 	private String name;
 	
 	@OneToMany(mappedBy = "category")
-	@JsonBackReference
 	private List<Item> items;
 	
 	public Category(String name) {
@@ -40,6 +37,7 @@ public class Category {
 		super();
 	}
 
+	@JsonView(ItemPresentationView.SummaryView.class)
 	public int getId() {
 		return id;
 	}
@@ -48,6 +46,7 @@ public class Category {
 		this.id = id;
 	}
 
+	@JsonView(ItemPresentationView.SummaryView.class)
 	public String getName() {
 		return name;
 	}
@@ -55,7 +54,8 @@ public class Category {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
+	@JsonBackReference
 	public List<Item> getItems() {
 		return items;
 	}
