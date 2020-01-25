@@ -60,6 +60,9 @@ public class User implements UserDetails {
 	
 	@OneToMany(mappedBy = "author")
 	private List<Item> items;
+	
+	@OneToMany(mappedBy = "author")
+	private List<Bid> bids;
 
 	
 	@PrePersist

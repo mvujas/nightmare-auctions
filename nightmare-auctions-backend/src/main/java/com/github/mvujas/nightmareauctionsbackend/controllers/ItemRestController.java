@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,10 +20,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.github.mvujas.nightmareauctionsbackend.controllers.messages.BidMessage;
 import com.github.mvujas.nightmareauctionsbackend.controllers.messages.ItemCreationMessage;
 import com.github.mvujas.nightmareauctionsbackend.managers.JasperManager;
 import com.github.mvujas.nightmareauctionsbackend.model.Item;
-import com.github.mvujas.nightmareauctionsbackend.model.User;
 import com.github.mvujas.nightmareauctionsbackend.presentationview.ItemPresentationView;
 import com.github.mvujas.nightmareauctionsbackend.services.ItemService;
 import com.github.mvujas.nightmareauctionsbackend.services.search.ItemAllSearchSpecification;
@@ -51,13 +50,15 @@ public class ItemRestController {
 			@RequestParam(required = false) String categoryName,
 			@RequestParam(required = false) Integer minimumPrice,
 			@RequestParam(required = false) Integer maximumPrice,
+			@RequestParam(required = false) Boolean over,
 			Pageable pageable) {
 		
 		SearchParameters searchParams = new SearchParameters(
 				name, 
 				categoryName, 
 				minimumPrice, 
-				maximumPrice);
+				maximumPrice,
+				over);
 	
 		return itemService.getAll(
 				new ItemAllSearchSpecification(searchParams),
@@ -67,7 +68,7 @@ public class ItemRestController {
 	@PostMapping
 	@PreAuthorize("isAuthenticated()")
 	public void addItem(
-			@Valid @RequestBody ItemCreationMessage itemCreationMessage,
+			@Valid @RequestBody(required = true) ItemCreationMessage itemCreationMessage,
 			Principal principal) {
 		itemService.createItem(
 				itemCreationMessage.getName().trim(),
@@ -91,6 +92,23 @@ public class ItemRestController {
 	@JsonView(ItemPresentationView.FullView.class)
 	public Item getById(@PathVariable(required = true) Integer id) {
 		return itemService.getById(id);
+	}
+	
+	@PostMapping("/{id}/bid")
+	@PreAuthorize("isAuthenticated()")
+	public void bidItem(
+			@PathVariable(required = true) Integer id,
+			@Valid @RequestBody(required = true) BidMessage bidMessage,
+			Principal principal) {
+		itemService.addBid(id, principal.getName(), bidMessage.getPrice());
+	}
+	
+	@PostMapping("/{id}/end")
+	@PreAuthorize("isAuthenticated()")
+	public void endAuction(
+			@PathVariable(required = true) Integer id,
+			Principal principal) {
+		itemService.endAuction(id, principal.getName());
 	}
 
 }

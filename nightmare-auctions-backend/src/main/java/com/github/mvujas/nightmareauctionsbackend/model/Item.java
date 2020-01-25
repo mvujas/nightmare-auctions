@@ -15,6 +15,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.apache.commons.lang3.time.DateUtils;
 import org.hibernate.annotations.Formula;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -39,6 +40,9 @@ public class Item {
 	@Column(nullable = false, updatable = false)
 	private Timestamp postingTime;
 	
+	@Column(nullable = true)
+	private Timestamp closingTime;
+	
 	@ManyToOne(optional = false)
 	private User author;
 
@@ -46,7 +50,7 @@ public class Item {
 	private Category category;
 	
 	@OneToMany(mappedBy = "item")
-	private List<Bid> bids = new ArrayList<>();
+	private List<Bid> bids;
 	
 	@PrePersist
 	protected void onCreate() {
@@ -57,13 +61,17 @@ public class Item {
 			"(SELECT COUNT(b.id) "
 			+ "FROM bid b "
 			+ "WHERE b.item_id = id)")
-	private Integer numberOfBids = 1;
-	
+	private Integer numberOfBids;
+
+	// Works on MariaDB, it's questionable whether it works on other DBMSs
 	@Formula(
 			"(SELECT IFNULL(MAX(b.price), starting_price) "
 			+ "FROM bid b "
 			+ "WHERE b.item_id = id)")
-	private Integer price = 1;
+	private Integer price;
+	
+	@Formula("NOT ISNULL(closing_time)")
+	private boolean over;
 	
 	public Item(String name, int startingPrice, Category category) {
 		super();
@@ -153,6 +161,25 @@ public class Item {
 		return numberOfBids;
 	}
 
+	@JsonView(ItemPresentationView.SummaryView.class)
+	public boolean isOver() {
+		return over;
+	}
+	
+	public void endAuction() {
+		if(closingTime == null) {
+			closingTime = TimeUtils.getCurrentTimestamp();
+		}
+	}
+	
+	public Timestamp getClosingTime() {
+		return closingTime;
+	}
+
+	public void setClosingTime(Timestamp closingTime) {
+		this.closingTime = closingTime;
+	}
+	
 
 	@Override
 	public String toString() {

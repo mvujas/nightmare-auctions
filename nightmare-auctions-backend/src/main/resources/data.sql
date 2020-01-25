@@ -1,6 +1,7 @@
 -- to disable running this script every startup remove 
 -- spring.datasource.initialization-mode=always from application.properties
 
+delete from bid;
 delete from item;
 delete from user_role;
 delete from user;

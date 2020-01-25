@@ -46,6 +46,7 @@ public class ItemAllSearchSpecification implements Specification<Item> {
 		filtersToPerform.add(this::filterMaximumPrice);
 		filtersToPerform.add(this::filterCategory);
 		filtersToPerform.add(this::filterName);
+		filtersToPerform.add(this::filterIsOver);
 	}
 
 	@Override
@@ -100,6 +101,16 @@ public class ItemAllSearchSpecification implements Specification<Item> {
 	}
 	
 	private Predicate filterName(
+			Root<Item> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
+		Boolean isOver = searchParameters.isOver();
+		Predicate predicate = null;
+		if(isOver != null) {
+			predicate = builder.equal(root.get("over"), isOver);
+		}
+		return predicate;
+	}
+
+	private Predicate filterIsOver(
 			Root<Item> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
 		String name = searchParameters.getName();
 		Predicate predicate = null;
