@@ -8,4 +8,6 @@ export interface Item {
     postingTime: Date;
     author: User;
     category: Category;
+    numberOfBids: number;
+    price: number;
 }

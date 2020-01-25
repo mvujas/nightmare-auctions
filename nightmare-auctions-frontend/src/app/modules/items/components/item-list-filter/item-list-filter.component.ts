@@ -6,6 +6,8 @@ import { CategoryService } from '@app/core/http/category/category.service';
 import { Category } from '@app/shared/model/category';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { SearchItemsValueHolder } from '../../domain/search-items-value-holder';
+import { UserAuthHolder } from '@app/shared/domain/user-auth-holder';
+import { AuthenticationService } from '@app/core/authentication/authentication.service';
 
 @Component({
   selector: 'app-item-list-filter',
@@ -50,6 +52,7 @@ export class ItemListFilterComponent implements OnInit {
       category: '',
       sortCriteria: '',
       sortStyle: 'asc',
+      over: 'false',
       minimumPrice: 0,
       maximumPrice: 100000
     });

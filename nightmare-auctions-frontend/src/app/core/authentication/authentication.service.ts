@@ -12,7 +12,6 @@ export class AuthenticationService {
   private userDetails: BehaviorSubject<UserAuthHolder>;
 
   constructor(private http: HttpClient) {
-    localStorage.removeItem('token');
     let storageUserDetails = JSON.parse(localStorage.getItem('userDetails'));
     this.userDetails = new BehaviorSubject<UserAuthHolder>(storageUserDetails);
   }
@@ -58,6 +57,9 @@ export class AuthenticationService {
   }
 
   public get basicUserDetails(): Observable<UserAuthHolder> {
+    if(this.token === null) {
+      this.updateUserDetails(null)
+    }
     return this.userDetails.asObservable();
   }
 
