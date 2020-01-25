@@ -88,7 +88,7 @@ public class ItemRestController {
 	}
 	
 	@GetMapping("/{id}")
-	@JsonView(ItemPresentationView.SummaryView.class)
+	@JsonView(ItemPresentationView.FullView.class)
 	public Item getById(@PathVariable(required = true) Integer id) {
 		return itemService.getById(id);
 	}

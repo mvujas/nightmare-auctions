@@ -40,11 +40,9 @@ public class User implements UserDetails {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@JsonView(ItemPresentationView.SummaryView.class)
 	private int id;
 	
 	@Column(unique = true, nullable = false)
-	@JsonView(ItemPresentationView.SummaryView.class)
 	private String username;
 
 	@Column(nullable = false)
@@ -81,6 +79,7 @@ public class User implements UserDetails {
 		this.password = password;
 	}
 
+	@JsonView(ItemPresentationView.SummaryView.class)
 	public int getId() {
 		return id;
 	}
@@ -89,6 +88,7 @@ public class User implements UserDetails {
 		this.id = id;
 	}
 
+	@JsonView(ItemPresentationView.SummaryView.class)
 	public String getUsername() {
 		return username;
 	}
