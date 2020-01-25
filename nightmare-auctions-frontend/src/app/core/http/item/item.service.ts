@@ -27,4 +27,8 @@ export class ItemService {
     return this.http.get<Item>(`api/item/${id}`);
   }
 
+  public placeBid(id: number, price: number) {
+    return this.http.post(`api/item/${id}/bid`, { price: price });
+  }
+
 }

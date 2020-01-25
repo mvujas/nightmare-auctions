@@ -4,6 +4,8 @@ import { Item } from '@app/shared/model/item';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import deepEqual from 'deep-equal';
+import { UserAuthHolder } from '@app/shared/domain/user-auth-holder';
+import { AuthenticationService } from '@app/core/authentication/authentication.service';
 
 @Component({
   selector: 'app-single-item-page',
@@ -13,18 +15,40 @@ import deepEqual from 'deep-equal';
 export class SingleItemPageComponent implements OnInit {
 
   constructor(private itemService: ItemService,
+    private authService: AuthenticationService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router) { }
 
+  private currentUser: UserAuthHolder = null;
   private itemLoadingFailure: boolean = false;
   private item: Item = null;
   private bidForm: FormGroup = null;
   private previousBidFormValue = null;
   private bidFormSubmitted = null;
+  private alert = null;
 
   ngOnInit() {
+    this.authService.basicUserDetails.subscribe(value => this.currentUser = value);
     this.route.params.subscribe(this.handlePathParams.bind(this));
+  }
+
+  showErrorMessage(message) {
+    this.alert = {
+      type: 'danger',
+      message: message
+    }
+  }
+
+  showSuccessMessage(message) {
+    this.alert = {
+      type: 'success',
+      message: message
+    }
+  }
+
+  closeAlert() {
+    this.alert = null;
   }
 
   handlePathParams(params) {
@@ -66,7 +90,21 @@ export class SingleItemPageComponent implements OnInit {
   }
 
   processValue(formValue: any) {
-    console.log(formValue);
+
+    this.itemService.placeBid(this.item.id, formValue.price).subscribe(
+      this.successfulBid.bind(this),
+      console.log
+    )
+  }
+
+  successfulBid(item) {
+    this.bidForm.reset();
+    this.bidFormSubmitted = false;
+
+    this.item.numberOfBids +=  1;
+    this.item.price = this.previousBidFormValue.price;
+    
+    this.showSuccessMessage("You have successfully placed your bid");
   }
 
 }

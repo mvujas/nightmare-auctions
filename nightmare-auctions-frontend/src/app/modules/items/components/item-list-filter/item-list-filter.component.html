@@ -23,6 +23,15 @@
         </div>
 
         <div class="col col-12 no-padding">
+          <label for="searchActivenessInput">Activeness</label><br>
+          <select class="form-control" formControlName="over" id="searchActivenessInput">
+            <option value="">Show all</option>
+            <option value="false">Show active only</option>
+            <option value="true">Show over only</option>
+          </select>
+        </div>
+
+        <div class="col col-12 no-padding">
           <label for="searchSortCriteria">Sort by</label><br>
           <select class="form-control" formControlName="sortCriteria" id="searchSortCriteria">
             <option value="">Default</option>
