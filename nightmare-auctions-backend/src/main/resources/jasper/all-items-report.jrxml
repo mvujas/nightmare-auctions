@@ -149,7 +149,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{startingPrice}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["€ " + $F{startingPrice}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="280" y="0" width="60" height="30" uuid="12b069bc-73c9-4528-b8ba-8399b2d82e29">
