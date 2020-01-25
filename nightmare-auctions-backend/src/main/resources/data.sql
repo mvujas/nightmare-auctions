@@ -15,12 +15,14 @@ VALUES (1, 'USER'),
        
 INSERT INTO user(id, username, email, password, registration_time)
 VALUES (1, 'mvujas', 'pera@example.com', '$2a$10$DGLg18J2x5HELp88hQrVVua7a5svZzBGD44IFjD76YJBDu/cT/TCq', now()), -- password: maliPerica
-       (2, 'admin', 'admin@example.com', '$2a$10$RaAr5cYGq6.NSc2nODLgYeDsgWfalcJuVJyQg.nQPk.cRPJkPE4cq', now()); -- password: admin123
+       (2, 'admin', 'admin@example.com', '$2a$10$RaAr5cYGq6.NSc2nODLgYeDsgWfalcJuVJyQg.nQPk.cRPJkPE4cq', now()), -- password: admin123
+       (3, 'stasa', 'stasa@example.com', '$2a$10$RaAr5cYGq6.NSc2nODLgYeDsgWfalcJuVJyQg.nQPk.cRPJkPE4cq', now()); -- password: admin123
        
 INSERT INTO user_role(users_id, roles_id)
 VALUES (2, 1), -- USER to admin
        (2, 2), -- ADMIN to admin
-       (1, 1); -- USER to mvujas
+       (1, 1), -- USER to mvujas
+       (3, 1); -- USER to stasa
        
 INSERT INTO category(id, name)
 VALUES (1, 'CARS'),
@@ -41,3 +43,30 @@ VALUES (1, 'Audi Q5 2.0 tdi 190 Quatt At 2015. godište', 18900, 1, 1, now()), -
        (12, 'Fiat Panda 1,3 MJT 2014. godište', 3999, 1, 1, now()), -- CATEGORY: CARS, AUTHOR: mvujas
        (13, 'Ford Fiesta 1.25 2017. godište', 8590, 1, 1, now()), -- CATEGORY: CARS, AUTHOR: mvujas
        (14, 'Peugeot 308 1.6 HDI EXECUTIVE 2014. godište', 6999, 1, 1, now()); -- CATEGORY: CARS, AUTHOR: mvujas
+       
+INSERT INTO bid(id, posting_time, price, author_id, item_id)
+VALUES (1, now(), 21000, 2, 1),
+       (2, now(), 21001, 2, 1),
+       (3, now(), 21005, 2, 1),
+       (4, now(), 210000, 2, 1),
+       (5, now(), 1000000, 2, 1),
+       (6, now(), 10000, 2, 2),
+       (7, now(), 12000, 2, 2),
+       (8, now(), 14000, 2, 2),
+       (9, now(), 20000, 2, 2),
+       (10, now(), 20000, 1, 3),
+       (11, now(), 21000, 3, 3),
+       (12, now(), 22000, 1, 3),
+       (13, now(), 100000, 3, 3),
+       (14, now(), 120000, 1, 3),
+       (15, now(), 121000, 3, 3),
+       (16, now(), 150000, 1, 3),
+       (17, now(), 200000, 3, 3);
+       
+       
+       
+       
+       
+       
+       
+       

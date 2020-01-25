@@ -1,5 +1,8 @@
 package com.github.mvujas.nightmareauctionsbackend.controllers;
 
+import java.security.Principal;
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.mvujas.nightmareauctionsbackend.controllers.messages.UserRegistrationMessage;
+import com.github.mvujas.nightmareauctionsbackend.exceptionhandling.exceptions.ResourceOperationException;
+import com.github.mvujas.nightmareauctionsbackend.model.Grade;
 import com.github.mvujas.nightmareauctionsbackend.model.User;
+import com.github.mvujas.nightmareauctionsbackend.repositories.GradeRepository;
 import com.github.mvujas.nightmareauctionsbackend.services.UserService;
 
 @RestController
@@ -21,6 +27,8 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private GradeRepository gradeRepository;
 	
 	@PostMapping
 	public void registerUser(
@@ -33,5 +41,18 @@ public class UserController {
 		return userService.getUserByUsername(username);
 	}
 	
+	@GetMapping("/{username}/grades")
+	@PreAuthorize("isAuthenticated()")
+	public List<Grade> getUserGrades(
+			@PathVariable(required = true) String username,
+			Principal principal) {
+		if(!principal.getName().equals(username)) {
+			throw new ResourceOperationException(
+					"User can show only their own grades");
+		}
+		
+		User user = userService.getUserByUsername(username);
+		return gradeRepository.getUsersGrades(user);
+	}
 
 }
