@@ -1,6 +1,6 @@
 <ng-container *ngIf="item != null">
   <div class="item-item">
-    <a href="https://google.rs" class="reset-link-style">
+    <a [routerLink]="[ '/items', item.id ]" class="reset-link-style">
       <div class="item-image-container">
         <div class="inner-image-div"></div>
         <div class="hover-panel"></div>
@@ -10,15 +10,15 @@
     </a>
 
     <p class="item-info">
-      Author: {{ item.author.username }}
+      Author: <a [routerLink]="[ '/user', item.author.username ]" class="reset-link-style">{{ item.author.username }}</a>
       <br>
       Category: {{ item.category.name }}
       <br>
       Posting date: {{ item.postingTime | date: 'short' }}
       <br>
-      Number of bids: 12
+      Number of bids: {{ item.numberOfBids }}
     </p>
     
-    <p class="item-price">{{ item.startingPrice | currency }}</p>
+    <p class="item-price">{{ item.price | currency: 'EUR' }}</p>
   </div>
 </ng-container>

@@ -27,7 +27,7 @@
           <select class="form-control" formControlName="sortCriteria" id="searchSortCriteria">
             <option value="">Default</option>
             <option value="name">Name</option>
-            <option value="startingPrice">Price</option>
+            <option value="price">Price</option>
             <option value="numberOfBids">Number of bids</option>
           </select>
         </div>
@@ -40,20 +40,32 @@
           </select>
         </div>
 
-        <div class="col col-6 two-part-row-group-item">
+        <!--<div class="col col-6 two-part-row-group-item">
           <label for="searchMinimumPrice">Minimum price</label>
         </div>
 
         <div class="col col-6 two-part-row-group-item">
-          <label for="searchMinimumPrice">Maximum price</label>
+          <label for="searchMaximumPrice">Maximum price</label>
+        </div>-->
+
+        <div class="col col-12 no-padding">
+          <label for="searchMinimumPrice">Minimum price</label>
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">€</div>
+            </div>
+            <input class="form-control" type="number" min="0" formControlName="minimumPrice" id="searchMinimumPrice" value="0">
+          </div>
         </div>
 
-        <div class="col col-6 two-part-row-group-item">
-          <input class="form-control" type="number" min="0" formControlName="minimumPrice" id="searchMinimumPrice" value="0">
-        </div>
-
-        <div class="col col-6 two-part-row-group-item">
-          <input class="form-control" type="number" min="0" formControlName="maximumPrice" id="searchMinimumPrice" value="1000000">
+        <div class="col col-12 no-padding">
+          <label for="searchMaximumPrice">Maximum price</label>
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">€</div>
+            </div>
+            <input class="form-control" type="number" min="0" formControlName="maximumPrice" id="searchMaximumPrice" value="1000000">
+          </div>
         </div>
 
         <div class="col col-12 no-padding" id="search-filter-button-container">
