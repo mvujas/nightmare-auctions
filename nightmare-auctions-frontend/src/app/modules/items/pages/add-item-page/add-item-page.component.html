@@ -29,13 +29,18 @@
             </div>
             <!-- create-auction-input- -->
             <div class="form-group">
-              <label for="create-auction-input-starting-price">Starting price ($)</label>
-              <input 
-                type="number"
-                class="form-control" 
-                id="create-auction-input-starting-price" 
-                formControlName="startingPrice"
-                placeholder="Enter starting price">
+              <label for="create-auction-input-starting-price">Starting price</label>
+              <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">€</div>
+                </div>
+                <input 
+                  type="number"
+                  class="form-control" 
+                  id="create-auction-input-starting-price" 
+                  formControlName="startingPrice"
+                  placeholder="Enter starting price">
+              </div>
               <ng-container *ngIf="submitted && f.startingPrice.errors as e">
                 <small class="form-text text-danger" *ngIf="e.required">Starting price is required</small>
                 <small class="form-text text-danger" *ngIf="e.min">Item must cost at least $1</small>

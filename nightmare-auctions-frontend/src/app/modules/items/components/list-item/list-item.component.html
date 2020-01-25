@@ -16,9 +16,9 @@
       <br>
       Posting date: {{ item.postingTime | date: 'short' }}
       <br>
-      Number of bids: 12
+      Number of bids: {{ item.numberOfBids }}
     </p>
     
-    <p class="item-price">{{ item.startingPrice | currency }}</p>
+    <p class="item-price">{{ item.price | currency: 'EUR' }}</p>
   </div>
 </ng-container>

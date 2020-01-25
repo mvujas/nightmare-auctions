@@ -9,7 +9,27 @@
       <p>Author: {{ item.author.username }}</p>
       <p>Posting date: {{ item.postingTime }}</p>
       <p>Category: {{ item.category.name }}</p>
-      <p>Starting price: {{ item.startingPrice }}</p>
+      <p>Price: {{ item.price | currency: 'EUR' }}</p>
+      <p>Number of bids: {{ item.numberOfBids }}</p>
+
+      <form [formGroup]="bidForm" (ngSubmit)="handleBidFormSubmit()">
+        <div class="form-group">
+          <label for="bid-form-price-input">Bid price</label>
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">€</div>
+            </div>
+            <input type="number" formControlName="price" id="bid-form-price-input" class="form-control" placeholder="Enter bid price">
+          </div>
+          
+          <ng-container *ngIf="bidFormSubmitted && bidForm.controls.price.errors as e">
+            <small class="form-text text-danger" *ngIf="e.required">Bid price is required</small>
+            <small class="form-text text-danger" *ngIf="e.min">Bid price must be at least $1 higher than current item price</small>
+          </ng-container>
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Submit your bid</button>
+      </form>
 
     </ng-container>
 
