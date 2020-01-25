@@ -13,12 +13,11 @@
       <p>Number of bids: {{ item.numberOfBids }}</p>
 
       <ng-container *ngIf="!item.over && currentUser != null">
-        
+        <ngb-alert *ngIf="alert != null" [type]="alert.type" (click)="closeAlert()">
+          {{ alert.message }}
+        </ngb-alert>
+
         <ng-container *ngIf="currentUser.username != item.author.username; else notAuthor">
-          <ngb-alert *ngIf="alert != null" [type]="alert.type" (click)="closeAlert()">
-            {{ alert.message }}
-          </ngb-alert>
-  
           <form [formGroup]="bidForm" (ngSubmit)="handleBidFormSubmit()">
             <div class="form-group">
               <label for="bid-form-price-input">Bid price</label>
@@ -38,13 +37,18 @@
             <button type="submit" class="btn btn-primary">Submit your bid</button>
           </form>
         </ng-container>
+
         <ng-template #notAuthor>
-          <button class="btn btn-primary">End auction</button>
+          <button class="btn btn-primary" (click)="endAuction()">End auction</button>
         </ng-template>
-        
-        
+
       </ng-container>
-      
+
+      <h2>Bids</h2>
+
+      <ul>
+        <li *ngFor="let bid of item.bids">{{ bid.author.username }} ({{ bid.postingTime }}) - {{ bid.price | currency: 'EUR' }}</li>
+      </ul>
 
     </ng-container>
 
@@ -55,6 +59,7 @@
     </ng-template>
 
   </ng-container>
+
 
   <ng-template #loader>
     <div class="text-center loader-container">

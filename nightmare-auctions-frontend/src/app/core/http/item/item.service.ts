@@ -31,4 +31,8 @@ export class ItemService {
     return this.http.post(`api/item/${id}/bid`, { price: price });
   }
 
+  public endAuction(id: number) {
+    return this.http.post(`api/item/${id}/end`, {});
+  }
+
 }

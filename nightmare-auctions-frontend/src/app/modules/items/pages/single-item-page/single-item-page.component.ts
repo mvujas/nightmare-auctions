@@ -54,6 +54,10 @@ export class SingleItemPageComponent implements OnInit {
   handlePathParams(params) {
     let id: number = params.id;
 
+    this.loadItem(id);
+  }
+
+  loadItem(id) {
     this.itemService.getById(id).subscribe(
       this.successfulLoadOfData.bind(this),
       this.failedToLoadItem.bind(this)
@@ -93,18 +97,37 @@ export class SingleItemPageComponent implements OnInit {
 
     this.itemService.placeBid(this.item.id, formValue.price).subscribe(
       this.successfulBid.bind(this),
-      console.log
+      this.failedBid.bind(this)
     )
   }
 
   successfulBid(item) {
+    this.loadItem(this.item.id);
+
     this.bidForm.reset();
     this.bidFormSubmitted = false;
 
-    this.item.numberOfBids +=  1;
-    this.item.price = this.previousBidFormValue.price;
-    
     this.showSuccessMessage("You have successfully placed your bid");
+  }
+
+  failedBid(res) {
+    this.showErrorMessage("Failed to place the bid. Please try again later");
+  }
+
+  endAuction() {
+    this.itemService.endAuction(this.item.id).subscribe(
+      this.successfulEndOfAuction.bind(this),
+      console.log
+    );
+  }
+
+  successfulEndOfAuction(value) {
+    this.showSuccessMessage("You have successfully ended auction");
+    this.loadItem(this.item.id);
+  }
+
+  failedEndOfAuction(res) {
+    this.showErrorMessage("Failed to end the auction. Please try again later");
   }
 
 }

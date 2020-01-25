@@ -10,4 +10,5 @@ export interface Item {
     category: Category;
     numberOfBids: number;
     price: number;
+    over: boolean;
 }
