@@ -5,7 +5,12 @@
     <ng-container *ngIf="!userLoadingFailure; else failedToLoadUser">
       <h1>{{ user.username }}</h1>
 
+      <p>Rating: <app-rating-display [rating]="user.avgGrade"></app-rating-display></p>
+
       <p>Email: {{ user.email }}</p>
+
+
+      <h2>Auctions</h2>
     </ng-container>
 
     <ng-template #failedToLoadUser>
@@ -17,10 +22,6 @@
   </ng-container>
 
   <ng-template #loader>
-    <div class="text-center loader-container">
-      <div class="spinner-border" role="status">
-        <span class="sr-only">Loading...</span>
-      </div>
-    </div>
+    <app-loader></app-loader>
   </ng-template>
 </div>

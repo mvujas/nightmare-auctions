@@ -6,10 +6,10 @@ import { LoaderComponent } from '@app/shared/components/loader/loader.component'
 import { SingleGradeFormComponent } from './components/single-grade-form/single-grade-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SharedModule } from '@app/shared/shared.module';
 
 const components: any[] = [
   WaitingGradesPageComponent,
-  LoaderComponent,
   SingleGradeFormComponent
 ];
 
@@ -19,7 +19,8 @@ const components: any[] = [
     GradesRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    NgbModule
+    NgbModule,
+    SharedModule
   ],
   declarations: [ ...components ]
 })

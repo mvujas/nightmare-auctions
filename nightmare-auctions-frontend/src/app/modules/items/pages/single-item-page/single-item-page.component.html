@@ -6,7 +6,10 @@
 
       <h1>{{ item.name }}</h1>
 
-      <p>Author: {{ item.author.username }}</p>
+      <p>
+        Author: {{ item.author.username }} 
+        <app-rating-display [rating]="item.author.avgGrade"></app-rating-display>
+      </p>
       <p>Posting date: {{ item.postingTime }}</p>
       <p>Category: {{ item.category.name }}</p>
       <p>Price: {{ item.price | currency: 'EUR' }}</p>

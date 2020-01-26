@@ -1,0 +1,92 @@
+@import 'src/assets/scss/bootstrap-utils';
+
+.chat-messages {
+    z-index: 100;
+
+    position: fixed;
+
+    bottom: 15px;
+    right: 15px;
+
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+
+    @include transition(1s all ease-in-out 500ms);
+
+    .chat-popup {
+        background-color: red;
+        .inner-container {
+            width: 100%;
+            height: 100%;
+            background-color: transparent;
+            display: flex;
+            @include transition(300ms background-color ease-in-out);
+
+            &:hover {
+                background-color: rgba(0, 0, 0, 0.3);
+            }
+        }
+        @include transition(1s background-color ease-in-out 500ms);
+        @include transition(500ms height ease-in-out);
+
+        height: 100%;
+        cursor: pointer;
+
+        $icon-size: 2em;
+        
+        i {
+            font-size: $icon-size;
+            margin: auto;
+            vertical-align: middle;
+
+            color: white;
+        }
+    }
+
+    #chat-context-box {
+        @include transition(500ms flex ease-in-out);
+
+        border: none;
+        box-sizing: border-box;
+        border-top: none;
+
+        overflow: hidden;
+
+        flex: 1 1;
+    }
+    
+ 
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    max-width: 100%;
+
+    &.active {
+        @include transition(1s all ease-in-out);
+
+        background: white;
+        border-radius: 0;
+        width: 500px;
+        max-width: 100%;
+        height: 500px;
+
+        bottom: 0;
+        right: 0;
+
+        .chat-popup {
+            @include transition(1s background-color ease-in-out);
+            @include transition(500ms height ease-in-out 1s);
+            height: 50px;
+            background-color: blue;
+        }
+
+        #chat-context-box {
+            @include transition(500ms flex ease-in-out 1s);
+
+            border-left: 1px solid black;
+            flex: 0 1 100%;
+        }
+    }
+}
