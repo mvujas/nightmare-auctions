@@ -11,11 +11,18 @@ import { TokenInterceptor } from './interceptors/token.interceptor';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '@app/shared/shared.module';
 import { ChatComponent } from './chat/chat.component';
+import { ChatFaceListComponent } from './chat/sub-components/chat-face-list/chat-face-list.component';
+import { ChatFaceComponent } from './chat/sub-components/chat-face/chat-face.component';
 
 const componentsToExport: any[] = [
   NavigationBarComponent,
   FooterComponent,
   ChatComponent
+];
+
+const localComponents: any[] = [
+  ChatFaceListComponent,
+  ChatFaceComponent
 ];
 
 const interceptors: any[] = [
@@ -34,7 +41,8 @@ const interceptors: any[] = [
     SharedModule
   ],
   declarations: [ 
-    ...componentsToExport
+    ...componentsToExport,
+    ...localComponents
   ],
   exports: [ ...componentsToExport ],
   providers: [
