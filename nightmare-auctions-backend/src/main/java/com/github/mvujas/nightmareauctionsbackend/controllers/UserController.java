@@ -17,11 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.github.mvujas.nightmareauctionsbackend.controllers.messages.UserRegistrationMessage;
 import com.github.mvujas.nightmareauctionsbackend.exceptionhandling.exceptions.ResourceOperationException;
-import com.github.mvujas.nightmareauctionsbackend.model.Grade;
 import com.github.mvujas.nightmareauctionsbackend.model.GradeHolder;
 import com.github.mvujas.nightmareauctionsbackend.model.User;
 import com.github.mvujas.nightmareauctionsbackend.presentationview.GradePresentationView;
-import com.github.mvujas.nightmareauctionsbackend.repositories.GradeRepository;
+import com.github.mvujas.nightmareauctionsbackend.services.GradeService;
 import com.github.mvujas.nightmareauctionsbackend.services.UserService;
 
 @RestController
@@ -31,7 +30,7 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	@Autowired
-	private GradeRepository gradeRepository;
+	private GradeService gradeService;
 	
 	@PostMapping
 	public void registerUser(
@@ -61,7 +60,7 @@ public class UserController {
 				username, principal, "User can show only their own grades");
 		
 		User user = userService.getUserByUsername(username);
-		return gradeRepository.getFinishedGradesForUser(user);
+		return gradeService.getFinishedGradesForUser(user);
 	}
 	
 	@GetMapping("/{username}/grades/waiting")
@@ -73,7 +72,7 @@ public class UserController {
 		checkPrincipalWithUsername(
 				username, principal, "User can show only their own grades");
 		User user = userService.getUserByUsername(username);
-		return gradeRepository.getWaitingGradesForGivingUser(user);
+		return gradeService.getWaitingGradesForGivingUser(user);
 	}
 	
 }
