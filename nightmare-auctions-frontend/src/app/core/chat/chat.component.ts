@@ -168,6 +168,9 @@ export class ChatComponent implements OnInit {
 
   // =============| LOADING CHATTERS START |=============
   loadChatters() {
+    if(this.myUsername == null) {
+      this.clearActiveChatersInterval();
+    }
     if(!this.isActive() && this.users != null) {
       return;
     }
@@ -193,9 +196,12 @@ export class ChatComponent implements OnInit {
 
   // =============| LOADING MESSAGES START |=============
   loadMessages() {
+    if(this.myUsername == null) {
+      this.clearMessagesInterval();
+    }
     if(!this.isActive() && this.messages != null) {
       return;
-    }
+    } 
 
     this.privateMessageService
       .getMessagesBetweenUsersSince(this.myUsername, this.activeUsername, this.lastMessageDate)

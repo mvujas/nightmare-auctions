@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AllItemsPageComponent } from './pages/all-items-page/all-items-page.component';
 import { AddItemPageComponent } from './pages/add-item-page/add-item-page.component';
 import { SingleItemPageComponent } from './pages/single-item-page/single-item-page.component';
+import { AuthGuard } from '@app/core/guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -11,7 +12,11 @@ const routes: Routes = [
   },
   {
     path: 'add',
-    component: AddItemPageComponent
+    component: AddItemPageComponent,
+    canActivate: [AuthGuard],
+    data: {
+      authorisedOnly: true
+    }
   },
   {
     path: ':id',
