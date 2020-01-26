@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.github.mvujas.nightmareauctionsbackend.controllers.messages.PrivateMessageMessageHolder;
+import com.github.mvujas.nightmareauctionsbackend.exceptionhandling.exceptions.ResourceOperationException;
 import com.github.mvujas.nightmareauctionsbackend.model.PrivateMessage;
 import com.github.mvujas.nightmareauctionsbackend.model.User;
 import com.github.mvujas.nightmareauctionsbackend.presentationview.MessagePresentationView;
@@ -34,9 +35,14 @@ public class PrivateMessageRestController {
 
 	@GetMapping("/{username}")
 	@JsonView(UserPresentationView.UsernameOnly.class)
+	@PreAuthorize("isAuthenticated()")
 	public List<User> getAllChattersForUser(
 			@PathVariable(required = true) String username,
 			Principal principal) {
+		if(!principal.getName().equals(username)) {
+			throw new ResourceOperationException(
+					"User can see only their own waiting grades");
+		}
 		return privateMessageService.getChattersOrderedByDateForUser(username);
 	}
 
@@ -52,6 +58,7 @@ public class PrivateMessageRestController {
 	
 	@GetMapping("/{requesterUsername}/{otherUsername}")
 	@JsonView(MessagePresentationView.MessagesBetweenUsersView.class)
+	@PreAuthorize("isAuthenticated()")
 	public List<PrivateMessage> getPrivateMessagesBetweenUsers(
 			@PathVariable(required = true) String requesterUsername,
 			@PathVariable(required = true) String otherUsername,
@@ -61,6 +68,10 @@ public class PrivateMessageRestController {
 			Principal principal) {
 		if(since == null) {
 			since = new Date(0);
+		}
+		if(!principal.getName().equals(requesterUsername)) {
+			throw new ResourceOperationException(
+					"Users can send messages only on their own name");
 		}
 		return privateMessageService
 				.getMessagesBetweenUsersSince(requesterUsername, otherUsername, since);

@@ -12,6 +12,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonView;
+import com.github.mvujas.nightmareauctionsbackend.presentationview.CategoryPresentationView;
 import com.github.mvujas.nightmareauctionsbackend.presentationview.ItemPresentationView;
 
 @Entity
@@ -37,7 +38,7 @@ public class Category {
 		super();
 	}
 
-	@JsonView(ItemPresentationView.SummaryView.class)
+	@JsonView(CategoryPresentationView.Identifier.class)
 	public int getId() {
 		return id;
 	}
@@ -46,7 +47,7 @@ public class Category {
 		this.id = id;
 	}
 
-	@JsonView(ItemPresentationView.SummaryView.class)
+	@JsonView(CategoryPresentationView.Name.class)
 	public String getName() {
 		return name;
 	}
@@ -56,6 +57,7 @@ public class Category {
 	}
 
 	@JsonBackReference
+	@JsonView(CategoryPresentationView.Items.class)
 	public List<Item> getItems() {
 		return items;
 	}

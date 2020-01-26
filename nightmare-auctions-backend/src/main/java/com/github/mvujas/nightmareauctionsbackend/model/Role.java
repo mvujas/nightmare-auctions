@@ -12,6 +12,9 @@ import javax.persistence.Table;
 
 import org.springframework.security.core.GrantedAuthority;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.github.mvujas.nightmareauctionsbackend.presentationview.RolePresentationView;
+
 @Entity
 @Table(name = "role")
 public class Role implements GrantedAuthority {
@@ -40,6 +43,7 @@ public class Role implements GrantedAuthority {
 		super();
 	}
 
+	@JsonView(RolePresentationView.Identifier.class)
 	public int getId() {
 		return id;
 	}
@@ -48,12 +52,22 @@ public class Role implements GrantedAuthority {
 		this.id = id;
 	}
 
+	@JsonView(RolePresentationView.Name.class)
 	public String getName() {
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@JsonView(RolePresentationView.Users.class)
+	public List<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<User> users) {
+		this.users = users;
 	}
 
 	@Override
@@ -63,6 +77,7 @@ public class Role implements GrantedAuthority {
 
 	// GrantedAuthority required method
 	@Override
+	@JsonView(RolePresentationView.Authority.class)
 	public String getAuthority() {
 		final String springStandardAuthorityPrefix = "ROLE_";
 		return springStandardAuthorityPrefix + name;

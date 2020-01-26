@@ -9,4 +9,7 @@ public class UserPresentationView {
 	public static interface Authorithies {}
 	public static interface AvgGrade {}
 
+	public static interface FullProfile 
+		extends UsernameOnly, Email, Roles, AvgGrade {}
+	
 }

@@ -20,6 +20,7 @@ import com.github.mvujas.nightmareauctionsbackend.exceptionhandling.exceptions.R
 import com.github.mvujas.nightmareauctionsbackend.model.GradeHolder;
 import com.github.mvujas.nightmareauctionsbackend.model.User;
 import com.github.mvujas.nightmareauctionsbackend.presentationview.GradePresentationView;
+import com.github.mvujas.nightmareauctionsbackend.presentationview.UserPresentationView;
 import com.github.mvujas.nightmareauctionsbackend.services.GradeService;
 import com.github.mvujas.nightmareauctionsbackend.services.UserService;
 
@@ -39,6 +40,7 @@ public class UserController {
 	}
 	
 	@GetMapping("/{username}")
+	@JsonView(UserPresentationView.FullProfile.class)
 	public User getUserByUsername(@PathVariable(required = true) String username) {
 		return userService.getUserByUsername(username);
 	}

@@ -13,6 +13,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.github.mvujas.nightmareauctionsbackend.presentationview.BidPresentationView;
 import com.github.mvujas.nightmareauctionsbackend.presentationview.ItemPresentationView;
 import com.github.mvujas.nightmareauctionsbackend.util.TimeUtils;
 
@@ -44,8 +45,8 @@ public class Bid {
 	protected void onCreate() {
 		postingTime = TimeUtils.getCurrentTimestamp();
 	}
-	
 
+	@JsonView(BidPresentationView.Identifier.class)
 	public int getId() {
 		return id;
 	}
@@ -54,7 +55,7 @@ public class Bid {
 		this.id = id;
 	}
 
-	@JsonView(ItemPresentationView.FullView.class)
+	@JsonView(BidPresentationView.Price.class)
 	public int getPrice() {
 		return price;
 	}
@@ -63,7 +64,7 @@ public class Bid {
 		this.price = price;
 	}
 
-	@JsonView(ItemPresentationView.FullView.class)
+	@JsonView(BidPresentationView.Author.class)
 	public User getAuthor() {
 		return author;
 	}
@@ -71,8 +72,8 @@ public class Bid {
 	public void setAuthor(User author) {
 		this.author = author;
 	}
-	
-	@JsonView(ItemPresentationView.FullView.class)
+
+	@JsonView(BidPresentationView.PostingTime.class)
 	public Timestamp getPostingTime() {
 		return postingTime;
 	}
@@ -81,6 +82,7 @@ public class Bid {
 		this.postingTime = postingTime;
 	}
 
+	@JsonView(BidPresentationView.Item.class)
 	public Item getItem() {
 		return item;
 	}
@@ -89,6 +91,7 @@ public class Bid {
 		this.item = item;
 	}
 
+	@JsonView(BidPresentationView.Grade.class)
 	public Grade getGrade() {
 		return grade;
 	}

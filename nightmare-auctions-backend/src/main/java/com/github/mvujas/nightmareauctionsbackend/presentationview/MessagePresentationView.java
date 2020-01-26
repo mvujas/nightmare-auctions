@@ -11,8 +11,7 @@ public class MessagePresentationView {
 	private static interface UserIdentifyingInfo
 		extends UserPresentationView.UsernameOnly {}
 	
-	public static class MessagesBetweenUsersView 
-		implements Sender, Receiver, Text, SendingTime, UserIdentifyingInfo {}
-	
+	public static interface MessagesBetweenUsersView 
+		extends Sender, Receiver, Text, SendingTime, UserIdentifyingInfo {}
 	
 }

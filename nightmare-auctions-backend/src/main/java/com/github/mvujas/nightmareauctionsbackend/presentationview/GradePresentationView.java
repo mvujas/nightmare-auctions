@@ -14,10 +14,10 @@ public class GradePresentationView {
 	
 	
 	
-	public static class IncompletedGradesView 
-		implements Identifier, ItemInfo, GivenGrade, UserInfo {};
+	public static interface IncompletedGradesView 
+		extends Identifier, ItemInfo, GivenGrade, UserInfo {};
 		
-	public static class UserReceivedGradesView
-		implements Identifier, ItemInfo, ReceivedGrade, CompleteGrade, UserInfo {}
+	public static interface UserReceivedGradesView
+		extends Identifier, ItemInfo, ReceivedGrade, CompleteGrade, UserInfo {}
 
 }

@@ -90,7 +90,7 @@ public class Item {
 		super();
 	}
 
-	@JsonView(ItemPresentationView.SummaryView.class)
+	@JsonView(ItemPresentationView.Identifier.class)
 	public int getId() {
 		return id;
 	}
@@ -99,7 +99,7 @@ public class Item {
 		this.id = id;
 	}
 
-	@JsonView(ItemPresentationView.SummaryView.class)
+	@JsonView(ItemPresentationView.Name.class)
 	public String getName() {
 		return name;
 	}
@@ -108,7 +108,7 @@ public class Item {
 		this.name = name;
 	}
 
-	@JsonView(ItemPresentationView.FullView.class)
+	@JsonView(ItemPresentationView.StartingPrice.class)
 	public int getStartingPrice() {
 		return startingPrice;
 	}
@@ -118,7 +118,7 @@ public class Item {
 	}
 
     @JsonManagedReference
-	@JsonView(ItemPresentationView.SummaryView.class)
+	@JsonView(ItemPresentationView.Category.class)
 	public Category getCategory() {
 		return category;
 	}
@@ -126,8 +126,8 @@ public class Item {
 	public void setCategory(Category category) {
 		this.category = category;
 	}
-	
-	@JsonView(ItemPresentationView.SummaryView.class)
+
+	@JsonView(ItemPresentationView.PostingTime.class)
 	public Timestamp getPostingTime() {
 		return postingTime;
 	}
@@ -136,7 +136,7 @@ public class Item {
 		this.postingTime = postingTime;
 	}
 
-	@JsonView(ItemPresentationView.SummaryView.class)
+	@JsonView(ItemPresentationView.Author.class)
     @JsonManagedReference
 	public User getAuthor() {
 		return author;
@@ -146,7 +146,7 @@ public class Item {
 		this.author = author;
 	}
 
-	@JsonView(ItemPresentationView.FullView.class)
+	@JsonView(ItemPresentationView.Bids.class)
 	public List<Bid> getBids() {
 		return bids;
 	}
@@ -157,17 +157,17 @@ public class Item {
 		price = null;
 	}
 
-	@JsonView(ItemPresentationView.SummaryView.class)
+	@JsonView(ItemPresentationView.Price.class)
 	public int getPrice() {
 		return price;
 	}
 
-	@JsonView(ItemPresentationView.SummaryView.class)
+	@JsonView(ItemPresentationView.NumberOfBids.class)
 	public int getNumberOfBids() {
 		return numberOfBids;
 	}
 
-	@JsonView(ItemPresentationView.SummaryView.class)
+	@JsonView(ItemPresentationView.Over.class)
 	public boolean isOver() {
 		return over;
 	}
@@ -177,7 +177,8 @@ public class Item {
 			closingTime = TimeUtils.getCurrentTimestamp();
 		}
 	}
-	
+
+	@JsonView(ItemPresentationView.ClosingTime.class)
 	public Timestamp getClosingTime() {
 		return closingTime;
 	}
@@ -186,6 +187,7 @@ public class Item {
 		this.closingTime = closingTime;
 	}
 
+	@JsonView(ItemPresentationView.Grade.class)
 	public Grade getGrade() {
 		return grade;
 	}
