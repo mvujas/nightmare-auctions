@@ -10,11 +10,8 @@
 
 .chat-face-list-content {
     overflow-y: auto;
-    flex: 0 1 0%;
-
-    .chat-face:not(:last-child) {
-        background: red;
-    }
+    flex: 2;
+    border-right: 1px solid #bbb;
 }
 
 .chat-face-list-heading {
@@ -24,4 +21,9 @@
     text-align: center;
     font-size: 1.5em;
     padding: 5px 0;
+}
+
+::-webkit-scrollbar {
+    width: 0px;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
 }

@@ -1,0 +1,45 @@
+@import "src/assets/scss/bootstrap-utils";
+
+.chat-content {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    max-height: 100%;
+}
+
+.user-username {
+    font-size: 1.5em;
+    padding: 4.5px 10px;
+    box-sizing: border-box;
+    background-color: #eee;
+    border-bottom: 1px solid #bbb;
+}
+
+.message-content {
+    flex: 2;
+    position: relative;
+
+    .message-list {
+        position: absolute;
+        max-height: 100%;
+        width: 100%;
+        bottom: 0;
+        overflow-y: auto;
+    }
+}
+
+.message-form {
+    background-color: #eee;
+    box-sizing: border-box;
+    padding: 5px;
+    border-top: 1px solid #bbb;
+
+    input:focus, input:active {
+        @include box-shadow(none);
+    }
+}
+
+::-webkit-scrollbar {
+    width: 0px;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
+}

@@ -13,6 +13,8 @@ import { SharedModule } from '@app/shared/shared.module';
 import { ChatComponent } from './chat/chat.component';
 import { ChatFaceListComponent } from './chat/sub-components/chat-face-list/chat-face-list.component';
 import { ChatFaceComponent } from './chat/sub-components/chat-face/chat-face.component';
+import { ChatContentComponent } from './chat/sub-components/chat-content/chat-content.component';
+import { MessageComponent } from './chat/sub-components/message/message.component';
 
 const componentsToExport: any[] = [
   NavigationBarComponent,
@@ -22,7 +24,9 @@ const componentsToExport: any[] = [
 
 const localComponents: any[] = [
   ChatFaceListComponent,
-  ChatFaceComponent
+  ChatFaceComponent,
+  ChatContentComponent,
+  MessageComponent
 ];
 
 const interceptors: any[] = [
