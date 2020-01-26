@@ -9,6 +9,10 @@
 
       <p>Email: {{ user.email }}</p>
 
+      <button 
+        class="btn btn-primary" 
+        (click)="openChatWithUser(user.username)">
+        Open chat</button>
 
       <h2>Auctions</h2>
     </ng-container>

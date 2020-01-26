@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '@app/shared/model/user';
 import { UserService } from '@app/core/http/user/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ChatService } from '@app/core/services/chat.service';
 
 @Component({
   selector: 'app-single-user-page',
@@ -11,6 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class SingleUserPageComponent implements OnInit {
 
   constructor(private userService: UserService,
+    private chatService: ChatService,
     private route: ActivatedRoute,
     private router: Router) { }
 
@@ -41,6 +43,10 @@ export class SingleUserPageComponent implements OnInit {
 
   successfulLoadOfData(user) {
     this.user = user;
+  }
+
+  openChatWithUser(username: string) {
+    this.chatService.openChat(username);
   }
 
 }

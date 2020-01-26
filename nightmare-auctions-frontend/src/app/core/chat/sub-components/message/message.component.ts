@@ -10,6 +10,8 @@ export class MessageComponent implements OnInit {
   @Input()
   private text: string;
   @Input()
+  private date: Date;
+  @Input()
   private received: boolean;
 
   constructor() { }

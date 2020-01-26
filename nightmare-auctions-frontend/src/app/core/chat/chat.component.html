@@ -1,5 +1,5 @@
-<div class="chat-messages active" id="chat-container">
-  <div class="chat-popup" id="chat-control-section">
+<div class="chat-messages" id="chat-container" *ngIf="myUsername">
+  <div class="chat-popup" id="chat-control-section" (click)="toggleActive()">
     <div class="inner-container">
       <i class="material-icons">
         message
@@ -16,7 +16,7 @@
         
         <app-chat-face-list 
           (chatChoosen)="handleChatChoosen($event)"
-          [users]="users"
+          [users]="allActiveUserChats"
           [activeUsername]="activeUsername"
         ></app-chat-face-list>
 
@@ -29,6 +29,7 @@
           [myUsername]="myUsername"
           [messages]="messages"
           (sendMessage)="handleMessageSendSubmission($event)"
+          #chatContent
         ></app-chat-content>
 
       </div>

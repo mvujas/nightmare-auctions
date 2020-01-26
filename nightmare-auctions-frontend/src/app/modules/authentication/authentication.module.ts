@@ -6,15 +6,13 @@ import { RegistrationPageComponent } from './pages/registration-page/registratio
 import { FancyInputWithUnderlineComponent } from '@app/shared/components/fancy-input/fancy-input-with-underline/fancy-input-with-underline.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SharedModule } from '@app/shared/shared.module';
 
 const components: any[] = [
   LoginPageComponent,
   RegistrationPageComponent
 ];
 
-const sharedComponentsUsed: any[] = [
-  FancyInputWithUnderlineComponent
-];
 
 @NgModule({
   imports: [
@@ -22,11 +20,11 @@ const sharedComponentsUsed: any[] = [
     AuthenticationRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    NgbModule
+    NgbModule,
+    SharedModule
   ],
   declarations: [ 
-    ...components, 
-    ...sharedComponentsUsed 
+    ...components
   ]
 })
 export class AuthenticationModule { }
