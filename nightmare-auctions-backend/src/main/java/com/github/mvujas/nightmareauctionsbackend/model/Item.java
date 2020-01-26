@@ -35,6 +35,9 @@ public class Item {
 	@Column(unique = true, nullable = false)
 	private String name;
 	
+	@Column(columnDefinition="TEXT", nullable = false)
+	private String details;
+	
 	@Column(nullable = false)
 	private int startingPrice;
 	
@@ -194,6 +197,15 @@ public class Item {
 
 	public void setGrade(Grade grade) {
 		this.grade = grade;
+	}
+
+	@JsonView(ItemPresentationView.Details.class)
+	public String getDetails() {
+		return details;
+	}
+
+	public void setDetails(String details) {
+		this.details = details;
 	}
 
 	@Override

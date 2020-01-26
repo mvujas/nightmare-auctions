@@ -47,7 +47,7 @@ public class ItemRestController {
 	@JsonView(ItemPresentationView.SummaryView.class)
 	public Page<Item> getAllItems(
 			@RequestParam(required = false) String name,
-			@RequestParam(required = false) String categoryName,
+			@RequestParam(required = false) String category,
 			@RequestParam(required = false) String username,
 			@RequestParam(required = false) Integer minimumPrice,
 			@RequestParam(required = false) Integer maximumPrice,
@@ -56,7 +56,7 @@ public class ItemRestController {
 		
 		SearchParameters searchParams = new SearchParameters(
 				name, 
-				categoryName, 
+				category, 
 				username,
 				minimumPrice, 
 				maximumPrice,
@@ -76,6 +76,7 @@ public class ItemRestController {
 				itemCreationMessage.getName().trim(),
 				itemCreationMessage.getStartingPrice(),
 				itemCreationMessage.getCategoryName(),
+				itemCreationMessage.getDetails(),
 				principal.getName());
 	}
 	
@@ -110,8 +111,6 @@ public class ItemRestController {
 	public void endAuction(
 			@PathVariable(required = true) Integer id,
 			Principal principal) {
-		System.out.println("Stiglo nesto");
-		
 		itemService.endAuction(id, principal.getName());
 	}
 

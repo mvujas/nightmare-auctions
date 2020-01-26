@@ -66,6 +66,7 @@ public class ItemService {
 			String name,
 			int startingPrice,
 			String categoryName,
+			String details,
 			String authorUsername) {
 		
 		Category category = 
@@ -78,6 +79,7 @@ public class ItemService {
 				startingPrice, 
 				category);
 		
+		item.setDetails(details);
 		item.setAuthor(user);
 		
 		itemRepository.saveAndFlush(item);

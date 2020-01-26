@@ -12,6 +12,7 @@ public final class ItemPresentationView {
 	public static interface Bids {}
 	public static interface Grade {}
 	public static interface NumberOfBids {}
+	public static interface Details {}
 	public static interface Price {}
 	public static interface Over {}
 	
@@ -40,6 +41,6 @@ public final class ItemPresentationView {
 			Author{}
 	
 	public static interface FullView 
-		extends Bids, BidInfo, SummaryView, Over {}
+		extends Bids, BidInfo, SummaryView, Over, Details {}
 
 }

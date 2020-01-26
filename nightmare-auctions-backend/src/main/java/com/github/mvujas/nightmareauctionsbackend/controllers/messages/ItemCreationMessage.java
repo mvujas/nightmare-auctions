@@ -21,6 +21,9 @@ public class ItemCreationMessage {
 		message = "There is no category with given name")
 	private String categoryName;
 
+	@NotNull(message = "Details cannot be null")
+	private String details;
+	
 	public String getName() {
 		return name;
 	}
@@ -43,6 +46,14 @@ public class ItemCreationMessage {
 
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
+	}
+
+	public String getDetails() {
+		return details;
+	}
+
+	public void setDetails(String details) {
+		this.details = details;
 	}
 
 }
