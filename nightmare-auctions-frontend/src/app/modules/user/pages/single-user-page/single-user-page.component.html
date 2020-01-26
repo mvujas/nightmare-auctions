@@ -16,6 +16,16 @@
         Open chat</button>
 
       <h2>Auctions</h2>
+
+      <div class="row" *ngIf="items != null">
+
+        <app-list-item 
+          class="col col-12 col-lg-4 col-xl-3 col-sm-6" 
+          *ngFor="let item of items.content"
+          [item]="item"
+        ></app-list-item>
+
+      </div>
     </ng-container>
 
     <ng-template #failedToLoadUser>

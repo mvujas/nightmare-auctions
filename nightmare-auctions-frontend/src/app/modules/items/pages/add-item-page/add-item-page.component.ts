@@ -42,7 +42,8 @@ export class AddItemPageComponent implements OnInit {
       this.newItemForm = this.formBuilder.group({
         name: ['', [Validators.required, Validators.pattern(/^.*\S.*$/)]],
         startingPrice: ['', [Validators.required, Validators.min(1)]],
-        categoryName: ['', Validators.required]
+        categoryName: ['', Validators.required],
+        details: ['']
       });
   
       this.categoriesResult = {

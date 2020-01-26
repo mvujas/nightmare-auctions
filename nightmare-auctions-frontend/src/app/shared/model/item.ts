@@ -4,6 +4,7 @@ import { User } from './user';
 export interface Item {
     id: number;
     name: string;
+    details: string;
     startingPrice: number;
     postingTime: Date;
     author: User;

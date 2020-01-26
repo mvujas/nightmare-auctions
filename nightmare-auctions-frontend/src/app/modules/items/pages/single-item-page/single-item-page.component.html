@@ -7,13 +7,14 @@
       <h1>{{ item.name }}</h1>
 
       <p>
-        Author: {{ item.author.username }} 
+        Author: <a [routerLink]="[ '/user', item.author.username ]" class="reset-link-style">{{ item.author.username }}</a>
         <app-rating-display [rating]="item.author.avgGrade"></app-rating-display>
       </p>
-      <p>Posting date: {{ item.postingTime }}</p>
+      <p>Posting date: {{ item.postingTime | date: 'short' }}</p>
       <p>Category: {{ item.category.name }}</p>
       <p>Price: {{ item.price | currency: 'EUR' }}</p>
       <p>Number of bids: {{ item.numberOfBids }}</p>
+      <p>Details: <br> {{ item.details }}</p>
 
       <ng-container *ngIf="!item.over && currentUser != null">
         <ngb-alert *ngIf="alert != null" [type]="alert.type" (click)="closeAlert()">
@@ -50,7 +51,7 @@
       <h2>Bids</h2>
 
       <ul>
-        <li *ngFor="let bid of item.bids">{{ bid.author.username }} ({{ bid.postingTime }}) - {{ bid.price | currency: 'EUR' }}</li>
+        <li *ngFor="let bid of item.bids">{{ bid.author.username }} ({{ bid.postingTime | date: 'short' }}) - {{ bid.price | currency: 'EUR' }}</li>
       </ul>
 
     </ng-container>
