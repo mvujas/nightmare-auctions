@@ -35,14 +35,18 @@
               {{ userDetails.username }}
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <a class="dropdown-item" href="#">
+              <a class="dropdown-item" [routerLink]="[ '/user', userDetails.username ]">
                 <i class="material-icons">person</i>
                 Profile
               </a>
-              <a class="dropdown-item" href="#">
+              <a class="dropdown-item" routerLink="/grades/waiting">
+                <i class="material-icons">grade</i>
+                Grades
+              </a>
+              <!--<a class="dropdown-item" href="#">
                 <i class="material-icons">settings_applications</i>
                 Settings
-              </a>
+              </a>-->
               <hr>
               <a class="dropdown-item" (click)="logout()" style="cursor: pointer">
                 <i class="material-icons">exit_to_app</i>
