@@ -1,0 +1,25 @@
+<div class="grade-form">
+  <p>
+    User: {{ gradeHolder.receivingGrade.username }}
+    <br>
+    <a href="/items/{{ gradeHolder.itemId }}" target="_blank" rel="noopener noreferrer">Item</a>
+  </p>
+  <ngb-alert *ngIf="alert != null" [type]="alert.type" (click)="closeAlert()">
+    {{ alert.message }}
+  </ngb-alert>
+  <form [formGroup]="waitingGradeForm" (ngSubmit)="handleFormSubmit()">
+    <div class="form-group">
+      <label for="waiting-grade-value-input">Grade</label>
+      <select formControlName="value" class="form-control" id="waiting-grade-value-input">
+        <option value="" disabled>Choose grade</option>
+        <option value="1">I'm unsatisfied</option>
+        <option value="2">I'm satisfied</option>
+        <option value="3">Excellent user</option>
+      </select>
+      <ng-container *ngIf="submitted && waitingGradeForm.controls.value.errors as e">
+        <small class="form-text text-danger" *ngIf="e.required">You must choose grade first</small>
+      </ng-container>
+    </div>
+    <button type="submit" class="btn btn-primary">Save grade</button>
+  </form>
+</div>

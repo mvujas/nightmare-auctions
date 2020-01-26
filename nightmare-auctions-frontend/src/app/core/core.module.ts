@@ -9,14 +9,24 @@ import { ApiPrefixInterceptor } from './interceptors/api-prefix.interceptor';
 import { ErrorHandlerInterceptor } from './interceptors/error-handler.interceptor';
 import { TokenInterceptor } from './interceptors/token.interceptor';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from '@app/shared/shared.module';
+import { ChatComponent } from './chat/chat.component';
+import { ChatFaceListComponent } from './chat/sub-components/chat-face-list/chat-face-list.component';
+import { ChatFaceComponent } from './chat/sub-components/chat-face/chat-face.component';
+import { ChatContentComponent } from './chat/sub-components/chat-content/chat-content.component';
+import { MessageComponent } from './chat/sub-components/message/message.component';
 
 const componentsToExport: any[] = [
   NavigationBarComponent,
-  FooterComponent
+  FooterComponent,
+  ChatComponent
 ];
 
-const sharedComponentsUsed: any[] = [
-  FancyInputComponent
+const localComponents: any[] = [
+  ChatFaceListComponent,
+  ChatFaceComponent,
+  ChatContentComponent,
+  MessageComponent
 ];
 
 const interceptors: any[] = [
@@ -31,11 +41,12 @@ const interceptors: any[] = [
     RouterModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule
   ],
   declarations: [ 
     ...componentsToExport,
-    ...sharedComponentsUsed
+    ...localComponents
   ],
   exports: [ ...componentsToExport ],
   providers: [

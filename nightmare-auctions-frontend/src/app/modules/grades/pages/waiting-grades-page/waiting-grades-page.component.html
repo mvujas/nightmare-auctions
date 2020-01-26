@@ -1,0 +1,37 @@
+<div class="container">
+  <h1>Waiting grades</h1>
+
+  <ng-container *ngIf="errorLoadingUser; else successfullyLoadedUser">
+    <div class="loading-error-message">
+      Cannot load user. Please try again later
+    </div>
+  </ng-container>
+
+  <ng-template #successfullyLoadedUser>
+    
+    <ng-container *ngIf="errorLoadingWaitingGrades; else successfullyLoadedGrades">
+      <div class="loading-error-message">
+        An error occured trying to retrieve data from the server. Please try again later 
+      </div>
+    </ng-container>
+
+    <ng-template #successfullyLoadedGrades>
+      
+      <app-loader *ngIf="waitingGrades == null && waitingGrades !== []; else loaded"></app-loader>
+      <ng-template #loaded>
+
+        <p *ngIf="waitingGrades.length == 0">There are no grades waiting for you to give. Thank you</p>
+        
+        <app-single-grade-form 
+          *ngFor="let grade of waitingGrades" 
+          [gradeHolder]="grade"
+          (successfulSubmitCallback)="refreshGrades()"
+        ></app-single-grade-form>
+
+      </ng-template>
+      
+    </ng-template>
+
+  </ng-template>
+  
+</div>

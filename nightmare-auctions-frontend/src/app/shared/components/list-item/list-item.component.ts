@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Item } from '@app/shared/model/item';
-import { ItemService } from '@app/core/http/item/item.service';
 
 @Component({
   selector: 'app-list-item',
