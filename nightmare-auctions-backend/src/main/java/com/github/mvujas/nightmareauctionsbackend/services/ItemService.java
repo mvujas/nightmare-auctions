@@ -40,6 +40,10 @@ public class ItemService {
 		return itemRepository.findAll();
 	}
 	
+	public List<Item> getAllNonClosedItems() {
+		return itemRepository.getAllNonClosedItems();
+	}
+	
 	public Page<Item> getAll(
 			Specification<Item> specification, Pageable pageable) {
 		return itemRepository.findAll(specification, pageable);

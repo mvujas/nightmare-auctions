@@ -82,7 +82,7 @@ public class ItemRestController {
 	@GetMapping("/report")
 	public void getAllItemsReport(HttpServletResponse response) 
 			throws JRException, IOException {
-		List<Item> items = itemService.getAll();
+		List<Item> items = itemService.getAllNonClosedItems();
 			
 		JasperReport jasperReport = jasperManager.loadReport("all-items-report");
 		JasperPrint jasperPrint = jasperManager.fillReport(jasperReport, items);
