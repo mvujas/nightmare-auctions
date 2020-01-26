@@ -10,10 +10,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
+import javax.persistence.Table;
 
 import com.github.mvujas.nightmareauctionsbackend.util.TimeUtils;
 
-@Entity(name = "private_message")
+@Entity
+@Table(name = "private_message")
 public class PrivateMessage {
 
 	@Id

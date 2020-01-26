@@ -48,6 +48,7 @@ public class ItemRestController {
 	public Page<Item> getAllItems(
 			@RequestParam(required = false) String name,
 			@RequestParam(required = false) String categoryName,
+			@RequestParam(required = false) String username,
 			@RequestParam(required = false) Integer minimumPrice,
 			@RequestParam(required = false) Integer maximumPrice,
 			@RequestParam(required = false) Boolean over,
@@ -56,6 +57,7 @@ public class ItemRestController {
 		SearchParameters searchParams = new SearchParameters(
 				name, 
 				categoryName, 
+				username,
 				minimumPrice, 
 				maximumPrice,
 				over);

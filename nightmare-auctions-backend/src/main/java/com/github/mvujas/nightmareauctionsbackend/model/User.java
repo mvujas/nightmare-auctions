@@ -23,8 +23,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
-import com.github.mvujas.nightmareauctionsbackend.presentationview.GradePresentationView;
-import com.github.mvujas.nightmareauctionsbackend.presentationview.ItemPresentationView;
 import com.github.mvujas.nightmareauctionsbackend.presentationview.UserPresentationView;
 import com.github.mvujas.nightmareauctionsbackend.util.TimeUtils;
 
@@ -90,6 +88,7 @@ public class User implements UserDetails {
 		this.password = password;
 	}
 
+	@JsonView(UserPresentationView.TrueIdentifier.class)
 	public int getId() {
 		return id;
 	}
@@ -107,6 +106,7 @@ public class User implements UserDetails {
 		this.username = username;
 	}
 
+	@JsonView(UserPresentationView.Email.class)
 	public String getEmail() {
 		return email;
 	}
@@ -122,7 +122,8 @@ public class User implements UserDetails {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
+	@JsonView(UserPresentationView.Roles.class)
 	public List<Role> getRoles() {
 		return roles;
 	}
@@ -135,12 +136,12 @@ public class User implements UserDetails {
 		this.roles.add(role);
 	}
 
-	@JsonView(UserPresentationView.UsernameOnly.class)
+	@JsonView(UserPresentationView.AvgGrade.class)
 	public Double getAvgGrade() {
 		return avgGrade;
 	}
 
-
+	
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", email=" + email + ", password=" + password + ", roles="
@@ -151,6 +152,7 @@ public class User implements UserDetails {
 	// UserDetails methods beginning
 	
 		@Override
+		@JsonView(UserPresentationView.Authorithies.class)
 		public Collection<? extends GrantedAuthority> getAuthorities() {
 			return roles;
 		}

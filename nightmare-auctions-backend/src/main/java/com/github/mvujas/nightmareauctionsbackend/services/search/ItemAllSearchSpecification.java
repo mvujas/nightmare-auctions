@@ -46,6 +46,7 @@ public class ItemAllSearchSpecification implements Specification<Item> {
 		filtersToPerform.add(this::filterMaximumPrice);
 		filtersToPerform.add(this::filterCategory);
 		filtersToPerform.add(this::filterName);
+		filtersToPerform.add(this::filterAuthorUsername);
 		filtersToPerform.add(this::filterIsOver);
 	}
 
@@ -96,6 +97,18 @@ public class ItemAllSearchSpecification implements Specification<Item> {
 			predicate = builder.equal(
 					root.join("category").get("name"), 
 					categoryName);
+		}
+		return predicate;
+	}
+	
+	private Predicate filterAuthorUsername(
+			Root<Item> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
+		String username = searchParameters.getUsername();
+		Predicate predicate = null;
+		if(username != null) {
+			predicate = builder.equal(
+					root.join("author").get("username"), 
+					username);
 		}
 		return predicate;
 	}

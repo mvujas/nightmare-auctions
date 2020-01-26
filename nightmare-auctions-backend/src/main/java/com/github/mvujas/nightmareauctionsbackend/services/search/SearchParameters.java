@@ -4,18 +4,20 @@ public class SearchParameters {
 
 	private String name;
 	private String categoryName;
+	private String username;
 	private Integer minimumPrice, maximumPrice;
 	private Boolean isOver;
 	
 	public SearchParameters() {
 		super();
 	}
-	
-	public SearchParameters(String name, String categoryName, Integer minimumPrice, Integer maximumPrice,
-			Boolean isOver) {
+
+	public SearchParameters(String name, String categoryName, String username, Integer minimumPrice,
+			Integer maximumPrice, Boolean isOver) {
 		super();
 		this.name = name;
 		this.categoryName = categoryName;
+		this.username = username;
 		this.minimumPrice = minimumPrice;
 		this.maximumPrice = maximumPrice;
 		this.isOver = isOver;
@@ -45,6 +47,12 @@ public class SearchParameters {
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
 	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
 	public Boolean isOver() {
 		return isOver;
 	}
@@ -54,8 +62,8 @@ public class SearchParameters {
 
 	@Override
 	public String toString() {
-		return "SearchParameters [name=" + name + ", categoryName=" + categoryName + ", minimumPrice=" + minimumPrice
-				+ ", maximumPrice=" + maximumPrice + ", isOver=" + isOver + "]";
+		return "SearchParameters [name=" + name + ", categoryName=" + categoryName + ", username=" + username
+				+ ", minimumPrice=" + minimumPrice + ", maximumPrice=" + maximumPrice + ", isOver=" + isOver + "]";
 	}
 	
 }

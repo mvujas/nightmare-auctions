@@ -1,6 +1,7 @@
 -- to disable running this script every startup remove 
 -- spring.datasource.initialization-mode=always from application.properties
 
+delete from private_message;
 delete from grade;
 delete from grade_holder;
 delete from bid;
@@ -74,11 +75,29 @@ INSERT INTO grade_holder(id, value, giving_grade_id, receiving_grade_id)
 VALUES (1, 2, 2, 1),
        (2, null, 1, 2),
        (3, null, 3, 2),
-       (4, 0, 2, 3);
+       (4, 1, 2, 3);
 
 INSERT INTO grade(id, author_grade_id,	bid_id, buyer_grade_id)
 VALUES (1, 2, 5, 1),
        (3, 4, 17, 3);
+       
+INSERT INTO private_message(id, sending_time, text, receiver_id, sender_id)
+VALUES (1, '2010-03-13 20:19:52', 'Hey buddy, I like your house', 1, 2),
+       (2, '2010-06-09 10:55:02', 'In how good condition is it?', 1, 2),
+       (3, '2010-07-10 22:31:41', 'Hello. Thank you for contacting me. It is in a great condition if I may say so. He changed the roof a month ago', 2, 1),
+       (4, '2010-11-13 19:38:54', 'How good is isolation?', 1, 2),
+       (5, '2011-05-07 09:24:57', 'We had not really worried about it when making house, so it is non existent pretty much', 2, 1),
+       (6, '2012-01-04 04:01:15', 'Oh. That is a dealbreaker for me... Thank you for answering my questions. Good luck with the sale', 1, 2),
+       (7, '2012-01-19 13:35:27', 'It is ok. Thank you.', 2, 1),
+       (8, '2012-03-20 04:04:49', 'Hey! I like your car collection how many of them do you have?', 3, 1),
+       (9, '2012-05-14 22:12:11', 'Hey. I have already lost count of them...', 1, 3),
+       (10, '2012-07-15 20:01:36', 'Do you like any of them? Would you like to buy any maybe?', 1, 3),
+       (11, '2012-07-17 19:47:00', 'I like all of them, but I do not have money for any of them :( But would you maybe give me a ride in one ;)', 3, 1),
+       (12, '2012-08-26 07:12:46', 'I am here strictly for business. Sorry', 1, 3),
+       (13, '2012-10-03 10:44:57', 'You are such a party popper. Thank you anyway', 3, 1),
+       (14, '2013-03-22 18:51:06', 'I have been threatened by mvujas. Please ban him', 3, 2),
+       (15, '2013-03-29 13:44:17', 'Thank you for your report. We will take appropriate steps to deal with the issue.', 2, 3),
+       (16, '2013-04-23 18:28:52', 'Thank you so much. A beautiful platform like NightmareAuctions is no place for cowards like him', 3, 2);
        
        
        
