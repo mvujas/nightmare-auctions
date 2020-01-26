@@ -83,7 +83,7 @@ VALUES (1, 2, 5, 1),
        
 INSERT INTO private_message(id, sending_time, text, receiver_id, sender_id)
 VALUES (1, '2010-03-13 20:19:52', 'Hey buddy, I like your house', 1, 2),
-       (2, '2010-06-09 10:55:02', 'In how good condition is it?', 1, 2),
+       (2, '2010-06-09 10:55:02', 'How good condition is it in?', 1, 2),
        (3, '2010-07-10 22:31:41', 'Hello. Thank you for contacting me. It is in a great condition if I may say so. He changed the roof a month ago', 2, 1),
        (4, '2010-11-13 19:38:54', 'How good is isolation?', 1, 2),
        (5, '2011-05-07 09:24:57', 'We had not really worried about it when making house, so it is non existent pretty much', 2, 1),

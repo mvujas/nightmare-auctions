@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.github.mvujas.nightmareauctionsbackend.presentationview.MessagePresentationView;
 import com.github.mvujas.nightmareauctionsbackend.util.TimeUtils;
 
 @Entity
@@ -55,6 +57,7 @@ public class PrivateMessage {
 		this.receiver = receiver;
 	}
 
+	@JsonView(MessagePresentationView.Identifier.class)
 	public int getId() {
 		return id;
 	}
@@ -63,6 +66,7 @@ public class PrivateMessage {
 		this.id = id;
 	}
 
+	@JsonView(MessagePresentationView.Text.class)
 	public String getText() {
 		return text;
 	}
@@ -71,6 +75,7 @@ public class PrivateMessage {
 		this.text = text;
 	}
 
+	@JsonView(MessagePresentationView.SendingTime.class)
 	public Timestamp getSendingTime() {
 		return sendingTime;
 	}
@@ -79,6 +84,7 @@ public class PrivateMessage {
 		this.sendingTime = sendingTime;
 	}
 
+	@JsonView(MessagePresentationView.Sender.class)
 	public User getSender() {
 		return sender;
 	}
@@ -87,6 +93,7 @@ public class PrivateMessage {
 		this.sender = sender;
 	}
 
+	@JsonView(MessagePresentationView.Receiver.class)
 	public User getReceiver() {
 		return receiver;
 	}

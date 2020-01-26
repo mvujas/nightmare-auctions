@@ -1,5 +1,6 @@
 package com.github.mvujas.nightmareauctionsbackend.repositories;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,5 +21,16 @@ public interface PrivateMessageRepository extends JpaRepository<PrivateMessage, 
 			+ "GROUP BY pm.id "
 			+ "ORDER BY MAX(pm.sendingTime) DESC")
 	List<User> getChattersOrderedByDateForUser(@Param("user") User user);
+	
+	@Query(
+			"SELECT pm "
+			+ "FROM PrivateMessage pm "
+			+ "WHERE pm.sendingTime >= :since AND "
+			+ "	((pm.sender = :user1 AND pm.receiver = :user2) OR (pm.sender = :user2 AND pm.receiver = :user1)) "
+			+ "ORDER BY pm.sendingTime ASC")
+	List<PrivateMessage> getMessagesBetweenUsersSinceDate(
+			@Param("user1") User user1,
+			@Param("user2") User user2,
+			@Param("since") Date since);
 	
 }
