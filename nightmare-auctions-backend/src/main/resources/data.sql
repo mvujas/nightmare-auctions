@@ -94,10 +94,10 @@ VALUES (1, '2010-03-13 20:19:52', 'Hey buddy, I like your house', 1, 2),
        (10, '2012-07-15 20:01:36', 'Do you like any of them? Would you like to buy any maybe?', 1, 3),
        (11, '2012-07-17 19:47:00', 'I like all of them, but I do not have money for any of them :( But would you maybe give me a ride in one ;)', 3, 1),
        (12, '2012-08-26 07:12:46', 'I am here strictly for business. Sorry', 1, 3),
-       (13, '2012-10-03 10:44:57', 'You are such a party popper. Thank you anyway', 3, 1),
-       (14, '2013-03-22 18:51:06', 'I have been threatened by mvujas. Please ban him', 3, 2),
-       (15, '2013-03-29 13:44:17', 'Thank you for your report. We will take appropriate steps to deal with the issue.', 2, 3),
-       (16, '2013-04-23 18:28:52', 'Thank you so much. A beautiful platform like NightmareAuctions is no place for cowards like him', 3, 2);
+       (13, '2012-10-03 10:44:57', 'You are such a party popper. Thank you anyway', 3, 1);
+       -- (14, '2013-03-22 18:51:06', 'I have been threatened by mvujas. Please ban him', 3, 2),
+       -- (15, '2013-03-29 13:44:17', 'Thank you for your report. We will take appropriate steps to deal with the issue.', 2, 3),
+       -- (16, '2013-04-23 18:28:52', 'Thank you so much. A beautiful platform like NightmareAuctions is no place for cowards like him', 3, 2);
        
        
        
