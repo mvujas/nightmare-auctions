@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
+import { User } from '@app/shared/model/user';
 
 @Component({
   selector: 'app-chat-face-list',
@@ -7,9 +8,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChatFaceListComponent implements OnInit {
 
+  @Output()
+  private chatChoosen = new EventEmitter<string>();
+
+  @Input()
+  private activeUsername: string;
+  @Input()
+  private users: User[];
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  chatFaceChanged(username: string) {
+    this.chatChoosen.emit(username);
   }
 
 }

@@ -14,12 +14,22 @@
     <div class="row" style="height: 100%; margin: 0;">
       <div class="col col-4 no-padding chat-faces">
         
-        <app-chat-face-list></app-chat-face-list>
+        <app-chat-face-list 
+          (chatChoosen)="handleChatChoosen($event)"
+          [users]="users"
+          [activeUsername]="activeUsername"
+        ></app-chat-face-list>
 
       </div>
       <div class="col col-8 no-padding">
 
-        <app-chat-content></app-chat-content>
+        <app-chat-content 
+          *ngIf="activeUsername"
+          [activeUsername]="activeUsername"
+          [myUsername]="myUsername"
+          [messages]="messages"
+          (sendMessage)="handleMessageSendSubmission($event)"
+        ></app-chat-content>
 
       </div>
     </div>

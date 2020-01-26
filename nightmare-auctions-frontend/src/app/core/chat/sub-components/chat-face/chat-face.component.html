@@ -1,4 +1,4 @@
-<div class="chat-face" [class.not-last-child]="!isLastChild">
+<div class="chat-face" [class.not-last-child]="!isLastChild" [class.active]="active" (click)="handleClick()">
   <div class="user-username">
     {{ username }}
   </div>

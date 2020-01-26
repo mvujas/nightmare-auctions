@@ -4,8 +4,8 @@
     cursor: pointer;
     padding: 8px 15px;
 
-    &:hover {
-        background-color: #ddd;
+    &:hover, &.active {
+        background-color: #ccc;
     }
 
     &.not-last-child {

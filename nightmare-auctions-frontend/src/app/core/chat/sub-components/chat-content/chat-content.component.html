@@ -1,16 +1,22 @@
 <div class="chat-content">
   <div class="user-username">
-    mvujas
+    {{ activeUsername }}
   </div>
   <div class="message-content">
-    <div class="message-list">
+    <div class="message-list" id="message-list">
       
-      <app-message text="Hey buddy" [received]="false"></app-message>
+      <app-message
+        *ngFor="let message of messages"
+        [text]="message.text"
+        [received]="message.sender.username != myUsername"
+      ></app-message>
+
+      <!--<app-message text="Hey buddy" [received]="false"></app-message>
       <app-message text="Long time, no see. How are you doing friend?" [received]="true"></app-message>
       <app-message text="I'm doing great. Thanks for asking. How's Jack?" [received]="false"></app-message>
       <app-message text="Well. I haven't really spoken to him in a while" [received]="true"></app-message>
       <app-message text="Oh... Why's that? Did something happen between the two of you" [received]="false"></app-message>
-      <app-message text="I'd rather not talk about it, I hope you understand... How's you job going? I was jubilant when I heard you got it, I have never doubted your potential" [received]="true"></app-message>
+      <app-message text="I'd rather not talk about it, I hope you understand... How's you job going? I was jubilant when I heard you got it, I have never doubted your potential" [received]="true"></app-message>-->
       
     </div>
   </div>

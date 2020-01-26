@@ -3,19 +3,15 @@
     Chats
   </div>
   <div class="chat-face-list-content">
-    <app-chat-face username="mvujas"></app-chat-face>
-    <app-chat-face username="mvujas"></app-chat-face>
-    <app-chat-face username="mvujas"></app-chat-face>
-    <app-chat-face username="mvujas"></app-chat-face>
-    <app-chat-face username="mvujas"></app-chat-face>
-    <app-chat-face username="mvujas"></app-chat-face>
-    <app-chat-face username="mvujas"></app-chat-face>
-    <app-chat-face username="mvujas"></app-chat-face>
-    <app-chat-face username="mvujas"></app-chat-face>
-    <app-chat-face username="mvujas"></app-chat-face>
-    <app-chat-face username="mvujas"></app-chat-face>
-    <app-chat-face username="mvujas"></app-chat-face>
-    <app-chat-face [isLastChild]="true" username="mvujas"></app-chat-face>
+
+    <app-chat-face 
+      *ngFor="let user of users; let last = last"
+      [username]="user.username"
+      [active]="user.username == activeUsername"
+      [isLastChild]="last"
+      (chatChoosen)="chatFaceChanged($event)"
+    ></app-chat-face>
+    
   </div>
 </div>
 
