@@ -1,5 +1,6 @@
 package com.github.mvujas.nightmareauctionsbackend.services.search;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -48,6 +49,8 @@ public class ItemAllSearchSpecification implements Specification<Item> {
 		filtersToPerform.add(this::filterName);
 		filtersToPerform.add(this::filterAuthorUsername);
 		filtersToPerform.add(this::filterIsOver);
+		filtersToPerform.add(this::filterBefore);
+		filtersToPerform.add(this::filterAfter);
 	}
 
 	@Override
@@ -135,6 +138,30 @@ public class ItemAllSearchSpecification implements Specification<Item> {
 		}
 		return predicate;
 	}
+	
+	private Predicate filterBefore(
+			Root<Item> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
+		Date before = searchParameters.getBefore();
+		Predicate predicate = null;
+		if(before != null) {
+			predicate = builder
+					.lessThanOrEqualTo(root.get("closingTime"), before);
+		}
+		return predicate;
+	}
+	
+	private Predicate filterAfter(
+			Root<Item> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
+		Date after = searchParameters.getBefore();
+		Predicate predicate = null;
+		if(after != null) {
+			predicate = builder
+					.greaterThanOrEqualTo(root.get("closingTime"), after);
+		}
+		return predicate;
+	}
+	
+	
 	
 	private String containsLowerCase(String searchField) {
 	    return "%" + searchField.toLowerCase() + "%";

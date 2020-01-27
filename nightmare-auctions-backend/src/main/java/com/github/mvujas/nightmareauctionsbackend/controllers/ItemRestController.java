@@ -2,7 +2,9 @@ package com.github.mvujas.nightmareauctionsbackend.controllers;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -10,6 +12,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +25,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.github.mvujas.nightmareauctionsbackend.controllers.messages.BidMessage;
 import com.github.mvujas.nightmareauctionsbackend.controllers.messages.ItemCreationMessage;
+import com.github.mvujas.nightmareauctionsbackend.domain.SoldItem;
+import com.github.mvujas.nightmareauctionsbackend.exceptionhandling.exceptions.ResourceOperationException;
 import com.github.mvujas.nightmareauctionsbackend.managers.JasperManager;
 import com.github.mvujas.nightmareauctionsbackend.model.Item;
 import com.github.mvujas.nightmareauctionsbackend.presentationview.ItemPresentationView;
@@ -60,7 +65,9 @@ public class ItemRestController {
 				username,
 				minimumPrice, 
 				maximumPrice,
-				over);
+				over,
+				null,
+				null);
 	
 		return itemService.getAll(
 				new ItemAllSearchSpecification(searchParams),
@@ -112,6 +119,22 @@ public class ItemRestController {
 			@PathVariable(required = true) Integer id,
 			Principal principal) {
 		itemService.endAuction(id, principal.getName());
+	}
+	
+	@GetMapping("/soldStatistics/{username}")
+	@PreAuthorize("isAuthenticated()")
+	public List<SoldItem> soldItemsInPeriod(
+			@PathVariable String username,
+			@RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date after,
+			@RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date before,
+			Pageable pageable,
+			Principal principal) {
+		if(!principal.getName().equals(username)) {
+			throw new ResourceOperationException(
+					"Users can see only their own statistics");
+		}
+		
+		return itemService.soldItemsInPeriod(before, after, principal.getName());
 	}
 
 }

@@ -79,6 +79,12 @@ public class Item {
 			+ "WHERE b.item_id = id)")
 	private Integer price;
 	
+	@Formula(
+			"(SELECT u.username "
+			+ "FROM grade g, bid b, user u "
+			+ "WHERE g.id = id AND b.id = g.bid_id AND b.author_id = u.id)")
+	private String buyerUsername;
+	
 	@Formula("NOT ISNULL(closing_time)")
 	private boolean over;
 	
@@ -207,7 +213,12 @@ public class Item {
 	public void setDetails(String details) {
 		this.details = details;
 	}
-
+	
+	public String getBuyerUsername() {
+		return buyerUsername;
+	}
+	
+	
 	@Override
 	public String toString() {
 		return "Item [id=" + id + ", name=" + name + ", startingPrice=" + startingPrice + ", category=" + category

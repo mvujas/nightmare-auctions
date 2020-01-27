@@ -1,6 +1,8 @@
 package com.github.mvujas.nightmareauctionsbackend.services;
 
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -8,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import com.github.mvujas.nightmareauctionsbackend.domain.SoldItem;
 import com.github.mvujas.nightmareauctionsbackend.exceptionhandling.exceptions.ResourceNotFoundException;
 import com.github.mvujas.nightmareauctionsbackend.exceptionhandling.exceptions.ResourceOperationException;
 import com.github.mvujas.nightmareauctionsbackend.model.Bid;
@@ -165,6 +168,24 @@ public class ItemService {
 		}
 		
 		itemRepository.saveAndFlush(item);
+	}
+	
+	public List<SoldItem> soldItemsInPeriod(Date before, Date after, String username) {
+		if(after == null) {
+			after = new Date(0L);
+		}
+		if(before == null) {
+			before = new Date();
+		}
+
+		User user = userRepository.findByUsername(username);
+		
+		List<Item> items = itemRepository.getSoldInPeriod(after, before, user);
+		
+		return items
+				.stream()
+				.map(SoldItem::fromItem)
+				.collect(Collectors.toList());
 	}
 
 }
