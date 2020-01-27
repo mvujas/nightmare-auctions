@@ -50,9 +50,22 @@
 
       <h2>Bids</h2>
 
-      <ul>
-        <li *ngFor="let bid of item.bids">{{ bid.author.username }} ({{ bid.postingTime | date: 'short' }}) - {{ bid.price | currency: 'EUR' }}</li>
-      </ul>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Price</th>
+            <th scope="col">Bidder</th>
+            <th scope="col">Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let bid of item.bids">
+            <td>{{ bid.price | currency: 'EUR' }}</td>
+            <td><a [routerLink]="[ '/user', bid.author.username ]">{{ bid.author.username }}</a></td>
+            <td>{{ bid.postingTime | date: 'short' }}</td>
+          </tr>
+        </tbody>
+      </table>
 
     </ng-container>
 
