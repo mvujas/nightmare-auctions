@@ -43,6 +43,10 @@ export class ChatComponent implements OnInit {
     );
   }
 
+  messageReceived(message) {
+    console.log("Porukica: "+message);
+  }
+
   myUsernameNewValue(value) {
     this.myUsername = (value == null) ? null : value.username
 

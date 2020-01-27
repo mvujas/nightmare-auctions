@@ -1,5 +1,6 @@
 import { Category } from './category';
 import { User } from './user';
+import { Bid } from './bid';
 
 export interface Item {
     id: number;
@@ -12,4 +13,5 @@ export interface Item {
     numberOfBids: number;
     price: number;
     over: boolean;
+    bids: Bid[];
 }

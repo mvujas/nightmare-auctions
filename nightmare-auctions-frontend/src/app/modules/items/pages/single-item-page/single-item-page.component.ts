@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import deepEqual from 'deep-equal';
 import { UserAuthHolder } from '@app/shared/domain/user-auth-holder';
 import { AuthenticationService } from '@app/core/authentication/authentication.service';
+import { Bid } from '@app/shared/model/bid';
 
 @Component({
   selector: 'app-single-item-page',
@@ -73,7 +74,11 @@ export class SingleItemPageComponent implements OnInit {
     }
   }
 
-  successfulLoadOfData(item) {
+  successfulLoadOfData(item: Item) {
+    if(item != null && item.bids != null) {
+      item.bids.sort((a: Bid, b: Bid) => b.price - a.price);
+    }
+
     this.item = item;
 
     this.bidForm = this.formBuilder.group({
