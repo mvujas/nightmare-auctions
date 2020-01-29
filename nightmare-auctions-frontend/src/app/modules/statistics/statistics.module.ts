@@ -4,6 +4,8 @@ import { StatisticsRoutingModule } from './statistics-routing.module';
 import { SoldItemsStatisticsComponent } from './pages/sold-items-statistics/sold-items-statistics.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SelectPeriodFormComponent } from './components/select-period-form/select-period-form.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from '@app/shared/shared.module';
 
 const components: any[] = [
   SoldItemsStatisticsComponent,
@@ -14,7 +16,10 @@ const components: any[] = [
   imports: [
     CommonModule,
     StatisticsRoutingModule,
-    NgbModule
+    NgbModule,
+    FormsModule,
+    ReactiveFormsModule,
+    SharedModule
   ],
   declarations: [ 
     ...components

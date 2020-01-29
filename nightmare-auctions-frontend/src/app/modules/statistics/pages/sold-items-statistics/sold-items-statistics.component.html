@@ -2,5 +2,47 @@
   <h1>Statistics</h1>
 
   <h5>Select time period</h5>
-  <app-select-period-form></app-select-period-form>
+  <app-select-period-form (submitCallback)="handleSubmitCallback($event)"></app-select-period-form>
+
+  <ng-container *ngIf="dataLoading.triedLoading">
+
+    <ng-container *ngIf="dataLoading.error; else successTemplate">
+      <div class="loading-error-message">
+        There was an error trying to load data
+      </div>
+    </ng-container>
+    <ng-template #successTemplate>
+
+      <ng-container *ngIf="dataLoading.items === null; else loadedData">
+        <app-loader></app-loader>
+      </ng-container>
+      <ng-template #loadedData>
+        <h4>Selling statistics in period from {{ dataLoading.from | date: 'yyyy-MM-dd' }} to {{ dataLoading.to | date: 'yyyy-MM-dd' }}</h4>
+        <p>You have sold {{ dataLoading.items.length }} items in the given period of time</p>
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Item</th>
+              <th scope="col">Buyer</th>
+              <th scope="col">Selling date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of dataLoading.items; let i=index">
+              <td>{{ i + 1 }}</td>
+              <td><a [routerLink]="[ '/items', item.itemId ]">{{ item.itemName }}</a></td>
+              <td><a [routerLink]="[ '/user', item.buyer ]">{{ item.buyer }}</a></td>
+              <td>{{ item.closingTimestamp | date: 'short' }}</td>
+            </tr>
+          </tbody>
+        </table>
+
+      </ng-template>
+    </ng-template>
+    
+  </ng-container>
+  
+
 </div>

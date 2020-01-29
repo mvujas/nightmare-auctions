@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Item } from '@app/shared/model/item';
 import { Observable } from 'rxjs';
 import { Page } from '@app/shared/domain/page';
+import { SoldItem } from '@app/shared/domain/sold-item';
 
 @Injectable({
   providedIn: 'root'
@@ -33,6 +34,16 @@ export class ItemService {
 
   public endAuction(id: number) {
     return this.http.post(`api/item/${id}/end`, {});
+  }
+
+  public getSoldItemsStatisticsInPeriod(
+      username: string, from: Date, to: Date): Observable<SoldItem[]> {
+    const dateToStr = (date: Date) => `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+
+    console.log(dateToStr);
+    
+    let queryString: string = `after=${dateToStr(from)}&before=${dateToStr(to)}`
+    return this.http.get<SoldItem[]>(`api/item/soldStatistics/${username}?${queryString}`);
   }
 
 }

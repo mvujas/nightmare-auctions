@@ -1,11 +1,11 @@
-<form>
+<form [formGroup]="periodForm" (ngSubmit)="handleFormSubmission()">
   <div class="form-group">
     <label for="from-date-input">From:</label>
     <div class="form-inline">
       <div class="form-group">
         <div class="input-group">
-          <input class="form-control" placeholder="yyyy-mm-dd"
-                 name="dp" id="from-date-input" ngbDatepicker #fromDate="ngbDatepicker">
+          <input class="form-control" placeholder="yyyy-mm-dd" formControlName="from"
+                 name="dp" id="from-date-input" ngbDatepicker #fromDate="ngbDatepicker" [maxDate]="maxDate" [minDate]="minDate">
           <div class="input-group-append">
             <button class="btn btn-outline-secondary calendar" (click)="fromDate.toggle()" type="button">
               <i class="material-icons" style="font-size: 1em;vertical-align:middle;">
@@ -16,6 +16,9 @@
         </div>
       </div>
     </div>
+    <ng-container *ngIf="submitted && periodForm.controls.from.errors as e">
+      <small class="form-text text-danger" *ngIf="e.required">Start date is required</small>
+    </ng-container>
   </div>
 
   <div class="form-group">
@@ -23,8 +26,8 @@
     <div class="form-inline">
       <div class="form-group">
         <div class="input-group">
-          <input class="form-control" placeholder="yyyy-mm-dd"
-                name="dp" ngbDatepicker #toDate="ngbDatepicker">
+          <input class="form-control" placeholder="yyyy-mm-dd" formControlName="to"
+                name="dp" ngbDatepicker #toDate="ngbDatepicker" [maxDate]="maxDate" [minDate]="minDate">
           <div class="input-group-append">
             <button class="btn btn-outline-secondary calendar" (click)="toDate.toggle()" type="button">
               <i class="material-icons" style="font-size: 1em;vertical-align:middle;">
@@ -35,9 +38,13 @@
         </div>
       </div>
     </div>
+    <ng-container *ngIf="submitted && periodForm.controls.to.errors as e">
+      <small class="form-text text-danger" *ngIf="e.required">End date is required</small>
+      <small class="form-text text-danger" *ngIf="e.toNotHigher">End date must be later than start date</small>
+    </ng-container>
   </div>
   
-  
+  <button type="submit" class="btn btn-primary">Get statistics</button>
   
   
 
