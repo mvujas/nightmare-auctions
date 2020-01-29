@@ -13,7 +13,7 @@
     </ng-container>
     <ng-template #successTemplate>
 
-      <ng-container *ngIf="dataLoading.items === null; else loadedData">
+      <ng-container *ngIf="dataLoading.items == null; else loadedData">
         <app-loader></app-loader>
       </ng-container>
       <ng-template #loadedData>
