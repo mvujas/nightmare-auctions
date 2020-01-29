@@ -50,6 +50,7 @@ export class AuthenticationService {
   public logout(): void {
     localStorage.removeItem('token');
     this.updateUserDetails(null);
+    location.reload(true);
   }
 
   public get token(): string {

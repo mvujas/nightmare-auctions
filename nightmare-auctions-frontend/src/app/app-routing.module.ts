@@ -25,6 +25,10 @@ const routes: Routes = [
     loadChildren: () => import('@modules/grades/grades.module').then(mod => mod.GradesModule)
   },
   {
+    path: 'statistics',
+    loadChildren: () => import('@modules/statistics/statistics.module').then(mod => mod.StatisticsModule)
+  },
+  {
     path: 'auth',
     loadChildren: () => import('@modules/authentication/authentication.module').then(mod => mod.AuthenticationModule)
   },
