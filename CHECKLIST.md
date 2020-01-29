@@ -3,7 +3,8 @@
 ## TO-DO
 
 - Forms should show response error messages
-- Show user's statistics in chosen period
+- Improve design of several pages
+- Add images to items
 
 ## Known bugs
 
