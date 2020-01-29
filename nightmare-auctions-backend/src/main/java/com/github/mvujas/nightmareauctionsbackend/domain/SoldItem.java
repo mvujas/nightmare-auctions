@@ -7,6 +7,7 @@ import com.github.mvujas.nightmareauctionsbackend.model.Item;
 public class SoldItem {
 
 	private int itemId;
+	private String itemName;
 	private String name;
 	private Timestamp closingTimestamp;
 	private String buyer;
@@ -35,9 +36,16 @@ public class SoldItem {
 	public void setBuyer(String buyer) {
 		this.buyer = buyer;
 	}
+	public String getItemName() {
+		return itemName;
+	}
+	public void setItemName(String itemName) {
+		this.itemName = itemName;
+	}
 	
 	public static SoldItem fromItem(Item item) {
 		SoldItem soldItem = new SoldItem();
+		soldItem.setItemName(item.getName());
 		soldItem.setBuyer(item.getBuyerUsername());
 		soldItem.setItemId(item.getId());
 		soldItem.setName(item.getName());

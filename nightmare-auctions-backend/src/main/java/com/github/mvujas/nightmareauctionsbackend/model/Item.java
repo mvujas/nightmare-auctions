@@ -1,7 +1,6 @@
 package com.github.mvujas.nightmareauctionsbackend.model;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -14,9 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
-import org.apache.commons.lang3.time.DateUtils;
 import org.hibernate.annotations.Formula;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
