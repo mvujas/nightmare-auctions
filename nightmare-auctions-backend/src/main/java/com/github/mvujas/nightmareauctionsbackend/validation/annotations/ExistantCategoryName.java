@@ -16,7 +16,7 @@ import com.github.mvujas.nightmareauctionsbackend.validation.ExistantCategoryNam
 @Target({ ElementType.FIELD })
 public @interface ExistantCategoryName {
 
-	public String message() default "There is already user with this email!";
+	public String message() default "There is no category with this name";
 	
 	public Class<?>[] groups() default {};
 	
